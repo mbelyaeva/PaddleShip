@@ -3,8 +3,6 @@
 #include "Game.h"
 
 
-#define BALL_RADIUS 50
-
 //---------------------------------------------------------------------------
 Game::Game(void)
 {
@@ -56,13 +54,12 @@ void Game::createScene(void)
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
     //ball
-    entBall = mSceneMgr->createEntity("ballEntity", "sphere.mesh");
-    entBall->setCastShadows(true);
-    ballNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("ballNode", Ogre::Vector3(0, 0, 0));
-    ballNode->attachObject(entBall);
-    Ogre::Real scale = BALL_RADIUS/100.0;
-    ballNode->setScale(Ogre::Vector3(scale,scale,scale));
-    entBall->setMaterialName("Examples/Rockwall");
+    entShip = mSceneMgr->createEntity("shipEntity", "sphere.mesh");
+    entShip->setCastShadows(true);
+    shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
+    shipNode->attachObject(entShip);
+    shipNode->setScale(Ogre::Vector3(1,1,1));
+    //entShip->setMaterialName("Examples/Rockwall");
 
     //ground
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -750);
@@ -142,48 +139,13 @@ void Game::createScene(void)
     pointLight->setType(Ogre::Light::LT_POINT);
     pointLight->setPosition(Ogre::Vector3(0, 150, 250));
  
-    pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-    pointLight->setSpecularColour(1.0, 0.0, 0.0);
+    pointLight->setDiffuseColour(1.0, 1.0, 1.0);
+    pointLight->setSpecularColour(1.0, 1.0, 1.0);
 
-    Ogre::Light* pointLight2 = mSceneMgr->createLight("pointLight2");
-    pointLight2->setType(Ogre::Light::LT_POINT);
-    pointLight2->setPosition(Ogre::Vector3(0, 500, -100));
- 
-    pointLight2->setDiffuseColour(0.0, 0.5, 0.0);
-    pointLight2->setSpecularColour(0.0, 0.5, 0.0);
-
-    Ogre::Light* pointLight3 = mSceneMgr->createLight("pointLight3");
-    pointLight3->setType(Ogre::Light::LT_POINT);
-    pointLight3->setPosition(Ogre::Vector3(-100, 0, -700));
- 
-    pointLight3->setDiffuseColour(0.0, 0.0, 0.5);
-    pointLight3->setSpecularColour(0.0, 0.0, 0.5);
-
- 
-    Ogre::Light* directionalLight = mSceneMgr->createLight("directionalLight");
-    directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-    directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, 0));
-    directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, 0));
- 
-    directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 )); 
- 
-    Ogre::Light* spotLight = mSceneMgr->createLight("spotLight");
-    spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
-    spotLight->setDiffuseColour(0, 0, 1.0);
-    spotLight->setSpecularColour(0, 0, 1.0);
- 
-    spotLight->setDirection(-1, -1, 0);
-    spotLight->setPosition(Ogre::Vector3(300, 300, 0));
- 
-    spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
 }
 //---------------------------------------------------------------------------
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
-    ballNode -> translate(ballVelocity*evt.timeSinceLastFrame);
-    const Ogre::Vector3 pos = ballNode -> getPosition();
-    if (pos.x < -750 + BALL_RADIUS || pos.x > 750 - BALL_RADIUS) ballVelocity.x *= -1;
-    if (pos.y < -750 + BALL_RADIUS || pos.y > 750 - BALL_RADIUS) ballVelocity.y *= -1;
-    if (pos.z < -750 + BALL_RADIUS || pos.z > 750 - BALL_RADIUS) ballVelocity.z *= -1;
+
     return BaseApplication::frameRenderingQueued(evt);
 }
 //---------------------------------------------------------------------------

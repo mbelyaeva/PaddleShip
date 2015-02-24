@@ -17,9 +17,8 @@ protected:
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent &evt);
-	Ogre::Vector3 ballVelocity;
-	Ogre::Entity *entBall;
-	Ogre::SceneNode *ballNode;
+	Ogre::Entity *entShip;
+	Ogre::SceneNode *shipNode;
 };
 
 //---------------------------------------------------------------------------
