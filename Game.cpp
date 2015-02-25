@@ -8,12 +8,10 @@
 Game::Game(void)
 {
     srand(time(0));
-    gameScreen = new GameScreen(mSceneMgr);
 }
 //---------------------------------------------------------------------------
 Game::~Game(void)
 {
-    delete gameScreen;
 }
 //---------------------------------------------------------------------------
 void Game::createCamera(void)
@@ -44,11 +42,17 @@ void Game::createFrameListener(void){
 //---------------------------------------------------------------------------
 void Game::createScene(void)
 {
+    gameScreen = new GameScreen(mSceneMgr);
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
     //ship
     gameScreen->createScene();
+    // Ogre::Entity *entShip = mSceneMgr->createEntity("shipEntity", "sphere.mesh");
+    // entShip->setCastShadows(true);
+    // Ogre::SceneNode *shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
+    // shipNode->attachObject(entShip);
+    // shipNode->setScale(Ogre::Vector3(1,1,1));
 
     //ground
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -750);
@@ -131,6 +135,11 @@ void Game::createScene(void)
     pointLight->setDiffuseColour(1.0, 1.0, 1.0);
     pointLight->setSpecularColour(1.0, 1.0, 1.0);
 
+}
+//---------------------------------------------------------------------------
+void Game::destroyScene(void){
+    delete gameScreen;
+    BaseApplication::destroyScene(); 
 }
 //---------------------------------------------------------------------------
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){

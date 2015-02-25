@@ -17,6 +17,7 @@ protected:
   virtual void createFrameListener(void);
 	virtual void createCamera(void);
 	virtual void createViewports(void);
+  virtual void destroyScene(void);
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent &evt);
 	GameScreen *gameScreen;
 };
