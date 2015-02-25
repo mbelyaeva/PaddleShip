@@ -46,14 +46,11 @@ void Game::createScene(void)
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
-    //ship
+    //game screen
     gameScreen->createScene();
-    // Ogre::Entity *entShip = mSceneMgr->createEntity("shipEntity", "sphere.mesh");
-    // entShip->setCastShadows(true);
-    // Ogre::SceneNode *shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
-    // shipNode->attachObject(entShip);
-    // shipNode->setScale(Ogre::Vector3(1,1,1));
+    
 
+    //sample stuff from old project
     //ground
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -750);
  
