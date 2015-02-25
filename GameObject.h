@@ -12,6 +12,7 @@ public:
     virtual ~GameObject(void);
     void checkCollisions(bool check);
     void addToSimulator(void);
+    virtual void update(void);
 
 protected:
     Ogre::String name;
@@ -34,6 +35,8 @@ protected:
 
     CollisionContext* context;
     BulletContactCallback* cCallBack;
+
+};
 
 //---------------------------------------------------------------------------
 

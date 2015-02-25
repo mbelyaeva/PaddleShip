@@ -1,14 +1,23 @@
 #include "GameObject.h"
 
+GameObject::GameObject(void){
+}
+
+GameObject::~GameObject(){
+}
+
 void GameObject::checkCollisions(bool check) {
+    /*
     needsUpdates = check;
     if (!cCallBack && needsUpdates) {
         context = new CollisionContext();
         cCallBack = new BulletContactCallback(*body, *context);
     }
+    */
 }
 
 void GameObject::addToSimulator(void) {
+    /*
     //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
     updateTransform();
     //rigidbody is dynamic if and only if mass is non zero, otherwise static
@@ -23,4 +32,8 @@ void GameObject::addToSimulator(void) {
         body->setActivationState(DISABLE_DEACTIVATION);
     }
     simulator->addObject(this);
+    */
+}
+
+void GameObject::update(void){
 }

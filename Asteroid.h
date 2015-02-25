@@ -10,9 +10,9 @@ class Asteroid: public GameObject
 {
 public:
 	Asteroid(Ogre::SceneManager* sceneMgr);
-	virtual ~Asteroid(void);
+	~Asteroid(void);
 	void createScene(void);
-	void update(const Ogre::FrameEvent &evt);
+	void update(void);
 
 protected:
 	Ogre::SceneManager* mSceneMgr;
