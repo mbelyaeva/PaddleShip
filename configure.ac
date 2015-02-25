@@ -15,9 +15,9 @@ PKG_CHECK_MODULES(OIS, [OIS >= 1.0])
 AC_SUBST(OIS_CFLAGS)
 AC_SUBST(OIS_LIBS)
 
-PKG_CHECK_MODULES(bullet, [bullet >= 2.79])                                                                                  
-AC_SUBST(BULLET_CFLAGS)
-AC_SUBST(BULLET_LIBS)
+PKG_CHECK_MODULES(bullet, [bullet >= 2.79])
+AC_SUBST(bullet_CFLAGS)
+AC_SUBST(bullet_LIBS)
 
 AC_CONFIG_FILES(Makefile)
 AC_OUTPUT
