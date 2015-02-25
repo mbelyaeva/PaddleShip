@@ -1,16 +1,19 @@
 #include <cstdlib>
 #include <time.h>
 #include "Game.h"
+#include "GameScreen.h"
 
 
 //---------------------------------------------------------------------------
 Game::Game(void)
 {
     srand(time(0));
+    gameScreen = new GameScreen(mSceneMgr);
 }
 //---------------------------------------------------------------------------
 Game::~Game(void)
 {
+    delete gameScreen;
 }
 //---------------------------------------------------------------------------
 void Game::createCamera(void)
@@ -37,15 +40,6 @@ void Game::createViewports(void)
 //---------------------------------------------------------------------------
 void Game::createFrameListener(void){
     BaseApplication::createFrameListener();
-    
-    Ogre::Real x = 50.0 + 450.0 * ((Ogre::Real) rand() / (RAND_MAX)); //random 50 to 500
-    x *= -1 + 2 * (rand() % 2); //random -1 or 1
-    Ogre::Real y = 50.0 + 450.0 * ((Ogre::Real) rand() / (RAND_MAX));
-    y *= -1 + 2 * (rand() % 2);
-    Ogre::Real z = 50.0 + 450.0 * ((Ogre::Real) rand() / (RAND_MAX));
-    x *= -1 + 2 * (rand() % 2);
-    ballVelocity = Ogre::Vector3(x, y, z);
-
 }
 //---------------------------------------------------------------------------
 void Game::createScene(void)
@@ -53,13 +47,8 @@ void Game::createScene(void)
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
-    //ball
-    entShip = mSceneMgr->createEntity("shipEntity", "sphere.mesh");
-    entShip->setCastShadows(true);
-    shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
-    shipNode->attachObject(entShip);
-    shipNode->setScale(Ogre::Vector3(1,1,1));
-    //entShip->setMaterialName("Examples/Rockwall");
+    //ship
+    gameScreen->createScene();
 
     //ground
     Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -750);
@@ -145,7 +134,7 @@ void Game::createScene(void)
 }
 //---------------------------------------------------------------------------
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
-
+    gameScreen->update(evt);
     return BaseApplication::frameRenderingQueued(evt);
 }
 //---------------------------------------------------------------------------
