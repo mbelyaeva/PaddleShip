@@ -25,3 +25,5 @@ missing
 stamp-h1
 *.log
 PaddleShip
+.nfs*
+.desktop
