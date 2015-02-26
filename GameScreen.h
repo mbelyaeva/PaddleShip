@@ -4,7 +4,7 @@
 #include <Ogre.h>
 #include "BaseApplication.h" //?
 #include "Ship.h"
-#include "Asteroid.h"
+#include "AsteroidSys.h"
 
 //---------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ protected:
 	Ogre::SceneManager* mSceneMgr;
 
 	Ship* ship;
-	Asteroid* ast1;
+	AsteroidSys* ast1;
 
 
 };

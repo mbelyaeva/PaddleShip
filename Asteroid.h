@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include <Ogre.h>
+#include <stdlib.h>
 
 //---------------------------------------------------------------------------
 
@@ -11,7 +12,7 @@ class Asteroid: public GameObject
 public:
 	Asteroid(Ogre::SceneManager* sceneMgr);
 	~Asteroid(void);
-	void addToScene(void);
+	void addToScene(int i);
 	void update(void);
 
 protected:

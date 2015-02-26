@@ -5,7 +5,7 @@ GameScreen::GameScreen(Ogre::SceneManager* sceneMgr)
 {
 	mSceneMgr = sceneMgr;
 	ship = new Ship(sceneMgr);
-	ast1 = new Asteroid(sceneMgr);
+	ast1 = new AsteroidSys(sceneMgr);
 }
 //---------------------------------------------------------------------------
 GameScreen::~GameScreen(void)

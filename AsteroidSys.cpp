@@ -1,4 +1,4 @@
-#include "Asteroid.h"
+#include "AsteroidSys.h"
 
 //---------------------------------------------------------------------------
 AsteroidSys::AsteroidSys(Ogre::SceneManager* sceneMgr)
@@ -12,12 +12,21 @@ AsteroidSys::AsteroidSys(Ogre::SceneManager* sceneMgr)
 //---------------------------------------------------------------------------
 AsteroidSys::~AsteroidSys(void)
 {
-  delete [] asteroidSystem;
+  for (int i = 0; i < 5; i++) {
+    delete asteroidSystem[i];
+  }
+  //delete [] asteroidSystem;
 }
 //---------------------------------------------------------------------------
 void AsteroidSys::update(const Ogre::FrameEvent &evt){
   for (int i=0; i <5; i++) {
     asteroidSystem[i]-> update();
+  }
+}
+//---------------------------------------------------------------------------
+void AsteroidSys::addToScene(void){
+  for (int i=0; i <5; i++) {
+    asteroidSystem[i]-> addToScene(i);
   }
 }
 //---------------------------------------------------------------------------

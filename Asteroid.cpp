@@ -1,4 +1,5 @@
 #include "Asteroid.h"
+#include <iostream>
 
 //---------------------------------------------------------------------------
 Asteroid::Asteroid(Ogre::SceneManager* sceneMgr) : GameObject(sceneMgr)
@@ -18,10 +19,18 @@ Asteroid::~Asteroid(void)
 {
 }
 //---------------------------------------------------------------------------
-void Asteroid::addToScene(void){
-	entAsteroid = mSceneMgr->createEntity("asteroidEntity", "sphere.mesh");
+void Asteroid::addToScene(int i){
+  std::stringstream entName;
+  std::stringstream nodeName;
+  std::string astEnt = "asteroidEntity";
+  std::string astNode = "asteroidNode";
+  entName << astEnt << i;
+  nodeName << astNode << i;
+  std::string resultEnt = entName.str();
+  std::string resultNode = nodeName.str();
+	entAsteroid = mSceneMgr->createEntity(resultEnt, "sphere.mesh");
   entAsteroid->setCastShadows(true);
-  asteroidNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("asteroidNode", asteroidPosition);
+  asteroidNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(resultNode, asteroidPosition);
   asteroidNode->attachObject(entAsteroid);
   asteroidNode->setScale(Ogre::Vector3(0.5f,0.5f,0.5f));
   entAsteroid->setMaterialName("Examples/Rockwall");
