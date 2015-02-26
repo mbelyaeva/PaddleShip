@@ -166,6 +166,41 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
     return BaseApplication::frameRenderingQueued(evt);
 }
 //---------------------------------------------------------------------------
+bool Game::keyPressed(const OIS::KeyEvent &arg){
+    if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
+
+    //send to whatever handles ship movement
+
+    return BaseApplication::keyPressed(arg);
+}
+//---------------------------------------------------------------------------
+bool Game::keyReleased(const OIS::KeyEvent &arg)
+{
+    mCameraMan->injectKeyUp(arg);
+    return true;
+}
+//---------------------------------------------------------------------------
+bool Game::mouseMoved(const OIS::MouseEvent &arg)
+{
+    if (mTrayMgr->injectMouseMove(arg)) return true;
+    mCameraMan->injectMouseMove(arg);
+    return true;
+}
+//---------------------------------------------------------------------------
+bool Game::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+{
+    if (mTrayMgr->injectMouseDown(arg, id)) return true;
+    mCameraMan->injectMouseDown(arg, id);
+    return true;
+}
+//---------------------------------------------------------------------------
+bool Game::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+{
+    if (mTrayMgr->injectMouseUp(arg, id)) return true;
+    mCameraMan->injectMouseUp(arg, id);
+    return true;
+}
+  //---------------------------------------------------------------------------
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
