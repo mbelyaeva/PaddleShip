@@ -15,8 +15,8 @@ void Ship::addToScene(void){
   entShip->setCastShadows(true);
   shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
   shipNode->attachObject(entShip);
-  shipNode->setScale(Ogre::Vector3(1,1,1));
-  //entShip->setMaterialName("Examples/Rockwall");
+  int scale = 1.0f;
+  shipNode->setScale(Ogre::Vector3(scale,scale,scale));
 }
 //---------------------------------------------------------------------------
 void Ship::update(void){

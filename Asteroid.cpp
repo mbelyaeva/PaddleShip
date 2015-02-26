@@ -28,12 +28,12 @@ void Asteroid::addToScene(int i){
   nodeName << astNode << i;
   std::string resultEnt = entName.str();
   std::string resultNode = nodeName.str();
-	entAsteroid = mSceneMgr->createEntity(resultEnt, "sphere.mesh");
+	entAsteroid = mSceneMgr->createEntity(resultEnt, "asteroid1.mesh");
   entAsteroid->setCastShadows(true);
   asteroidNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(resultNode, asteroidPosition);
   asteroidNode->attachObject(entAsteroid);
-  asteroidNode->setScale(Ogre::Vector3(0.5f,0.5f,0.5f));
-  entAsteroid->setMaterialName("Examples/Rockwall");
+  float scale = 15.0f;
+  asteroidNode->setScale(Ogre::Vector3(scale,scale,scale));
 }
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
