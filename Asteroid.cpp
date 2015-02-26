@@ -28,6 +28,23 @@ void Asteroid::addToScene(void){
 }
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
+  int outOfBounds = 0;
+  if (asteroidPosition.x >= 750 || asteroidPosition.y >= 750 || asteroidPosition.z >= 750 || asteroidPosition.x <= -750 || asteroidPosition.y <= -750 || asteroidPosition.z <= -750) {
+    outOfBounds = 1;
+  }
+
+  if (outOfBounds) {
+    float minV = 1;
+    float maxV = 3;
+    Ogre::Real zV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
+    Ogre::Real xV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
+    asteroidVelocity = Ogre::Vector3(xV,0,zV);
+    float minP = -650;
+    float maxP = 650;
+    Ogre::Real xP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
+    asteroidPosition = Ogre::Vector3(xP,0,minP);
+  }
+
 	asteroidNode->translate(asteroidVelocity);
 	GameObject::update();
 }
