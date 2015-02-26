@@ -13,6 +13,7 @@ public:
   virtual ~Game(void);
 
 protected:
+  virtual bool configure(void);
   virtual void createScene(void);
   virtual void createFrameListener(void);
 	virtual void createCamera(void);

@@ -2,7 +2,9 @@
 #include <time.h>
 #include "Game.h"
 #include "GameScreen.h"
+#include <SdkCameraMan.h>
 
+using namespace OgreBites;
 
 //---------------------------------------------------------------------------
 Game::Game(void)
@@ -14,17 +16,37 @@ Game::~Game(void)
 {
 }
 //---------------------------------------------------------------------------
+bool Game::configure(void)
+{
+    // Show the configuration dialog and initialise the system.
+    // You can skip this and use root.restoreConfig() to load configuration
+    // settings if you were sure there are valid ones saved in ogre.cfg.
+    if(mRoot->showConfigDialog())
+    {
+        // If returned true, user clicked OK so initialise.
+        // Here we choose to let the system create a default rendering window by passing 'true'.
+        mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+//---------------------------------------------------------------------------
 void Game::createCamera(void)
 {
     // create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
     // set its position, direction  
-    mCamera->setPosition(Ogre::Vector3(0,10,500));
-    mCamera->lookAt(Ogre::Vector3(0,0,0));
+    mCamera->setPosition(Ogre::Vector3(0,750,750));
+    mCamera->lookAt(Ogre::Vector3(0,0,-250));
     // set the near clip distance
     mCamera->setNearClipDistance(5);
  
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
+    mCameraMan->setStyle(CS_MANUAL);
 }
 //---------------------------------------------------------------------------
 void Game::createViewports(void)
