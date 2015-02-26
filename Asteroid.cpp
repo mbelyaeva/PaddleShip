@@ -1,10 +1,8 @@
 #include "Asteroid.h"
 
 //---------------------------------------------------------------------------
-Asteroid::Asteroid(Ogre::SceneManager* sceneMgr)
+Asteroid::Asteroid(Ogre::SceneManager* sceneMgr) : GameObject(sceneMgr)
 {
-  mSceneMgr = sceneMgr;
-  srand(time(NULL));
   float minV = 1;
   float maxV = 3;
   Ogre::Real zV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
@@ -20,7 +18,7 @@ Asteroid::~Asteroid(void)
 {
 }
 //---------------------------------------------------------------------------
-void Asteroid::createScene(void){
+void Asteroid::addToScene(void){
 	entAsteroid = mSceneMgr->createEntity("asteroidEntity", "sphere.mesh");
   entAsteroid->setCastShadows(true);
   asteroidNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("asteroidNode", asteroidPosition);

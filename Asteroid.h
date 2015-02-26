@@ -11,11 +11,10 @@ class Asteroid: public GameObject
 public:
 	Asteroid(Ogre::SceneManager* sceneMgr);
 	~Asteroid(void);
-	void createScene(void);
+	void addToScene(void);
 	void update(void);
 
 protected:
-	Ogre::SceneManager* mSceneMgr;
 	Ogre::Entity *entAsteroid;
 	Ogre::SceneNode *asteroidNode;
 	Ogre::Vector3 asteroidVelocity;
