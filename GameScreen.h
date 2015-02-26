@@ -2,7 +2,8 @@
 #define __GameScreen_h_
 
 #include <Ogre.h>
-#include "BaseApplication.h"
+#include "BaseApplication.h" //?
+#include "Ship.h"
 
 //---------------------------------------------------------------------------
 
@@ -17,8 +18,7 @@ public:
 protected:
 	Ogre::SceneManager* mSceneMgr;
 
-	Ogre::Entity *entShip;
-	Ogre::SceneNode *shipNode;
+	Ship* ship;
 };
 
 //---------------------------------------------------------------------------

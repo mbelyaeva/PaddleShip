@@ -8,7 +8,7 @@ class OgreMotionState;
 
 class GameObject {
 public:
-    GameObject(void);
+    GameObject(Ogre::SceneManager* sceneMgr);
     virtual ~GameObject(void);
     void checkCollisions(bool check);
     void addToSimulator(void);
@@ -16,7 +16,7 @@ public:
 
 protected:
     Ogre::String name;
-    Ogre::SceneManager* sceneMgr;
+    Ogre::SceneManager* mSceneMgr;
     Ogre::SceneNode* rootNode;
     Ogre::Entity* geom;
     OgreMotionState* motionState;

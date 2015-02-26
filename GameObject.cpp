@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
-GameObject::GameObject(void){
+GameObject::GameObject(Ogre::SceneManager* sceneMgr) {
+    mSceneMgr = sceneMgr;
 }
 
 GameObject::~GameObject(){
