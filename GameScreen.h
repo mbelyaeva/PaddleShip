@@ -11,7 +11,7 @@
 class GameScreen
 {
 public:
-	GameScreen(Ogre::SceneManager* sceneMgr);
+	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode);
 	virtual ~GameScreen(void);
 	void createScene(void);
 	void update(const Ogre::FrameEvent &evt);

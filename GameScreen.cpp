@@ -1,10 +1,10 @@
 #include "GameScreen.h"
 
 //---------------------------------------------------------------------------
-GameScreen::GameScreen(Ogre::SceneManager* sceneMgr)
+GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode)
 {
 	mSceneMgr = sceneMgr;
-	ship = new Ship(sceneMgr);
+	ship = new Ship(sceneMgr, cameraNode);
 	ast1 = new AsteroidSys(sceneMgr);
 }
 //---------------------------------------------------------------------------

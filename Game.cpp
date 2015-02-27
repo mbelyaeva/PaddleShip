@@ -40,6 +40,10 @@ void Game::createCamera(void)
     // create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
     // set its position, direction  
+    mCameraNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("CameraNode");
+    mCameraNode->attachObject(mCamera);
+    mCameraNode->setPosition(Ogre::Vector3(0,0,0));
+
     mCamera->setPosition(Ogre::Vector3(0,750,750));
     mCamera->lookAt(Ogre::Vector3(0,0,-250));
     // set the near clip distance
@@ -64,7 +68,7 @@ void Game::createFrameListener(void){
 //---------------------------------------------------------------------------
 void Game::createScene(void)
 {
-    gameScreen = new GameScreen(mSceneMgr);
+    gameScreen = new GameScreen(mSceneMgr, mCameraNode);
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  

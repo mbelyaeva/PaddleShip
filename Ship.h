@@ -17,7 +17,7 @@
 class Ship: public GameObject 
 {
 public:
-	Ship(Ogre::SceneManager* sceneMgr);
+	Ship(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode);
 	~Ship(void);
 	void addToScene(void);
 	void update(void);
