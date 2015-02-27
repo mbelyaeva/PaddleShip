@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------
 Ship::Ship(Ogre::SceneManager* sceneMgr) : GameObject(sceneMgr)
 {
-	
+	velocity = Ogre::Vector3(0,0,0);
 
 }
 //---------------------------------------------------------------------------
@@ -18,7 +18,7 @@ void Ship::addToScene(void){
 	shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
 	shipNode->attachObject(geom);
 	int scale = 1.0f;
-shipNode->setScale(Ogre::Vector3(scale,scale,scale));
+	shipNode->setScale(Ogre::Vector3(scale,scale,scale));
 }
 //---------------------------------------------------------------------------
 void Ship::update(void){
