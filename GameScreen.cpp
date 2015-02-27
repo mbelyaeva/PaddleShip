@@ -21,5 +21,7 @@ void GameScreen::createScene(void){
 }
 //---------------------------------------------------------------------------
 void GameScreen::update(const Ogre::FrameEvent &evt){
+	ship->update();
+	ast1->update();
 }
 //---------------------------------------------------------------------------

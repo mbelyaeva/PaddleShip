@@ -16,7 +16,6 @@ public:
 	void update(void);
 
 protected:
-	Ogre::Entity *entAsteroid;
 	Ogre::SceneNode *asteroidNode;
 	Ogre::Vector3 asteroidVelocity;
 	Ogre::Vector3 asteroidPosition;

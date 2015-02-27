@@ -14,7 +14,6 @@ public:
 	void update(void);
 
 protected:
-	Ogre::Entity *entShip;
 	Ogre::SceneNode *shipNode;
 	Ogre::Vector3 velocity;
 	Ogre::Vector3 position;

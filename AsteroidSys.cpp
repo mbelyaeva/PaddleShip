@@ -18,7 +18,7 @@ AsteroidSys::~AsteroidSys(void)
   //delete [] asteroidSystem;
 }
 //---------------------------------------------------------------------------
-void AsteroidSys::update(const Ogre::FrameEvent &evt){
+void AsteroidSys::update(void){
   for (int i=0; i <5; i++) {
     asteroidSystem[i]-> update();
   }

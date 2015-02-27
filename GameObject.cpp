@@ -2,6 +2,7 @@
 
 GameObject::GameObject(Ogre::SceneManager* sceneMgr) {
     mSceneMgr = sceneMgr;
+    rootNode = mSceneMgr->getRootSceneNode();
 }
 
 GameObject::~GameObject(){
