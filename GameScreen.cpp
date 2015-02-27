@@ -12,7 +12,8 @@ GameScreen::~GameScreen(void)
 {
 }
 //---------------------------------------------------------------------------
-void GameScreen::createScene(void){
+void GameScreen::createScene(void)
+{
 	//ship
 	ship->addToScene();
 	
@@ -20,8 +21,30 @@ void GameScreen::createScene(void){
     ast1->addToScene();
 }
 //---------------------------------------------------------------------------
-void GameScreen::update(const Ogre::FrameEvent &evt){
+void GameScreen::update(const Ogre::FrameEvent &evt)
+{
 	ship->update();
 	ast1->update();
 }
 //---------------------------------------------------------------------------
+void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
+{
+	ship->injectKeyDown(arg);
+}
+//---------------------------------------------------------------------------
+void GameScreen::injectKeyUp(const OIS::KeyEvent &arg)
+{
+	ship->injectKeyUp(arg);
+}
+//---------------------------------------------------------------------------
+void GameScreen::injectMouseMove(const OIS::MouseEvent &arg)
+{
+}
+//---------------------------------------------------------------------------
+void GameScreen::injectMouseDown(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+{
+}
+//---------------------------------------------------------------------------
+void GameScreen::injectMouseUp(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+{
+}

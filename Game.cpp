@@ -169,13 +169,14 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
 bool Game::keyPressed(const OIS::KeyEvent &arg){
     if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
 
-    //send to whatever handles ship movement
+    gameScreen->injectKeyDown(arg);
 
     return BaseApplication::keyPressed(arg);
 }
 //---------------------------------------------------------------------------
 bool Game::keyReleased(const OIS::KeyEvent &arg)
 {
+    gameScreen->injectKeyUp(arg);
     mCameraMan->injectKeyUp(arg);
     return true;
 }
@@ -183,6 +184,7 @@ bool Game::keyReleased(const OIS::KeyEvent &arg)
 bool Game::mouseMoved(const OIS::MouseEvent &arg)
 {
     if (mTrayMgr->injectMouseMove(arg)) return true;
+    gameScreen->injectMouseMove(arg);
     mCameraMan->injectMouseMove(arg);
     return true;
 }
@@ -190,6 +192,7 @@ bool Game::mouseMoved(const OIS::MouseEvent &arg)
 bool Game::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
+    gameScreen->injectMouseDown(arg, id);
     mCameraMan->injectMouseDown(arg, id);
     return true;
 }
@@ -197,6 +200,7 @@ bool Game::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 bool Game::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
+    gameScreen->injectMouseUp(arg, id);
     mCameraMan->injectMouseUp(arg, id);
     return true;
 }

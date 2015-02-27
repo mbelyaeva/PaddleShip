@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------
 Ship::Ship(Ogre::SceneManager* sceneMgr) : GameObject(sceneMgr)
 {
-	velocity = Ogre::Vector3(0,0,0);
+	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 
 }
 //---------------------------------------------------------------------------
@@ -11,7 +11,8 @@ Ship::~Ship(void)
 {
 }
 //---------------------------------------------------------------------------
-void Ship::addToScene(void){
+void Ship::addToScene(void)
+{
 	name = "shipEntity";
 	geom = mSceneMgr->createEntity(name, "sphere.mesh");
 	geom->setCastShadows(true);
@@ -21,8 +22,29 @@ void Ship::addToScene(void){
 	shipNode->setScale(Ogre::Vector3(scale,scale,scale));
 }
 //---------------------------------------------------------------------------
-void Ship::update(void){
+void Ship::update(void)
+{
 	shipNode->translate(velocity);
 	GameObject::update();
+}
+//---------------------------------------------------------------------------
+void Ship::injectKeyDown(const OIS::KeyEvent &arg)
+{
+	if (arg.key == OIS::KC_A){
+		velocity += Ogre::Vector3(-2.0f, 0.0f, 0.0f);
+	}
+	if (arg.key == OIS::KC_D){
+		velocity += Ogre::Vector3(2.0f, 0.0f, 0.0f);
+	}
+}
+//---------------------------------------------------------------------------
+void Ship::injectKeyUp(const OIS::KeyEvent &arg)
+{
+	if (arg.key == OIS::KC_A){
+		velocity -= Ogre::Vector3(-2.0f, 0.0f, 0.0f);
+	}
+	if (arg.key == OIS::KC_D){
+		velocity -= Ogre::Vector3(2.0f, 0.0f, 0.0f);
+	}
 }
 //---------------------------------------------------------------------------
