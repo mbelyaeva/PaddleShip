@@ -17,7 +17,7 @@
 class Ship: public GameObject 
 {
 public:
-	Ship(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode);
+	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cameraNode);
 	~Ship(void);
 	void addToScene(void);
 	void update(void);
@@ -26,7 +26,6 @@ public:
 	void injectKeyUp(const OIS::KeyEvent &arg);
 
 protected:
-	Ogre::SceneNode *shipNode;
 	Ogre::Vector3 velocity;
 	Ogre::Vector3 position;
 };

@@ -4,16 +4,23 @@
 GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode)
 {
 	mSceneMgr = sceneMgr;
-	ship = new Ship(sceneMgr, cameraNode);
-	ast1 = new AsteroidSys(sceneMgr);
+	sim = new Simulator();
+	ship = new Ship("Ship", sceneMgr, sim, cameraNode);
+	ast1 = new AsteroidSys(sceneMgr, sim);
+	
 }
 //---------------------------------------------------------------------------
 GameScreen::~GameScreen(void)
 {
+	delete ship;
+	delete ast1;
+	delete sim;
 }
 //---------------------------------------------------------------------------
 void GameScreen::createScene(void)
 {
+	mSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox");
+	
 	//ship
 	ship->addToScene();
 	

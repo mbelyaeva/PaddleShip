@@ -5,6 +5,7 @@
 #include "BaseApplication.h" //?
 #include "Ship.h"
 #include "AsteroidSys.h"
+#include "Simulator.h"
 
 //---------------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ public:
 protected:
 	Ogre::SceneManager* mSceneMgr;
 
+	Simulator* sim;
 	Ship* ship;
 	AsteroidSys* ast1;
 

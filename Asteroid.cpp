@@ -1,8 +1,9 @@
 #include "Asteroid.h"
 #include <iostream>
+#include <cassert>
 
 //---------------------------------------------------------------------------
-Asteroid::Asteroid(Ogre::SceneManager* sceneMgr) : GameObject(sceneMgr)
+Asteroid::Asteroid(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim) : GameObject(nym, mgr, sim)
 {
   float minV = 1;
   float maxV = 3;
@@ -15,6 +16,7 @@ Asteroid::Asteroid(Ogre::SceneManager* sceneMgr) : GameObject(sceneMgr)
   float maxP = 650;
   Ogre::Real xP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
   asteroidPosition = Ogre::Vector3(xP,0,minP);
+  rootNode->setPosition(asteroidPosition);
 }
 //---------------------------------------------------------------------------
 Asteroid::~Asteroid(void)
@@ -23,19 +25,17 @@ Asteroid::~Asteroid(void)
 //---------------------------------------------------------------------------
 void Asteroid::addToScene(int i){
   std::stringstream entName;
-  std::stringstream nodeName;
-  std::string astEnt = "asteroidEntity";
-  std::string astNode = "asteroidNode";
-  entName << astEnt << i;
-  nodeName << astNode << i;
-  std::string resultEnt = entName.str();
-  std::string resultNode = nodeName.str();
-	geom = mSceneMgr->createEntity(resultEnt, "asteroid1.mesh");
+  entName << "asteroidEntity" << i;
+  std::stringstream meshName;
+  meshName << "asteroid" << (i%3)+1 << ".mesh";
+
+  geom = sceneMgr->createEntity(entName.str(), meshName.str());
   geom->setCastShadows(true);
-  asteroidNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(resultNode, asteroidPosition);
-  asteroidNode->attachObject(geom);
+
+
+  rootNode->attachObject(geom);
   float scale = 15.0f;
-  asteroidNode->setScale(Ogre::Vector3(scale,scale,scale));
+  rootNode->setScale(Ogre::Vector3(scale,scale,scale));
 }
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
@@ -52,11 +52,11 @@ void Asteroid::update(void){
     float maxP = 650;
     Ogre::Real xP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
     asteroidPosition = Ogre::Vector3(xP,0,minP);
-    asteroidNode->setPosition(asteroidPosition);
+    rootNode->setPosition(asteroidPosition);
   }
 
-	asteroidNode->translate(asteroidVelocity);
-  asteroidPosition = asteroidNode->getPosition();
-	GameObject::update();
+	rootNode->translate(asteroidVelocity);
+  asteroidPosition = rootNode->getPosition();
+	//GameObject::update();
 }
 //---------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 #include "Ship.h"
 
 //---------------------------------------------------------------------------
-Ship::Ship(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode) : GameObject(sceneMgr)
+Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cameraNode) : GameObject(nym, mgr, sim)
 {
 	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
-	shipNode = cameraNode; //probably change later
+	rootNode = cameraNode; //probably change later
 }
 //---------------------------------------------------------------------------
 Ship::~Ship(void)
@@ -13,19 +13,20 @@ Ship::~Ship(void)
 //---------------------------------------------------------------------------
 void Ship::addToScene(void)
 {
-	name = "shipEntity";
-	geom = mSceneMgr->createEntity(name, "sphere.mesh");
+	geom = sceneMgr->createEntity("shipEnt", "rocket.mesh"); //geom = sceneMgr->createEntity("shipEntity", "sphere.mesh");
 	geom->setCastShadows(true);
-	//shipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("shipNode", Ogre::Vector3(0, 0, 0));
-	shipNode->attachObject(geom);
-	int scale = 1.0f;
-	shipNode->setScale(Ogre::Vector3(scale,scale,scale));
+	//geom->setMaterialName("Examples/Rockwall");
+	//rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("rootNode", Ogre::Vector3(0, 0, 0));
+	rootNode->attachObject(geom);
+	int scale = 15.0f;
+	rootNode->setScale(Ogre::Vector3(scale,scale,-scale));
+
 }
 //---------------------------------------------------------------------------
 void Ship::update(void)
 {
-	shipNode->translate(velocity);
-	GameObject::update();
+	rootNode->translate(velocity);
+	//GameObject::update();
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyDown(const OIS::KeyEvent &arg)

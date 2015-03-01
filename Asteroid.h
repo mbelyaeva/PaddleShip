@@ -1,22 +1,23 @@
 #ifndef __Asteroid_h_
 #define __Asteroid_h_
 
-#include "GameObject.h"
 #include <Ogre.h>
 #include <stdlib.h>
+#include "GameObject.h"
+#include "Simulator.h"
+
 
 //---------------------------------------------------------------------------
 
 class Asteroid: public GameObject 
 {
 public:
-	Asteroid(Ogre::SceneManager* sceneMgr);
+	Asteroid(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim);
 	~Asteroid(void);
 	void addToScene(int i);
 	void update(void);
 
 protected:
-	Ogre::SceneNode *asteroidNode;
 	Ogre::Vector3 asteroidVelocity;
 	Ogre::Vector3 asteroidPosition;
 };

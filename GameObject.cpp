@@ -1,41 +1,42 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Ogre::SceneManager* sceneMgr) {
-    mSceneMgr = sceneMgr;
-    rootNode = mSceneMgr->getRootSceneNode();
+GameObject::GameObject(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim)
+{
+    name = nym;
+    sceneMgr = mgr;
+    simulator = sim;
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name);
+    shape = NULL;
+    tr.setIdentity();
+    mass = 0.0f;
+    inertia.setZero();
 }
 
-GameObject::~GameObject(){
+GameObject::~GameObject()
+{
 }
 
-void GameObject::checkCollisions(bool check) {
+void GameObject::updateTransform()
+{
     /*
-    needsUpdates = check;
-    if (!cCallBack && needsUpdates) {
-        context = new CollisionContext();
-        cCallBack = new BulletContactCallback(*body, *context);
-    }
+    Ogre::Vector3 pos = rootNode->getPosition();
+    tr.setOrigin(btVector3(pos.x, pos.y, pos.z));
+    Ogre::Quaternion qt = rootNode->getOrientation();
+    tr.setRotation(btQuaternion(qt.x, qt.y, qt.z, qt.w));
+    if (motionState) motionState->updateTransform(tr);
     */
 }
 
-void GameObject::addToSimulator(void) {
-    /*
+void GameObject::addToSimulator() 
+{
+/*
     //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
     updateTransform();
+    motionState = new OgreMotionState(tr, rootNode);
     //rigidbody is dynamic if and only if mass is non zero, otherwise static
     if (mass != 0.0f) shape->calculateLocalInertia(mass, inertia);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, inertia);
-    rbInfo.m_restitution = restitution;
-    rbInfo.m_friction = friction;
     body = new btRigidBody(rbInfo);
-    body->setUserPointer(this);
-    if (kinematic) {
-        body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-        body->setActivationState(DISABLE_DEACTIVATION);
-    }
     simulator->addObject(this);
     */
-}
-
-void GameObject::update(void){
 }
