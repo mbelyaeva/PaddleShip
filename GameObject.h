@@ -3,8 +3,9 @@
 
 #include <Ogre.h>
 #include "BulletContactCallback.h"
-#include "Simulator.h"
-class OgreMotionState;
+#include "OgreMotionState.h"
+
+class Simulator;
 
 class GameObject {
 public:
@@ -12,6 +13,7 @@ public:
     virtual ~GameObject(void);
     void updateTransform();
     void addToSimulator();
+    btRigidBody* getBody();
 
 
 protected:

@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS= -I m4
-noinst_HEADERS= BulletContactCallback.h BaseApplication.h Game.h GameObject.h Ship.h Asteroid.h AsteroidSys.h Simulator.h GameScreen.h
+noinst_HEADERS= BulletContactCallback.h OgreMotionState.h BaseApplication.h Game.h GameObject.h Ship.h Asteroid.h AsteroidSys.h Simulator.h GameScreen.h
 
 bin_PROGRAMS= PaddleShip
 PaddleShip_CPPFLAGS= -I$(top_srcdir)
