@@ -27,6 +27,7 @@ void GameScreen::createScene(void)
 	
     //asteroid particle system
     ast1->addToScene();
+    ast1->addToSimulator();
 }
 //---------------------------------------------------------------------------
 void GameScreen::update(const Ogre::FrameEvent &evt)
