@@ -11,6 +11,17 @@ GameObject::GameObject(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim
     tr.setIdentity();
     mass = 0.0f;
     inertia.setZero();
+    
+    geom = NULL;
+    motionState = NULL;
+    body = NULL;
+    restitution = 0.0f;
+    friction = 0.0f;
+    kinematic = false;
+    needsUpdates = false;
+
+    context = NULL;
+    cCallBack = NULL;
 }
 
 GameObject::~GameObject()

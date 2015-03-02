@@ -23,6 +23,7 @@ void GameScreen::createScene(void)
 	
 	//ship
 	ship->addToScene();
+	ship->addToSimulator();
 	
     //asteroid particle system
     ast1->addToScene();
@@ -30,6 +31,7 @@ void GameScreen::createScene(void)
 //---------------------------------------------------------------------------
 void GameScreen::update(const Ogre::FrameEvent &evt)
 {
+	sim->stepSimulation(evt.timeSinceLastFrame, 10, 1/60.0f);
 	ship->update();
 	ast1->update();
 }
