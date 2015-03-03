@@ -32,10 +32,12 @@ void Asteroid::addToScene(int i){
   geom = sceneMgr->createEntity(entName.str(), meshName.str());
   geom->setCastShadows(true);
 
-
   rootNode->attachObject(geom);
   float scale = 15.0f;
   rootNode->setScale(Ogre::Vector3(scale,scale,scale));
+
+  mass = 1.0f;
+  shape = new btSphereShape(15.0f);
 }
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
