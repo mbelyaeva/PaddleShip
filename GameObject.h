@@ -12,7 +12,7 @@ public:
     GameObject(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim);
     virtual ~GameObject(void);
     void updateTransform();
-    void addToSimulator();
+    virtual void addToSimulator();
     btRigidBody* getBody();
     virtual void update();
 

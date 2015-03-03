@@ -5,8 +5,8 @@
 //---------------------------------------------------------------------------
 Asteroid::Asteroid(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim) : GameObject(nym, mgr, sim)
 {
-  float minV = 1;
-  float maxV = 3;
+  float minV = 20;
+  float maxV = 30;
   Ogre::Real zV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
   minV = -3;
   maxV = 3;
@@ -61,5 +61,10 @@ void Asteroid::update(void){
 	rootNode->translate(asteroidVelocity);
   asteroidPosition = rootNode->getPosition();*/
 	//GameObject::update();
+}
+//---------------------------------------------------------------------------
+void Asteroid::addToSimulator(void){
+  GameObject::addToSimulator();
+  body->setLinearVelocity( btVector3(asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z) );
 }
 //---------------------------------------------------------------------------

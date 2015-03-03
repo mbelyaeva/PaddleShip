@@ -21,7 +21,7 @@ void Ship::addToScene(void)
 	int scale = 1.0f;
 	rootNode->setScale(Ogre::Vector3(scale,scale,-scale));
 
-	mass = 1.0f;
+	mass = 0.0f;
 	shape = new btSphereShape(scale);
 
 }

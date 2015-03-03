@@ -16,6 +16,7 @@ public:
 	~Asteroid(void);
 	void addToScene(int i);
 	void update(void);
+	void addToSimulator(void);
 
 protected:
 	Ogre::Vector3 asteroidVelocity;
