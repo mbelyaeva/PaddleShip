@@ -27,7 +27,6 @@ public:
 
 protected:
 	Ogre::Vector3 velocity;
-	Ogre::Vector3 position;
 };
 
 //---------------------------------------------------------------------------

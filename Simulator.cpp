@@ -11,7 +11,7 @@ Simulator::Simulator()
     ///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
     solver = new btSequentialImpulseConstraintSolver();
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,overlappingPairCache,solver,collisionConfiguration);
-    dynamicsWorld->setGravity(btVector3(0,-0.098, 0));
+    dynamicsWorld->setGravity(btVector3(0,-0.098*100, 0));
     //keep track of the shapes, we release memory at exit.
     //make sure to re-use collision shapes among rigid bodies whenever possible!
     btAlignedObjectArray<btCollisionShape*> collisionShapes;
@@ -31,6 +31,8 @@ void Simulator::addObject (GameObject* o)
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)
 {
     dynamicsWorld->stepSimulation(elapsedTime, maxSubSteps, fixedTimestep);
+    /*for (unsigned int i = 0; i < objList.size(); i++)
+        objList[i]->update();*/
 }
 
 /*void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)

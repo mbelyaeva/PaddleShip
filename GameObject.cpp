@@ -47,6 +47,9 @@ void GameObject::addToSimulator()
     if (mass != 0.0f) shape->calculateLocalInertia(mass, inertia);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, inertia);
     body = new btRigidBody(rbInfo);
+    
+    //context/ccallback
+
     simulator->addObject(this);
     
 }
@@ -54,4 +57,8 @@ void GameObject::addToSimulator()
 btRigidBody* GameObject::getBody()
 {
     return body;
+}
+
+void GameObject::update()
+{
 }

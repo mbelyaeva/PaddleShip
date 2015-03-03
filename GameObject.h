@@ -14,6 +14,7 @@ public:
     void updateTransform();
     void addToSimulator();
     btRigidBody* getBody();
+    virtual void update();
 
 
 protected:

@@ -25,7 +25,7 @@ void Ship::addToScene(void)
 //---------------------------------------------------------------------------
 void Ship::update(void)
 {
-	rootNode->translate(velocity);
+	//rootNode->translate(velocity);
 	//GameObject::update();
 }
 //---------------------------------------------------------------------------

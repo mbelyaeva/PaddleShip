@@ -40,7 +40,7 @@ void Asteroid::addToScene(int i){
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
 
-  if (asteroidPosition.x >= 750 || asteroidPosition.y >= 750 || asteroidPosition.z >= 750 || asteroidPosition.x <= -750 || asteroidPosition.y <= -750 || asteroidPosition.z <= -750) {
+  /*if (asteroidPosition.x >= 750 || asteroidPosition.y >= 750 || asteroidPosition.z >= 750 || asteroidPosition.x <= -750 || asteroidPosition.y <= -750 || asteroidPosition.z <= -750) {
     float minV = 1;
     float maxV = 3;
     Ogre::Real zV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
@@ -56,7 +56,7 @@ void Asteroid::update(void){
   }
 
 	rootNode->translate(asteroidVelocity);
-  asteroidPosition = rootNode->getPosition();
+  asteroidPosition = rootNode->getPosition();*/
 	//GameObject::update();
 }
 //---------------------------------------------------------------------------
