@@ -18,11 +18,11 @@ void Ship::addToScene(void)
 	//geom->setMaterialName("Examples/Rockwall");
 	//rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("rootNode", Ogre::Vector3(0, 0, 0));
 	rootNode->attachObject(geom);
-	int scale = 15.0f;
+	int scale = 1.0f;
 	rootNode->setScale(Ogre::Vector3(scale,scale,-scale));
 
 	mass = 1.0f;
-	shape = new btSphereShape(15.0f);
+	shape = new btSphereShape(scale);
 
 }
 //---------------------------------------------------------------------------

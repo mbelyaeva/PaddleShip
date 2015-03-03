@@ -44,13 +44,13 @@ void Game::createCamera(void)
     mCameraNode->attachObject(mCamera);
     mCameraNode->setPosition(Ogre::Vector3(0,0,0));
 
-    mCamera->setPosition(Ogre::Vector3(0,750,750));
-    mCamera->lookAt(Ogre::Vector3(0,0,-250));
+    mCamera->setPosition(Ogre::Vector3(0,50,50));
+    mCamera->lookAt(Ogre::Vector3(0,0,-25));
     // set the near clip distance
     mCamera->setNearClipDistance(5);
  
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
-    mCameraMan->setStyle(CS_MANUAL);
+    //mCameraMan->setStyle(CS_MANUAL);
 }
 //---------------------------------------------------------------------------
 void Game::createViewports(void)

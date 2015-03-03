@@ -12,10 +12,10 @@ Asteroid::Asteroid(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim) : 
   maxV = 3;
   Ogre::Real xV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
   asteroidVelocity = Ogre::Vector3(xV,0,zV);
-  float minP = -650;
-  float maxP = 650;
+  float minP = -40;
+  float maxP = 40;
   Ogre::Real xP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
-  asteroidPosition = Ogre::Vector3(xP,0,minP);
+  asteroidPosition = Ogre::Vector3(xP,0,minP*2);
   rootNode->setPosition(asteroidPosition);
 }
 //---------------------------------------------------------------------------
@@ -33,11 +33,12 @@ void Asteroid::addToScene(int i){
   geom->setCastShadows(true);
 
   rootNode->attachObject(geom);
-  float scale = 15.0f;
+  float scale = 1.0f;
+
   rootNode->setScale(Ogre::Vector3(scale,scale,scale));
 
   mass = 1.0f;
-  shape = new btSphereShape(15.0f);
+  shape = new btSphereShape(scale*10);
 }
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
