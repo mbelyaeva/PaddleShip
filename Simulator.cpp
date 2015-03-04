@@ -31,8 +31,8 @@ void Simulator::addObject (GameObject* o)
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)
 {
     dynamicsWorld->stepSimulation(elapsedTime, maxSubSteps, fixedTimestep);
-    /*for (unsigned int i = 0; i < objList.size(); i++)
-        objList[i]->update();*/
+    for (unsigned int i = 0; i < objList.size(); i++)
+        objList[i]->update();
 }
 
 /*void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)
