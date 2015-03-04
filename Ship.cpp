@@ -13,16 +13,16 @@ Ship::~Ship(void)
 //---------------------------------------------------------------------------
 void Ship::addToScene(void)
 {
-	geom = sceneMgr->createEntity("shipEnt", "rocket.mesh"); //geom = sceneMgr->createEntity("shipEntity", "sphere.mesh");
+	geom = sceneMgr->createEntity("shipEnt", "sphere.mesh"/*"rocket.mesh"*/);
 	geom->setCastShadows(true);
 	//geom->setMaterialName("Examples/Rockwall");
 	//rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("rootNode", Ogre::Vector3(0, 0, 0));
 	rootNode->attachObject(geom);
-	int scale = 1.0f;
-	rootNode->setScale(Ogre::Vector3(scale,scale,-scale));
+	float scale = 0.05f;//1.0f;
+	rootNode->setScale(Ogre::Vector3(scale,scale,/*-*/scale));
 
 	mass = 0.0f;
-	shape = new btSphereShape(scale);
+	shape = new btSphereShape(5.0f);
 
 }
 //---------------------------------------------------------------------------

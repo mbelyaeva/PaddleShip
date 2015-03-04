@@ -37,8 +37,22 @@ void Asteroid::addToScene(int i){
 
   rootNode->setScale(Ogre::Vector3(scale,scale,scale));
 
-  mass = 1.0f;
-  shape = new btSphereShape(scale*10);
+  if ((i%3)+1 == 1) //asteroid1.mesh
+  {
+    mass = scale;
+    shape = new btSphereShape(scale*5);
+  }
+  else if ((i%3)+1 == 2) //asteroid2.mesh
+  {
+    mass = scale * 1.2;
+    shape = new btSphereShape(scale*6);
+  }
+  else //asteroid3.mesh
+  {
+    mass = scale * 3;
+    shape = new btSphereShape(scale*9);
+  }
+  
 }
 //---------------------------------------------------------------------------
 void Asteroid::update(void){

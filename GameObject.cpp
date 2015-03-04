@@ -16,7 +16,7 @@ GameObject::GameObject(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim
     motionState = NULL;
     body = NULL;
     restitution = 1.0f;
-    friction = 0.0f;
+    friction = 0.5f;
     kinematic = false;
     needsUpdates = false;
 
@@ -46,7 +46,8 @@ void GameObject::addToSimulator()
     //rigidbody is dynamic if and only if mass is non zero, otherwise static
     if (mass != 0.0f) shape->calculateLocalInertia(mass, inertia);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, inertia);
-    rbInfo.m_restitution = this->restitution;
+    rbInfo.m_restitution = restitution;
+    rbInfo.m_friction = friction;
     body = new btRigidBody(rbInfo);
     
     //context/ccallback
