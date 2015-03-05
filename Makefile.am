@@ -8,5 +8,8 @@ PaddleShip_CXXFLAGS= $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 PaddleShip_LDADD= $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 PaddleShip_LDFLAGS= -lOgreOverlay -lboost_system
 
+OgreApp_CXXFLAGS= $(OGRE_CFLAGS) $(OIS_CFLAGS) $(CEGUI_CFLAGS)
+OgreApp_LDADD= $(OGRE_LIBS) $(OIS_LIBS) $(CEGUI_LIBS) $(CEGUI_OGRE_LIBS)
+
 EXTRA_DIST= buildit makeit
 AUTOMAKE_OPTIONS= foreign
