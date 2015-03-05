@@ -22,8 +22,8 @@ void Ship::addToScene(void)
 	geom = sceneMgr->createEntity("shipEnt", "rocket.mesh");
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
-	float scale = 1.0f;
-	rootNode->setScale(Ogre::Vector3(scale,scale,scale));
+
+	//rootNode->setScale(Ogre::Vector3(1,1,-1));
 
 	mass = 0.0f; //kinematic
 	shape = new btCapsuleShapeZ(3.0f, 15.0f);
