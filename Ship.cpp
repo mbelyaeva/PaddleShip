@@ -20,7 +20,7 @@ void Ship::addToScene(void)
 	rootNode->setScale(Ogre::Vector3(scale,scale,-scale));
 
 	mass = 0.0f; //kinematic
-	shape = new btCapsuleShape(5.0f, 25.0f);
+	shape = new btCapsuleShapeZ(3.0f, 15.0f);
 
 }
 //---------------------------------------------------------------------------

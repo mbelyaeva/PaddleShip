@@ -4,7 +4,7 @@
 GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode)
 {
 	mSceneMgr = sceneMgr;
-	sim = new Simulator();
+	sim = new Simulator(sceneMgr);
 	ship = new Ship("Ship", sceneMgr, sim, cameraNode);
 	ast1 = new AsteroidSys(sceneMgr, sim);
 	

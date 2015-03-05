@@ -4,6 +4,7 @@
 #include <Ogre.h>
 #include "BulletContactCallback.h"
 #include "GameObject.h"
+#include "DebugDraw.hpp"
 
 class Simulator {
 protected:
@@ -15,8 +16,10 @@ protected:
 	btConstraintSolver* mConstraintsolver;
 	Ogre::SceneManager* sceneMgr;
 	std::deque<GameObject*> objList;
+
+	CDebugDraw* mDebugDrawer;
 public:
-	Simulator();
+	Simulator(Ogre::SceneManager* mgr);
 	~Simulator();
 
 	void addObject(GameObject* o);

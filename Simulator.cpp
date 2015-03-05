@@ -1,6 +1,6 @@
 #include "Simulator.h"
 
-Simulator::Simulator()
+Simulator::Simulator(Ogre::SceneManager* mgr)
 {
     ///collision configuration contains default setup for memory, collision setup.
     collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -15,6 +15,10 @@ Simulator::Simulator()
     //keep track of the shapes, we release memory at exit.
     //make sure to re-use collision shapes among rigid bodies whenever possible!
     btAlignedObjectArray<btCollisionShape*> collisionShapes;
+
+    sceneMgr = mgr;
+    mDebugDrawer = new CDebugDraw(mgr, dynamicsWorld);
+    dynamicsWorld->setDebugDrawer(mDebugDrawer);
 }
 
 Simulator::~Simulator()
@@ -33,6 +37,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
     dynamicsWorld->stepSimulation(elapsedTime, maxSubSteps, fixedTimestep);
     for (unsigned int i = 0; i < objList.size(); i++)
         objList[i]->update();
+    mDebugDrawer->Update();
 }
 
 /*void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)
