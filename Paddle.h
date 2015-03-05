@@ -1,5 +1,5 @@
-#ifndef __Ship_h_
-#define __Ship_h_
+#ifndef __Paddle_h_
+#define __Paddle_h_
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #  include <OIS/OISEvents.h>
@@ -10,30 +10,27 @@
 #endif
 
 #include "GameObject.h"
-#include "Paddle.h"
 
 //---------------------------------------------------------------------------
 
-class Ship: public GameObject 
+class Paddle: public GameObject 
 {
 public:
-	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam);
-	~Ship(void);
+	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* shipNode);
+	~Paddle(void);
 	void addToScene(void);
-	void addToSimulator(void);
 	void update(void);
 
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
 
 protected:
-	Ogre::SceneNode* cameraNode;
-	Ogre::Vector3 velocity;
-	Paddle* paddle;
+	Ogre::SceneNode* mShipNode;
+
 };
 
 //---------------------------------------------------------------------------
 
-#endif // #ifndef __Ship_h_
+#endif // #ifndef __Paddle_h_
 
 //---------------------------------------------------------------------------
