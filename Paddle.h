@@ -19,6 +19,7 @@ public:
 	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* shipNode);
 	~Paddle(void);
 	void addToScene(void);
+	void addToSimulator(void);
 	void update(void);
 
 	void injectKeyDown(const OIS::KeyEvent &arg);

@@ -21,12 +21,19 @@ void Paddle::addToScene(void)
 	rootNode->attachObject(geom);
 	
 
-	mass = 0.0f; //kinematic
+	mass = 1.0f;
 	shape = new btBoxShape(btVector3(5,4,1));
 
 
 
 
+}
+//---------------------------------------------------------------------------
+void Paddle::addToSimulator(void)
+{
+	GameObject::addToSimulator();
+
+	body->setLinearFactor(btVector3(0,1,1));
 }
 //---------------------------------------------------------------------------
 void Paddle::update(void)

@@ -25,7 +25,7 @@ void Ship::addToScene(void)
 
 	//rootNode->setScale(Ogre::Vector3(1,1,-1));
 
-	mass = 0.0f; //kinematic
+	mass = 3.0f; //kinematic
 	shape = new btCapsuleShapeZ(3.0f, 15.0f);
 
 	paddle->addToScene();
@@ -35,6 +35,9 @@ void Ship::addToSimulator(void)
 {
 	GameObject::addToSimulator();
 	paddle->addToSimulator();
+
+	body->setLinearFactor(btVector3(1,0,0));
+	body->setAngularFactor(btVector3(0,0,0));
 }
 //---------------------------------------------------------------------------
 void Ship::update(void)
