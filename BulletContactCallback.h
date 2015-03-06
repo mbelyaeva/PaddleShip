@@ -56,8 +56,11 @@ struct BulletContactCallback : public btCollisionWorld::ContactResultCallback {
 	
 	//! Called with each contact for your own processing
 	virtual btScalar addSingleResult(btManifoldPoint& cp,
-		const btCollisionObject* colObj0, int partId0, int index0,
-		const btCollisionObject* colObj1, int partId1, int index1) {
+		const btCollisionObjectWrapper* w1, int partId0, int index0,
+		const btCollisionObjectWrapper* w2, int partId1, int index1) {
+
+		const btCollisionObject* colObj0 = w1->m_collisionObject;
+		const btCollisionObject* colObj1 = w2->m_collisionObject;
 
 		ctxt.hit = true;
 		ctxt.lastBody = ctxt.body;

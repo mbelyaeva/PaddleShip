@@ -1,6 +1,9 @@
 #ifndef __OgreMotionState_h_
 #define __OgreMotionState_h_
 
+#include <btBulletDynamicsCommon.h>
+#include <Ogre.h>
+
 class OgreMotionState : public btMotionState {
 protected:
 	Ogre::SceneNode* mVisibleobj;

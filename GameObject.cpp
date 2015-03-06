@@ -50,7 +50,8 @@ void GameObject::addToSimulator()
     rbInfo.m_friction = friction;
     body = new btRigidBody(rbInfo);
     
-    //context/ccallback
+    context = new CollisionContext();
+    cCallBack = new BulletContactCallback(*body, *context);
 
     simulator->addObject(this);
     

@@ -1,9 +1,10 @@
 #ifndef __GameObject_h_
 #define __GameObject_h_
 
+#include <btBulletDynamicsCommon.h>
+#include "OgreMotionState.h"
 #include <Ogre.h>
 #include "BulletContactCallback.h"
-#include "OgreMotionState.h"
 
 class Simulator;
 
