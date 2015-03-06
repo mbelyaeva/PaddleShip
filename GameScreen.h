@@ -33,6 +33,8 @@ protected:
 	btHingeConstraint* paddleHinge;
 	AsteroidSys* ast1;
 
+	bool motorRight;
+
 
 };
 

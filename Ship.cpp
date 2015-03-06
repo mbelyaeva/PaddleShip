@@ -36,11 +36,11 @@ void Ship::addToSimulator(void)
 //---------------------------------------------------------------------------
 void Ship::update(void)
 {
-	if (left) {
-		body->applyCentralForce(btVector3(100,0,0));
+	if (left && body->getLinearVelocity().getX() < 250) {
+		body->applyCentralForce(btVector3(1000,0,0));
 	}
-	if (right) {
-		body->applyCentralForce(btVector3(-100,0,0));
+	if (right && body->getLinearVelocity().getX() > -250) {
+		body->applyCentralForce(btVector3(-1000,0,0));
 	}
 }
 //---------------------------------------------------------------------------

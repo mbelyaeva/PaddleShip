@@ -8,6 +8,8 @@ GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode
 	ship = new Ship("Ship", sceneMgr, sim, cameraNode);
 	paddle = new Paddle("paddle", sceneMgr, sim, NULL); //change later
 	ast1 = new AsteroidSys(sceneMgr, sim);
+
+	motorRight = true;
 	
 }
 //---------------------------------------------------------------------------
@@ -33,6 +35,7 @@ void GameScreen::createScene(void)
 
 	paddleHinge = new btHingeConstraint(*ship->getBody(), *paddle->getBody(), btVector3(0,0,5), btVector3(8.25,0,-5), btVector3(0,1,0), btVector3(0,1,0));
 	paddleHinge->setLimit(-M_PI, 0);
+	paddleHinge->enableAngularMotor(true, 100, 100);
 
 	sim->getDynamicsWorld()->addConstraint(paddleHinge, true);
 
@@ -50,6 +53,14 @@ void GameScreen::update(const Ogre::FrameEvent &evt)
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 {
+	if (arg.key == OIS::KC_SPACE){
+		if (motorRight)
+			paddleHinge->enableAngularMotor(true, -100, 1000);
+		else
+			paddleHinge->enableAngularMotor(true, 100, 1000);
+		motorRight = !motorRight;
+	}
+
 	ship->injectKeyDown(arg);
 	paddle->injectKeyDown(arg);
 }
