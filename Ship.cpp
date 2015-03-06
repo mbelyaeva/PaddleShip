@@ -5,16 +5,15 @@
 Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam) : GameObject(nym, mgr, sim)
 {
 	cameraNode = cam;
-	velocity = Ogre::Vector3(0.0f, 0.0f, 0.0f);
-	rootNode->getParent()->removeChild(rootNode);
-	cameraNode->addChild(rootNode);
-	//rootNode->yaw(Ogre::Radian(M_PI));
-	paddle = new Paddle("paddle", mgr, sim, rootNode);
+	//rootNode->getParent()->removeChild(rootNode);
+	//cameraNode->addChild(rootNode);
+	rootNode = cameraNode;
+	left = false;
+	right = false;
 }
 //---------------------------------------------------------------------------
 Ship::~Ship(void)
 {
-	delete paddle;
 }
 //---------------------------------------------------------------------------
 void Ship::addToScene(void)
@@ -23,18 +22,13 @@ void Ship::addToScene(void)
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
 
-	//rootNode->setScale(Ogre::Vector3(1,1,-1));
-
-	mass = 3.0f; //kinematic
+	mass = 3.0f;
 	shape = new btCapsuleShapeZ(3.0f, 15.0f);
-
-	paddle->addToScene();
 }
 //---------------------------------------------------------------------------
 void Ship::addToSimulator(void)
 {
 	GameObject::addToSimulator();
-	paddle->addToSimulator();
 
 	body->setLinearFactor(btVector3(1,0,0));
 	body->setAngularFactor(btVector3(0,0,0));
@@ -42,30 +36,32 @@ void Ship::addToSimulator(void)
 //---------------------------------------------------------------------------
 void Ship::update(void)
 {
-	//rootNode->translate(velocity);
-	//GameObject::update();
-	paddle->update();
+	if (left) {
+		body->applyCentralForce(btVector3(100,0,0));
+	}
+	if (right) {
+		body->applyCentralForce(btVector3(-100,0,0));
+	}
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyDown(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_A){
-		velocity += Ogre::Vector3(-2.0f, 0.0f, 0.0f);
+		left = true;
+		
 	}
 	if (arg.key == OIS::KC_D){
-		velocity += Ogre::Vector3(2.0f, 0.0f, 0.0f);
+		right = true;
 	}
-	paddle->injectKeyDown(arg);
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyUp(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_A){
-		velocity -= Ogre::Vector3(-2.0f, 0.0f, 0.0f);
+		left = false;
 	}
 	if (arg.key == OIS::KC_D){
-		velocity -= Ogre::Vector3(2.0f, 0.0f, 0.0f);
+		right = false;
 	}
-	paddle->injectKeyUp(arg);
 }
 //---------------------------------------------------------------------------

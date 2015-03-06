@@ -4,8 +4,8 @@
 Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* shipNode) : GameObject(nym, mgr, sim)
 {
 	mShipNode = shipNode;
-	rootNode->getParent()->removeChild(rootNode);
-	shipNode->addChild(rootNode);
+	//rootNode->getParent()->removeChild(rootNode);
+	//shipNode->addChild(rootNode);
 	rootNode->setPosition(Ogre::Vector3(-8.25f, 0.0f, 10.0f));
 
 }

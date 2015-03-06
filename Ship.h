@@ -10,7 +10,6 @@
 #endif
 
 #include "GameObject.h"
-#include "Paddle.h"
 
 //---------------------------------------------------------------------------
 
@@ -28,8 +27,8 @@ public:
 
 protected:
 	Ogre::SceneNode* cameraNode;
-	Ogre::Vector3 velocity;
-	Paddle* paddle;
+	bool left;
+	bool right;
 };
 
 //---------------------------------------------------------------------------

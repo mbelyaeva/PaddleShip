@@ -6,6 +6,7 @@
 #include "Ship.h"
 #include "AsteroidSys.h"
 #include "Simulator.h"
+#include "Paddle.h"
 
 //---------------------------------------------------------------------------
 
@@ -28,6 +29,8 @@ protected:
 
 	Simulator* sim;
 	Ship* ship;
+	Paddle* paddle;
+	btHingeConstraint* paddleHinge;
 	AsteroidSys* ast1;
 
 
