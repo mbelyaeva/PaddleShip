@@ -5,17 +5,23 @@
 //---------------------------------------------------------------------------
 Asteroid::Asteroid(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim) : GameObject(nym, mgr, sim)
 {
-  float minV = -20;
-  float maxV = -30;
+  float minV = -250;
+  float maxV = -200;
   Ogre::Real zV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
-  minV = -3;
-  maxV = 3;
+  minV = -60;
+  maxV = 60;
   Ogre::Real xV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
   asteroidVelocity = Ogre::Vector3(xV,0,zV);
-  float minP = -40;
-  float maxP = 40;
+  float minP = -600;
+  float maxP = 600;
   Ogre::Real xP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
-  asteroidPosition = Ogre::Vector3(xP,0,maxP*2);
+  minP = 950;
+  maxP = 800;
+  Ogre::Real zP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
+  minP = -25;
+  maxP = 25;
+  Ogre::Real yP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
+  asteroidPosition = Ogre::Vector3(xP,yP,zP);
   rootNode->setPosition(asteroidPosition);
 }
 //---------------------------------------------------------------------------
@@ -63,22 +69,28 @@ void Asteroid::addToScene(int i){
 //---------------------------------------------------------------------------
 void Asteroid::update(void){
   asteroidPosition = rootNode->getPosition();
-  if (asteroidPosition.x >= 100 || asteroidPosition.y >= 100 || asteroidPosition.z >= 100 || asteroidPosition.x <= -100 || asteroidPosition.y <= -100 || asteroidPosition.z <= -100) {
+  if (asteroidPosition.x >= 850 || asteroidPosition.y >= 75 || asteroidPosition.z >= 1200 || asteroidPosition.x <= -850 || asteroidPosition.y <= -75 || asteroidPosition.z <= -100) {
     printf("OUT OF BOUNDS\n");
-    float minV = -20;
-    float maxV = -30;
+    float minV = -250;
+    float maxV = -200;
     printf("About to do random z velocity\n");
     Ogre::Real zV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
-    minV = -3;
-    maxV = 3;
+    minV = -30;
+    maxV = 30;
     printf("About to do random x velocity\n");
     Ogre::Real xV = minV + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxV-minV)));
     printf("about to store velocity in asteroidVelocity\n");
     asteroidVelocity = Ogre::Vector3(xV,0,zV);
-    float minP = -40;
-    float maxP = 40;
+    float minP = -600;
+    float maxP = 600;
     Ogre::Real xP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
-    asteroidPosition = Ogre::Vector3(xP,0,maxP);
+    minP = 950;
+    maxP = 800;
+    Ogre::Real zP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
+    minP = -25;
+    maxP = 25;
+    Ogre::Real yP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
+    asteroidPosition = Ogre::Vector3(xP,yP,zP);
     printf("root node about to reset position\n");
     rootNode->setPosition(asteroidPosition);
     printf("dynamicsWorld about to remove rigid body\n");

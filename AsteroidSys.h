@@ -15,7 +15,7 @@ public:
 	void addToScene(void);
 	void addToSimulator(btDiscreteDynamicsWorld* dynamicsWorld);
 protected:
-	Asteroid * asteroidSystem [5];
+	Asteroid * asteroidSystem [500];
 };
 
 //---------------------------------------------------------------------------
