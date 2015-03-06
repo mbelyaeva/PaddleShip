@@ -46,21 +46,21 @@ void Ship::update(void)
 //---------------------------------------------------------------------------
 void Ship::injectKeyDown(const OIS::KeyEvent &arg)
 {
-	if (arg.key == OIS::KC_A){
+	if (arg.key == OIS::KC_Q){
 		left = true;
 		
 	}
-	if (arg.key == OIS::KC_D){
+	if (arg.key == OIS::KC_E){
 		right = true;
 	}
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyUp(const OIS::KeyEvent &arg)
 {
-	if (arg.key == OIS::KC_A){
+	if (arg.key == OIS::KC_Q){
 		left = false;
 	}
-	if (arg.key == OIS::KC_D){
+	if (arg.key == OIS::KC_E){
 		right = false;
 	}
 }

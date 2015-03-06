@@ -33,7 +33,7 @@ void Paddle::addToSimulator(void)
 {
 	GameObject::addToSimulator();
 
-	body->setLinearFactor(btVector3(0,1,1));
+	body->setLinearFactor(btVector3(1,0,1));
 }
 //---------------------------------------------------------------------------
 void Paddle::update(void)

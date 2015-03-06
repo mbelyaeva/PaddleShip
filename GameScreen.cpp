@@ -31,9 +31,10 @@ void GameScreen::createScene(void)
 	paddle->addToScene();
 	paddle->addToSimulator();
 
-	//paddleHinge = new btHingeConstraint(*ship->getBody(), *paddle->getBody(), btVector3(0,0,-5), btVector3(-8.25f, 0.0f, 10.0f), btVector3(0,1,0), btVector3(0,1,0));
-	//paddleHinge->setDbgDrawSize(btScalar(50.f));
-	//sim->getDynamicsWorld()->addConstraint(paddleHinge, true);
+	paddleHinge = new btHingeConstraint(*ship->getBody(), *paddle->getBody(), btVector3(0,0,5), btVector3(8.25,0,-5), btVector3(0,1,0), btVector3(0,1,0));
+	paddleHinge->setLimit(-M_PI, 0);
+
+	sim->getDynamicsWorld()->addConstraint(paddleHinge, true);
 
     //asteroid particle system
     ast1->addToScene();

@@ -50,7 +50,7 @@ void Game::createCamera(void)
     mCamera->setNearClipDistance(5);
  
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
-    mCameraMan->setStyle(CS_MANUAL);
+    //mCameraMan->setStyle(CS_MANUAL);
 }
 //---------------------------------------------------------------------------
 void Game::createViewports(void)
