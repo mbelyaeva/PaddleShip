@@ -40,6 +40,10 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
     mDebugDrawer->Update();
 }
 
+btDiscreteDynamicsWorld* Simulator::getDynamicsWorld() {
+    return dynamicsWorld;
+}
+
 /*void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)
 {
     for (int i = 0; i != objList.size(); i++) idList[i] = 0;

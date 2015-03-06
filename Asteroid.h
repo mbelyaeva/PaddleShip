@@ -17,10 +17,14 @@ public:
 	void addToScene(int i);
 	void update(void);
 	void addToSimulator(void);
+	void setDynamicsWorld( btDiscreteDynamicsWorld* world);
 
 protected:
 	Ogre::Vector3 asteroidVelocity;
 	Ogre::Vector3 asteroidPosition;
+	btDiscreteDynamicsWorld* dynamicsWorld;
+	float sphereSize;
+	float massVal;
 };
 
 //---------------------------------------------------------------------------

@@ -31,9 +31,10 @@ void AsteroidSys::addToScene(void){
   }
 }
 //---------------------------------------------------------------------------
-void AsteroidSys::addToSimulator(void){
+void AsteroidSys::addToSimulator(btDiscreteDynamicsWorld* dynamicsWorld){
   for (int i=0; i <5; i++) {
     asteroidSystem[i]-> addToSimulator();
+    asteroidSystem[i]-> setDynamicsWorld(dynamicsWorld);
   }
 }
 //---------------------------------------------------------------------------
