@@ -13,7 +13,7 @@ public:
 	virtual ~AsteroidSys(void);
 	void update(void);
 	void addToScene(void);
-	void addToSimulator(void);
+	void addToSimulator(btDiscreteDynamicsWorld* dynamicsWorld);
 protected:
 	Asteroid * asteroidSystem [5];
 };
