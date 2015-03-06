@@ -24,35 +24,9 @@ http://www.ogre3d.org/wiki/
 #include <macUtils.h>
 #endif
 
-/*
-gejrio[gwer
-gerherg
-jnfsia;oghi;oher
-fvighoioe
-fsjndosial;ghwerigower
-jdi;oghweri'pghtwer
-ij;gehrbg'wea
-]*/
 
 
-//---------------------------------------------------------------------------
-CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID)
-{
-    switch (buttonID)
-    {
-    case OIS::MB_Left:
-        return CEGUI::LeftButton;
- 
-    case OIS::MB_Right:
-        return CEGUI::RightButton;
- 
-    case OIS::MB_Middle:
-        return CEGUI::MiddleButton;
- 
-    default:
-        return CEGUI::LeftButton;
-    }
-}
+
 //---------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
     : mRoot(0),
@@ -91,6 +65,24 @@ BaseApplication::~BaseApplication(void)
     delete mRoot;
 }
 
+//---------------------------------------------------------------------------
+CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID)
+{
+    switch (buttonID)
+    {
+    case OIS::MB_Left:
+        return CEGUI::LeftButton;
+ 
+    case OIS::MB_Right:
+        return CEGUI::RightButton;
+ 
+    case OIS::MB_Middle:
+        return CEGUI::MiddleButton;
+ 
+    default:
+        return CEGUI::LeftButton;
+    }
+}
 //---------------------------------------------------------------------------
 bool BaseApplication::configure(void)
 {
