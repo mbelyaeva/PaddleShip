@@ -12,12 +12,15 @@ public:
 	void playPaddleSwing();
 	void playScore();
 	void playShipHit();
+	void soundOn();
+	void soundOff();
 
 protected:
 	Mix_Music *bgMusic;
 	Mix_Chunk *paddleSwing;
 	Mix_Chunk *score;
 	Mix_Chunk *shipHit;
+	bool mute;
 
 };
 

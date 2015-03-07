@@ -61,6 +61,12 @@ void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 		motorRight = !motorRight;
 		soundPlayer->playPaddleSwing();
 	}
+	if (arg.key == OIS::KC_M){
+		soundPlayer->soundOff();
+	}
+	if (arg.key == OIS::KC_N){
+		soundPlayer->soundOn();
+	}
 
 	ship->injectKeyDown(arg);
 	paddle->injectKeyDown(arg);

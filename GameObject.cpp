@@ -15,7 +15,7 @@ GameObject::GameObject(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim
     geom = NULL;
     motionState = NULL;
     body = NULL;
-    restitution = 1.0f;
+    restitution = 0.95f;
     friction = 0.5f;
     kinematic = false;
     needsUpdates = false;
