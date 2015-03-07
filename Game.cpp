@@ -81,7 +81,7 @@ void Game::createScene(void)
     //Lights
     Ogre::Light* pointLight = mSceneMgr->createLight("pointLight");
     pointLight->setType(Ogre::Light::LT_POINT);
-    pointLight->setPosition(Ogre::Vector3(0, 500, 250));
+    pointLight->setPosition(Ogre::Vector3(0, 500, -250));
  
     pointLight->setDiffuseColour(1.0, 1.0, 1.0);
     pointLight->setSpecularColour(1.0, 1.0, 1.0);
