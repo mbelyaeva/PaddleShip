@@ -44,13 +44,13 @@ void Game::createCamera(void)
     mCameraNode->attachObject(mCamera);
     mCameraNode->setPosition(Ogre::Vector3(0,0,0));
 
-    mCamera->setPosition(Ogre::Vector3(0,50,-50));
+    mCamera->setPosition(Ogre::Vector3(0,25,-40));
     mCamera->lookAt(Ogre::Vector3(0,0,25));
     // set the near clip distance
     mCamera->setNearClipDistance(5);
  
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
-    //mCameraMan->setStyle(CS_MANUAL);
+    mCameraMan->setStyle(CS_MANUAL);
 }
 //---------------------------------------------------------------------------
 void Game::createViewports(void)
@@ -77,80 +77,6 @@ void Game::createScene(void)
  
     //game screen
     gameScreen->createScene();
-
-    //sample stuff from old project
-    //ground
-    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, -750);
- 
-    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
- 
-    Ogre::Entity* entGround = mSceneMgr->createEntity("GroundEntity", "ground");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
- 
-    entGround->setMaterialName("Examples/Rockwall");
-    entGround->setCastShadows(false);
-
-    //ceiling
-    Ogre::Plane plane2(Ogre::Vector3(0,-1,0), -750);
- 
-    Ogre::MeshManager::getSingleton().createPlane("ceiling", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane2, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
- 
-    Ogre::Entity* entCeiling = mSceneMgr->createEntity("CeilingEntity", "ceiling");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entCeiling);
- 
-    entCeiling->setMaterialName("Examples/Rockwall");
-    entCeiling->setCastShadows(false);
-
-    //left wall
-    Ogre::Plane plane3(Ogre::Vector3(1,0,0), -750);
- 
-    Ogre::MeshManager::getSingleton().createPlane("lWall", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane3, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
- 
-    Ogre::Entity* entLWall = mSceneMgr->createEntity("lWallEntity", "lWall");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entLWall);
- 
-    entLWall->setMaterialName("Examples/Rockwall");
-    entLWall->setCastShadows(false);
-
-    //right wall
-    Ogre::Plane plane4(Ogre::Vector3(-1,0,0), -750);
- 
-    Ogre::MeshManager::getSingleton().createPlane("rWall", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane4, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
- 
-    Ogre::Entity* entRWall = mSceneMgr->createEntity("rWallEntity", "rWall");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entRWall);
- 
-    entRWall->setMaterialName("Examples/Rockwall");
-    entRWall->setCastShadows(false);
-
-    //back wall
-    Ogre::Plane plane5(Ogre::Vector3(0,0,1), -750);
- 
-    Ogre::MeshManager::getSingleton().createPlane("bWall", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane5, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
- 
-    Ogre::Entity* entBWall = mSceneMgr->createEntity("bWallEntity", "bWall");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entBWall);
- 
-    entBWall->setMaterialName("Examples/Rockwall");
-    entBWall->setCastShadows(false);
-
-    //front wall
-    Ogre::Plane plane6(Ogre::Vector3(0,0,-1), -750);
- 
-    Ogre::MeshManager::getSingleton().createPlane("fWall", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane6, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
- 
-    Ogre::Entity* entFWall = mSceneMgr->createEntity("fWallEntity", "fWall");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entFWall);
- 
-    entFWall->setMaterialName("Examples/Rockwall");
-    entFWall->setCastShadows(false);
-
 
     //Lights
     Ogre::Light* pointLight = mSceneMgr->createLight("pointLight");
