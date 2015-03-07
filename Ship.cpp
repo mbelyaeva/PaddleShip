@@ -2,7 +2,7 @@
 #include "Ship.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam) : GameObject(nym, mgr, sim)
+Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc) : GameObject(nym, mgr, sim), score(sc)
 {
 	cameraNode = cam;
 	//rootNode->getParent()->removeChild(rootNode);
@@ -45,13 +45,13 @@ void Ship::update(void)
 	}
 	if (context->hit){
 		//lose health
-		health-=1;
-		std::stringstream healthVal;
- 		healthVal << "" << health;
+		score-=1;
+		std::stringstream scoreVal;
+ 		scoreVal << "" << score;
  		if (mDetailsPanel==NULL) {
  	 		printf("mDetailsPanel is null ptr\n");
  	 	}
- 	 	mDetailsPanel->setParamValue(2, healthVal.str());
+ 	 	mDetailsPanel->setParamValue(0, scoreVal.str());
 		//play sound?
 	}
 }

@@ -17,7 +17,7 @@
 class Ship: public GameObject 
 {
 public:
-	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam);
+	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc);
 	~Ship(void);
 	void addToScene(void);
 	void addToSimulator(void);
@@ -33,6 +33,7 @@ protected:
 	int health; 
 	bool left;
 	bool right;
+	int &score;
 };
 
 //---------------------------------------------------------------------------

@@ -3,10 +3,11 @@
 //---------------------------------------------------------------------------
 GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode)
 {
+	score = 0;
 	mSceneMgr = sceneMgr;
 	sim = new Simulator(sceneMgr);
-	ship = new Ship("Ship", sceneMgr, sim, cameraNode);
-	paddle = new Paddle("paddle", sceneMgr, sim); 
+	ship = new Ship("Ship", sceneMgr, sim, cameraNode, score);
+	paddle = new Paddle("paddle", sceneMgr, sim, score); 
 	ast1 = new AsteroidSys(sceneMgr, sim, ship);
 
 	motorRight = true;

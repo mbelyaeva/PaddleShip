@@ -17,7 +17,7 @@
 class Paddle: public GameObject 
 {
 public:
-	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim);
+	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, int &sc);
 	~Paddle(void);
 	void addToScene(void);
 	void addToSimulator(void);
@@ -29,7 +29,7 @@ public:
 protected:
 	Ogre::SceneNode* mShipNode;
 	OgreBites::ParamsPanel* mDetailsPanel; 
-	int score;
+	int &score;
 };
 
 //---------------------------------------------------------------------------

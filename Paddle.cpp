@@ -1,12 +1,11 @@
 #include "Paddle.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim) : GameObject(nym, mgr, sim)
+Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, int &sc) : GameObject(nym, mgr, sim), score(sc)
 {
 	//rootNode->getParent()->removeChild(rootNode);
 	//shipNode->addChild(rootNode);
 	rootNode->setPosition(Ogre::Vector3(-8.25f, 0.0f, 10.0f));
-	score = 0;
 
 }
 //---------------------------------------------------------------------------
@@ -40,7 +39,7 @@ void Paddle::update(void)
 {
 	if (context->hit){
 		//increment score
-		score++;
+		score+=2;
 		std::stringstream numScore;
  	 	numScore << "" << score;
  	 	if (mDetailsPanel==NULL) {
