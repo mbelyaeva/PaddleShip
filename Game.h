@@ -3,6 +3,7 @@
 
 #include "BaseApplication.h"
 #include "GameScreen.h"
+#include "SoundPlayer.h"
 
 //---------------------------------------------------------------------------
 
@@ -28,6 +29,8 @@ protected:
   virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	GameScreen *gameScreen;
   Ogre::SceneNode *mCameraNode;
+  SoundPlayer *soundPlayer;
+
 };
 
 //---------------------------------------------------------------------------

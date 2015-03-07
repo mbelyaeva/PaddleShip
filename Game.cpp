@@ -70,12 +70,12 @@ void Game::createFrameListener(void){
 void Game::createScene(void)
 {
     gameScreen = new GameScreen(mSceneMgr, mCameraNode);
+    soundPlayer = new SoundPlayer();
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
     //game screen
     gameScreen->createScene();
-    
 
     //sample stuff from old project
     //ground
@@ -163,6 +163,7 @@ void Game::createScene(void)
 //---------------------------------------------------------------------------
 void Game::destroyScene(void){
     delete gameScreen;
+    delete soundPlayer;
     BaseApplication::destroyScene(); 
 }
 //---------------------------------------------------------------------------
