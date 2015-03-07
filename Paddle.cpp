@@ -39,7 +39,7 @@ void Paddle::update(void)
 {
 	if (context->hit){
 		//increment score
-		score+=2;
+		score+=1;
 		std::stringstream numScore;
  	 	numScore << "" << score;
  	 	if (mDetailsPanel==NULL) {

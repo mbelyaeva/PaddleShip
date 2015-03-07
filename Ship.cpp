@@ -45,7 +45,9 @@ void Ship::update(void)
 	}
 	if (context->hit){
 		//lose health
-		score-=1;
+		if (score > 0) {
+			score-=1;
+		}
 		std::stringstream scoreVal;
  		scoreVal << "" << score;
  		if (mDetailsPanel==NULL) {

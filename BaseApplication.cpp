@@ -160,7 +160,7 @@ void BaseApplication::createFrameListener(void)
     mDetailsPanel->setParamValue(0, "0");
     //mDetailsPanel->setParamValue(2, "100");
     // mDetailsPanel->setParamValue(10, "Solid");
-    mDetailsPanel->hide();
+    //mDetailsPanel->hide();
 
     mRoot->addFrameListener(this);
 }
@@ -320,6 +320,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mTrayMgr->toggleAdvancedFrameStats();
     }
+    /*
     else if (arg.key == OIS::KC_G)   // toggle visibility of even rarer debugging details
     {
         if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
@@ -333,6 +334,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             mDetailsPanel->hide();
         }
     }
+    */
     else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
     {
         Ogre::String newVal;
