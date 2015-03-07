@@ -10,10 +10,10 @@ SoundPlayer::SoundPlayer()
         }
 	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 
-	bgMusic = Mix_LoadMUS("sounds/bgMusic.wav");
+	/*bgMusic = Mix_LoadMUS("sounds/bgMusic.wav");
 	if(bgMusic == NULL) {
 		std::cout << Mix_GetError() << std::endl;
-	}
+	}*/
 	//Mix_PlayMusic(bgMusic, -1);
 
 	Mix_AllocateChannels(24);
@@ -27,7 +27,7 @@ SoundPlayer::SoundPlayer()
 
 void SoundPlayer::startBgMusic()
 {	
-	if (Mix_PlayingMusic() == 0) {
+	/*if (Mix_PlayingMusic() == 0) {
 		int err = Mix_PlayMusic(bgMusic, -1);
 		if (err == -1){
             std::cout << SDL_GetError() << std::endl;
@@ -36,7 +36,7 @@ void SoundPlayer::startBgMusic()
 		Mix_ResumeMusic();
 	} else {
 		Mix_PauseMusic();
-	}
+	}*/
 }
 
 void SoundPlayer::playPaddleSwing()
