@@ -64,6 +64,7 @@ void Game::createViewports(void)
 //---------------------------------------------------------------------------
 void Game::createFrameListener(void){
     BaseApplication::createFrameListener();
+    gameScreen->setDeetsPan(mDetailsPanel);
 }
 //---------------------------------------------------------------------------
 void Game::createScene(void)

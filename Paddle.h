@@ -10,24 +10,26 @@
 #endif
 
 #include "GameObject.h"
+#include <SdkTrays.h>
 
 //---------------------------------------------------------------------------
 
 class Paddle: public GameObject 
 {
 public:
-	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* shipNode);
+	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim);
 	~Paddle(void);
 	void addToScene(void);
 	void addToSimulator(void);
 	void update(void);
-
+	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
 
 protected:
 	Ogre::SceneNode* mShipNode;
-
+	OgreBites::ParamsPanel* mDetailsPanel; 
+	int score;
 };
 
 //---------------------------------------------------------------------------

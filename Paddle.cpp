@@ -1,12 +1,12 @@
 #include "Paddle.h"
-
+#include <iostream>
 //---------------------------------------------------------------------------
-Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* shipNode) : GameObject(nym, mgr, sim)
+Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim) : GameObject(nym, mgr, sim)
 {
-	mShipNode = shipNode;
 	//rootNode->getParent()->removeChild(rootNode);
 	//shipNode->addChild(rootNode);
 	rootNode->setPosition(Ogre::Vector3(-8.25f, 0.0f, 10.0f));
+	score = 0;
 
 }
 //---------------------------------------------------------------------------
@@ -40,6 +40,13 @@ void Paddle::update(void)
 {
 	if (context->hit){
 		//increment score
+		score++;
+		std::stringstream numScore;
+ 	 	numScore << "" << score;
+ 	 	if (mDetailsPanel==NULL) {
+ 	 		printf("mDetailsPanel is null ptr\n");
+ 	 	}
+ 	 	mDetailsPanel->setParamValue(0, numScore.str());
 		//play sound?
 	}
 }
@@ -52,5 +59,10 @@ void Paddle::injectKeyDown(const OIS::KeyEvent &arg)
 void Paddle::injectKeyUp(const OIS::KeyEvent &arg)
 {
 
+}
+//---------------------------------------------------------------------------
+void Paddle::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
+{
+	mDetailsPanel = mDeetsPan;
 }
 //---------------------------------------------------------------------------

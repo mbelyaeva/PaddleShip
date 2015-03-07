@@ -1,6 +1,6 @@
 #include <OgreMath.h>
 #include "Ship.h"
-
+#include <iostream>
 //---------------------------------------------------------------------------
 Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam) : GameObject(nym, mgr, sim)
 {
@@ -8,6 +8,7 @@ Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::Scen
 	//rootNode->getParent()->removeChild(rootNode);
 	//cameraNode->addChild(rootNode);
 	rootNode = cameraNode;
+	health = 100;
 	left = false;
 	right = false;
 }
@@ -44,6 +45,13 @@ void Ship::update(void)
 	}
 	if (context->hit){
 		//lose health
+		health-=1;
+		std::stringstream healthVal;
+ 		healthVal << "" << health;
+ 		if (mDetailsPanel==NULL) {
+ 	 		printf("mDetailsPanel is null ptr\n");
+ 	 	}
+ 	 	mDetailsPanel->setParamValue(2, healthVal.str());
 		//play sound?
 	}
 }
@@ -67,5 +75,10 @@ void Ship::injectKeyUp(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_E){
 		right = false;
 	}
+}
+//---------------------------------------------------------------------------
+void Ship::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
+{
+	mDetailsPanel = mDeetsPan;
 }
 //---------------------------------------------------------------------------

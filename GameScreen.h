@@ -17,7 +17,7 @@ public:
 	virtual ~GameScreen(void);
 	void createScene(void);
 	void update(const Ogre::FrameEvent &evt);
-
+	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
 	void injectMouseMove(const OIS::MouseEvent &arg);
@@ -32,7 +32,6 @@ protected:
 	Paddle* paddle;
 	btHingeConstraint* paddleHinge;
 	AsteroidSys* ast1;
-
 	bool motorRight;
 
 

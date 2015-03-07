@@ -10,6 +10,7 @@
 #endif
 
 #include "GameObject.h"
+#include <SdkTrays.h>
 
 //---------------------------------------------------------------------------
 
@@ -21,12 +22,14 @@ public:
 	void addToScene(void);
 	void addToSimulator(void);
 	void update(void);
-
+	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
 
 protected:
 	Ogre::SceneNode* cameraNode;
+	OgreBites::ParamsPanel* mDetailsPanel;
+	int health; 
 	bool left;
 	bool right;
 };

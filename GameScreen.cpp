@@ -6,7 +6,7 @@ GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode
 	mSceneMgr = sceneMgr;
 	sim = new Simulator(sceneMgr);
 	ship = new Ship("Ship", sceneMgr, sim, cameraNode);
-	paddle = new Paddle("paddle", sceneMgr, sim, NULL); //change later
+	paddle = new Paddle("paddle", sceneMgr, sim); 
 	ast1 = new AsteroidSys(sceneMgr, sim);
 
 	motorRight = true;
@@ -82,3 +82,11 @@ void GameScreen::injectMouseDown(const OIS::MouseEvent &arg, OIS::MouseButtonID 
 void GameScreen::injectMouseUp(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
 }
+//---------------------------------------------------------------------------
+void GameScreen::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
+{
+	//mDetailsPanel = mDeetsPan;
+	ship->setDeetsPan(mDeetsPan);
+	paddle->setDeetsPan(mDeetsPan);
+}
+//---------------------------------------------------------------------------
