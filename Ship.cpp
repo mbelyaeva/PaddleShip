@@ -42,6 +42,10 @@ void Ship::update(void)
 	if (right && body->getLinearVelocity().getX() > -250) {
 		body->applyCentralForce(btVector3(-1000,0,0));
 	}
+	if (context->hit){
+		//lose health
+		//play sound?
+	}
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyDown(const OIS::KeyEvent &arg)

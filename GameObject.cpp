@@ -65,3 +65,8 @@ btRigidBody* GameObject::getBody()
 void GameObject::update()
 {
 }
+
+BulletContactCallback* GameObject::getCollisionCallback()
+{
+    return cCallBack;
+}

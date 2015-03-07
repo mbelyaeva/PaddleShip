@@ -16,6 +16,7 @@ public:
     virtual void addToSimulator();
     btRigidBody* getBody();
     virtual void update();
+    BulletContactCallback* getCollisionCallback();
 
 
 protected:

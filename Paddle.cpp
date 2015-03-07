@@ -38,9 +38,10 @@ void Paddle::addToSimulator(void)
 //---------------------------------------------------------------------------
 void Paddle::update(void)
 {
-	//body->setLinearVelocity( btVector3(1, 1, 0) );
-	//rootNode->translate(velocity);
-	//GameObject::update();
+	if (context->hit){
+		//increment score
+		//play sound?
+	}
 }
 //---------------------------------------------------------------------------
 void Paddle::injectKeyDown(const OIS::KeyEvent &arg)

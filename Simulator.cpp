@@ -35,6 +35,15 @@ void Simulator::addObject (GameObject* o)
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep)
 {
     dynamicsWorld->stepSimulation(elapsedTime, maxSubSteps, fixedTimestep);
+    
+    //collision call back
+    objList[0]->getCollisionCallback()->ctxt.hit = false;
+    objList[1]->getCollisionCallback()->ctxt.hit = false;
+    for (int i = 2; i < objList.size(); i++) {
+        dynamicsWorld->contactPairTest(objList[0]->getBody(), objList[i]->getBody(), *(objList[0]->getCollisionCallback()));
+        dynamicsWorld->contactPairTest(objList[1]->getBody(), objList[i]->getBody(), *(objList[1]->getCollisionCallback()));
+    }
+
     for (unsigned int i = 0; i < objList.size(); i++)
         objList[i]->update();
     mDebugDrawer->Update();
@@ -54,15 +63,16 @@ btDiscreteDynamicsWorld* Simulator::getDynamicsWorld() {
 
 /*bool Simulator::checkHit(int o)
 {
-    for (int i = idList[o]; i < objList.size(); i++) {
+    for (int i = 2; i < objList.size(); i++) {
         if (i != o) {
-            objList[o].gObject->context->hit = false;
-            dynamicsWorld->contactPairTest(objList[o].gObject->getBody(), objList[i].gObject->getBody(), objList[o]);
-            if (objList[o].gObject->context->hit) {
+            objList[o]->context.hit = false;
+            dynamicsWorld->contactPairTest(objList[o]->getBody(), objList[i]->getBody(), objList[o]);
+            if (objList[o]->context.hit) {
                 idList[o] = ++i;
                 return true;
             }
         }
     }
     return false;
-}*/
+}
+*/
