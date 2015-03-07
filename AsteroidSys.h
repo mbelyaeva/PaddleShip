@@ -9,7 +9,7 @@
 class AsteroidSys
 {
 public:
-	AsteroidSys(Ogre::SceneManager* mgr, Simulator* sim);
+	AsteroidSys(Ogre::SceneManager* mgr, Simulator* sim, Ship * sh);
 	virtual ~AsteroidSys(void);
 	void update(void);
 	void addToScene(void);

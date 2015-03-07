@@ -25,6 +25,7 @@ public:
 	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
+	Ogre::Vector3 getPos();
 
 protected:
 	Ogre::SceneNode* cameraNode;

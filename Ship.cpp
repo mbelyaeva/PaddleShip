@@ -82,3 +82,8 @@ void Ship::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 	mDetailsPanel = mDeetsPan;
 }
 //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+Ogre::Vector3 Ship::getPos()
+{
+	return rootNode->getPosition();
+}

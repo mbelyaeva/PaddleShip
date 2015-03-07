@@ -1,12 +1,12 @@
 #include "AsteroidSys.h"
 
 //---------------------------------------------------------------------------
-AsteroidSys::AsteroidSys(Ogre::SceneManager* mgr, Simulator* sim)
+AsteroidSys::AsteroidSys(Ogre::SceneManager* mgr, Simulator* sim, Ship * sh)
 {
   for (int i = 0; i < 500; i++) {
     std::stringstream nodeName;
     nodeName << "asteroidNode" << i;
-    asteroidSystem[i] = new Asteroid(nodeName.str(), mgr, sim);
+    asteroidSystem[i] = new Asteroid(nodeName.str(), mgr, sim, sh);
   }
 
 }
