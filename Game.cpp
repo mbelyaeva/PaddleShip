@@ -69,8 +69,9 @@ void Game::createFrameListener(void){
 //---------------------------------------------------------------------------
 void Game::createScene(void)
 {
-    gameScreen = new GameScreen(mSceneMgr, mCameraNode);
     soundPlayer = new SoundPlayer();
+    soundPlayer->startBgMusic();
+    gameScreen = new GameScreen(mSceneMgr, mCameraNode, soundPlayer);
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  

@@ -1,12 +1,10 @@
 #include "Paddle.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, int &sc) : GameObject(nym, mgr, sim), score(sc)
+Paddle::Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, int &sc, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), score(sc)
 {
-	//rootNode->getParent()->removeChild(rootNode);
-	//shipNode->addChild(rootNode);
 	rootNode->setPosition(Ogre::Vector3(-8.25f, 0.0f, 10.0f));
-
+	soundPlayer = sPlayer;
 }
 //---------------------------------------------------------------------------
 Paddle::~Paddle(void)
@@ -46,7 +44,7 @@ void Paddle::update(void)
  	 		printf("mDetailsPanel is null ptr\n");
  	 	}
  	 	mDetailsPanel->setParamValue(0, numScore.str());
-		//play sound?
+		soundPlayer->playScore();
 	}
 }
 //---------------------------------------------------------------------------

@@ -7,13 +7,14 @@
 #include "AsteroidSys.h"
 #include "Simulator.h"
 #include "Paddle.h"
+#include "SoundPlayer.h"
 
 //---------------------------------------------------------------------------
 
 class GameScreen
 {
 public:
-	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode);
+	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer);
 	virtual ~GameScreen(void);
 	void createScene(void);
 	void update(const Ogre::FrameEvent &evt);
@@ -26,6 +27,7 @@ public:
 
 protected:
 	Ogre::SceneManager* mSceneMgr;
+	SoundPlayer* soundPlayer;
 
 	Simulator* sim;
 	Ship* ship;
@@ -34,7 +36,6 @@ protected:
 	AsteroidSys* ast1;
 	bool motorRight;
 	int score;
-
 };
 
 //---------------------------------------------------------------------------

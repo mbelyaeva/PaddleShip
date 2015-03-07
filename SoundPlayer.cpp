@@ -1,28 +1,49 @@
+#include <iostream>
 #include "SoundPlayer.h"
 
 SoundPlayer::SoundPlayer()
 {
-	SDL_Init(SDL_INIT_AUDIO);
+	int sdlret = SDL_Init(SDL_INIT_AUDIO);
+        if(sdlret == -1){
+                std::cout << "SDL value: " << sdlret << std::endl;
+                std::cout << SDL_GetError();
+        }
 	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 
-	//bgMusic = Mix_LoadMUS("sounds/bgMusic.wav");
+	/*bgMusic = Mix_LoadMUS("sounds/bgMusic.wav");
+	if(bgMusic == NULL) {
+		std::cout << Mix_GetError() << std::endl;
+		exit(1);
+	}*/
 	//Mix_PlayMusic(bgMusic, -1);
 
 	Mix_AllocateChannels(24);
 
-	paddleSwing = Mix_LoadWAV("sounds/paddleSwing.mp3");
-	score = Mix_LoadWAV("sounds/score.mp3");
-	shipHit = Mix_LoadWAV("sounds/shipHit.mp3");
+	paddleSwing = Mix_LoadWAV("sounds/paddleSwing.wav");
+	score = Mix_LoadWAV("sounds/score.wav");
+	shipHit = Mix_LoadWAV("sounds/shipHit.wav");
 }
 
 void SoundPlayer::startBgMusic()
-{
+{	
+	/*if (Mix_PlayingMusic() == 0) {
+		int err = Mix_PlayMusic(bgMusic, -1);
+		if (err == -1){
+            std::cout << SDL_GetError() << std::endl;
+            exit(1);
+		}
+	} else if (Mix_PausedMusic() == 1) {
+		Mix_ResumeMusic();
+	} else {
+		Mix_PauseMusic();
+	}*/
 }
 
 void SoundPlayer::playPaddleSwing()
 {
-	if (Mix_Playing(1) == 0)
+	if (Mix_Playing(1) == 0){
 		Mix_PlayChannel(1, paddleSwing, 0);
+	}
 }
 void SoundPlayer::playScore()
 {

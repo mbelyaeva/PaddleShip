@@ -1,17 +1,16 @@
 #include "GameScreen.h"
 
 //---------------------------------------------------------------------------
-GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode)
+GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer)
 {
 	score = 0;
 	mSceneMgr = sceneMgr;
+	soundPlayer = sPlayer;
 	sim = new Simulator(sceneMgr);
-	ship = new Ship("Ship", sceneMgr, sim, cameraNode, score);
-	paddle = new Paddle("paddle", sceneMgr, sim, score); 
+	ship = new Ship("Ship", sceneMgr, sim, cameraNode, score, sPlayer);
+	paddle = new Paddle("paddle", sceneMgr, sim, score, sPlayer); 
 	ast1 = new AsteroidSys(sceneMgr, sim, ship);
-
 	motorRight = true;
-	
 }
 //---------------------------------------------------------------------------
 GameScreen::~GameScreen(void)
@@ -60,6 +59,7 @@ void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 		else
 			paddleHinge->enableAngularMotor(true, 100, 1000);
 		motorRight = !motorRight;
+		soundPlayer->playPaddleSwing();
 	}
 
 	ship->injectKeyDown(arg);

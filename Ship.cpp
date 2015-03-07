@@ -2,7 +2,7 @@
 #include "Ship.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc) : GameObject(nym, mgr, sim), score(sc)
+Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), score(sc)
 {
 	cameraNode = cam;
 	//rootNode->getParent()->removeChild(rootNode);
@@ -11,6 +11,7 @@ Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::Scen
 	health = 100;
 	left = false;
 	right = false;
+	soundPlayer = sPlayer;
 }
 //---------------------------------------------------------------------------
 Ship::~Ship(void)
@@ -54,7 +55,7 @@ void Ship::update(void)
  	 		printf("mDetailsPanel is null ptr\n");
  	 	}
  	 	mDetailsPanel->setParamValue(0, scoreVal.str());
-		//play sound?
+		soundPlayer->playShipHit();
 	}
 }
 //---------------------------------------------------------------------------

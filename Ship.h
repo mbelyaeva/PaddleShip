@@ -10,6 +10,7 @@
 #endif
 
 #include "GameObject.h"
+#include "SoundPlayer.h"
 #include <SdkTrays.h>
 
 //---------------------------------------------------------------------------
@@ -17,7 +18,7 @@
 class Ship: public GameObject 
 {
 public:
-	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc);
+	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc, SoundPlayer* sPlayer);
 	~Ship(void);
 	void addToScene(void);
 	void addToSimulator(void);
@@ -30,6 +31,7 @@ public:
 protected:
 	Ogre::SceneNode* cameraNode;
 	OgreBites::ParamsPanel* mDetailsPanel;
+	SoundPlayer* soundPlayer;
 	int health; 
 	bool left;
 	bool right;

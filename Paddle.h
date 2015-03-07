@@ -10,6 +10,7 @@
 #endif
 
 #include "GameObject.h"
+#include "SoundPlayer.h"
 #include <SdkTrays.h>
 
 //---------------------------------------------------------------------------
@@ -17,7 +18,7 @@
 class Paddle: public GameObject 
 {
 public:
-	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, int &sc);
+	Paddle(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, int &sc, SoundPlayer* sPlayer);
 	~Paddle(void);
 	void addToScene(void);
 	void addToSimulator(void);
@@ -28,7 +29,8 @@ public:
 
 protected:
 	Ogre::SceneNode* mShipNode;
-	OgreBites::ParamsPanel* mDetailsPanel; 
+	OgreBites::ParamsPanel* mDetailsPanel;
+	SoundPlayer* soundPlayer;
 	int &score;
 };
 
