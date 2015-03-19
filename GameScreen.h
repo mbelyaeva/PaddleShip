@@ -8,6 +8,7 @@
 #include "Simulator.h"
 #include "Paddle.h"
 #include "SoundPlayer.h"
+#include "Alien.h"
 
 //---------------------------------------------------------------------------
 
@@ -34,8 +35,10 @@ protected:
 	Paddle* paddle;
 	btHingeConstraint* paddleHinge;
 	AsteroidSys* ast1;
+	Alien * alien;
 	bool motorRight;
 	int score;
+	int alienHealth;
 };
 
 //---------------------------------------------------------------------------

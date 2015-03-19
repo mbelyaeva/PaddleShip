@@ -70,3 +70,9 @@ BulletContactCallback* GameObject::getCollisionCallback()
 {
     return cCallBack;
 }
+
+
+Ogre::Vector3 GameObject::getPos()
+{
+  return rootNode->getPosition();
+}

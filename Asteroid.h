@@ -19,6 +19,7 @@ public:
 	void update(void);
 	void addToSimulator(void);
 	void setDynamicsWorld( btDiscreteDynamicsWorld* world);
+	Ogre::Vector3 getPos();
 
 protected:
 	Ogre::Vector3 asteroidVelocity;

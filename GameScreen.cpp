@@ -4,10 +4,13 @@
 GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer)
 {
 	score = 0;
+	alienHealth = 100;
 	mSceneMgr = sceneMgr;
 	soundPlayer = sPlayer;
 	sim = new Simulator(sceneMgr);
+	std::deque<GameObject*>* objList = sim -> getObjList();
 	ship = new Ship("Ship", sceneMgr, sim, cameraNode, score, sPlayer);
+	alien = new Alien("Alien", sceneMgr, sim, cameraNode, alienHealth, objList, sPlayer);
 	paddle = new Paddle("paddle", sceneMgr, sim, score, sPlayer); 
 	ast1 = new AsteroidSys(sceneMgr, sim, ship);
 	motorRight = true;
@@ -16,6 +19,7 @@ GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode
 GameScreen::~GameScreen(void)
 {
 	delete ship;
+	delete alien;
 	delete paddle;
 	delete ast1;
 	delete sim;
@@ -28,7 +32,7 @@ void GameScreen::createScene(void)
 	//ship
 	ship->addToScene();
 	ship->addToSimulator();
-	
+
 	//paddle
 	paddle->addToScene();
 	paddle->addToSimulator();
@@ -39,6 +43,10 @@ void GameScreen::createScene(void)
 
 	sim->getDynamicsWorld()->addConstraint(paddleHinge, true);
 
+	//alien
+	alien->addToScene();
+	alien->addToSimulator();
+
     //asteroid particle system
     ast1->addToScene();
     ast1->addToSimulator(sim->getDynamicsWorld());
@@ -47,12 +55,11 @@ void GameScreen::createScene(void)
 void GameScreen::update(const Ogre::FrameEvent &evt)
 {
 	sim->stepSimulation(evt.timeSinceLastFrame, 1, 1/60.0f);
-	//ship->update();
-	//ast1->update();
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 {
+	
 	if (arg.key == OIS::KC_SPACE){
 		if (motorRight)
 			paddleHinge->enableAngularMotor(true, -100, 1000);
@@ -67,15 +74,18 @@ void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_N){
 		soundPlayer->soundOn();
 	}
+	
 
 	ship->injectKeyDown(arg);
 	paddle->injectKeyDown(arg);
+	alien->injectKeyDown(arg);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyUp(const OIS::KeyEvent &arg)
 {
 	ship->injectKeyUp(arg);
 	paddle->injectKeyUp(arg);
+	alien->injectKeyUp(arg);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectMouseMove(const OIS::MouseEvent &arg)
@@ -95,5 +105,6 @@ void GameScreen::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 	//mDetailsPanel = mDeetsPan;
 	ship->setDeetsPan(mDeetsPan);
 	paddle->setDeetsPan(mDeetsPan);
+	alien->setDeetsPan(mDeetsPan);
 }
 //---------------------------------------------------------------------------

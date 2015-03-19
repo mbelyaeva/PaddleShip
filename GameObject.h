@@ -17,6 +17,7 @@ public:
     btRigidBody* getBody();
     virtual void update();
     BulletContactCallback* getCollisionCallback();
+    virtual Ogre::Vector3 getPos();
 
 
 protected:
