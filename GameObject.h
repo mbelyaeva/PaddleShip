@@ -18,6 +18,16 @@ public:
     virtual void update();
     BulletContactCallback* getCollisionCallback();
     virtual Ogre::Vector3 getPos();
+    Ogre::SceneNode* getNode();
+    OgreMotionState* getMotionState();
+    btTransform* getTransform();
+    btScalar getMass();
+    btCollisionShape * getShape() ;
+    btVector3 getInertia();
+    btScalar getFriction();
+    btScalar getRestitution();
+    void setMotionState(OgreMotionState* newState);
+    void setBody(btRigidBody* newBody);  
 
 
 protected:

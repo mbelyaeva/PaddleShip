@@ -76,3 +76,43 @@ Ogre::Vector3 GameObject::getPos()
 {
   return rootNode->getPosition();
 }
+
+Ogre::SceneNode* GameObject::getNode() {
+    return rootNode;
+}
+
+OgreMotionState* GameObject::getMotionState() {
+    return motionState;
+}
+
+btTransform* GameObject::getTransform() {
+    return &tr;
+}
+
+btScalar GameObject::getMass() {
+    return mass;
+}
+
+btCollisionShape * GameObject::getShape() {
+    return shape;
+}
+
+btVector3 GameObject::getInertia() {
+    return inertia;
+}
+
+btScalar GameObject::getFriction() {
+    return friction;
+}
+
+btScalar GameObject::getRestitution() {
+    return restitution;
+}
+
+void GameObject::setMotionState(OgreMotionState* newState) {
+    motionState = newState;
+}
+
+void GameObject::setBody(btRigidBody* newBody) {
+    body = newBody;
+}

@@ -87,7 +87,9 @@ void Ship::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
+/*
 Ogre::Vector3 Ship::getPos()
 {
 	return GameObject::getPos();
 }
+*/

@@ -93,7 +93,8 @@ void Alien::injectKeyUp(const OIS::KeyEvent &arg)
 		right = false;
 	}
 	if (arg.key == OIS::KC_I){
-		grabAsteroid(false);		
+		grabAsteroid(false);
+		hasAsteroid = false;		
 	}
 }
 //---------------------------------------------------------------------------
@@ -102,20 +103,52 @@ void Alien::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 	mDetailsPanel = mDeetsPan;
 }
 //---------------------------------------------------------------------------
+/*
 Ogre::Vector3 Alien::getPos()
 {
 	return rootNode->getPosition();
 }
 //---------------------------------------------------------------------------
+*/
 
 void Alien::grabAsteroid(bool tryGrab)
 {
 	if (tryGrab) {
 		std::deque<GameObject*> oList = *objList;
 		for (int i = 3; i < oList.size(); i++) {
-			if ((oList[i] -> getPos()).z <= ((rootNode ->getPosition()).z + 10) && (oList[i] -> getPos()).z >= (rootNode ->getPosition()).z) {
+			if ((oList[i] -> getPos()).z <= ((rootNode ->getPosition()).z - 20) && ((oList[i] -> getPos()).z <= (rootNode ->getPosition()).z) && (oList[i] -> getPos()).x <= ((rootNode ->getPosition()).x + 20) && (oList[i] -> getPos()).x >= ((rootNode ->getPosition()).x - 20)) {
 				hasAsteroid = true;
 				//reset rigid body as child node of alien ship
+				Asteroid * ast1 = (Asteroid *) oList[i];
+				ast1 -> getDynamicsWorld() -> removeRigidBody(ast1 -> getBody());
+				delete ast1 -> getBody() -> getMotionState();
+   	 			delete ast1 -> getBody();
+   	 			Ogre::Vector3 alienPos = getPos();
+				ast1 -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z));
+				//printf("set origin\n");
+				Ogre::Quaternion qt = ast1 -> getNode()->getOrientation();
+				//printf("set orientation\n");
+				ast1 -> getTransform() -> setRotation(btQuaternion(qt.x, qt.y, qt.z, qt.w));
+				//printf("set rotation\n");
+				ast1 -> setMotionState(new OgreMotionState(*(ast1 -> getTransform()), ast1 -> getNode()));
+				//printf("created new motionState\n");
+				//shape = new btSphereShape(sphereSize);
+				//printf("reset shape\n");
+				//printf("mass is %f before reset\n", massVal);  
+				//mass = massVal;
+				//printf("mass is %f\n", massVal);
+				//printf("reset mass\n");
+				btRigidBody::btRigidBodyConstructionInfo rbInfo(ast1 -> getMass(), ast1 -> getMotionState(), ast1 -> getShape(), ast1 -> getInertia());
+				//printf("constructed rigid body\n");
+				rbInfo.m_restitution = ast1 -> getRestitution();
+				rbInfo.m_friction = ast1 -> getFriction();
+				//printf("reassigned restitution and friction\n");
+				ast1 -> setBody(new btRigidBody(rbInfo));
+				//printf("created new rigid body\n");
+				//printf("Velocity values are now: %f, %f, %f\n", asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z);
+				//body->setLinearVelocity( btVector3(asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z) );
+				ast1 -> getDynamicsWorld() -> addRigidBody(ast1 -> getBody());
+				break;
 			}
 		}
 	}

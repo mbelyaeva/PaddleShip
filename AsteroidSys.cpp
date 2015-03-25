@@ -37,4 +37,3 @@ void AsteroidSys::addToSimulator(btDiscreteDynamicsWorld* dynamicsWorld){
     asteroidSystem[i]-> setDynamicsWorld(dynamicsWorld);
   }
 }
-//---------------------------------------------------------------------------

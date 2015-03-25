@@ -12,6 +12,7 @@
 #include "GameObject.h"
 #include "SoundPlayer.h"
 #include <SdkTrays.h>
+#include "AsteroidSys.h"
 
 //---------------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ public:
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
 	void grabAsteroid(bool tryGrab);
-	Ogre::Vector3 getPos();
+	//Ogre::Vector3 getPos();
 
 protected:
 	Ogre::SceneNode* cameraNode;

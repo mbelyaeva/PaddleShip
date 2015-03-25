@@ -142,7 +142,13 @@ void Asteroid::setDynamicsWorld( btDiscreteDynamicsWorld* world) {
 }
 
 //---------------------------------------------------------------------------
+
+btDiscreteDynamicsWorld* Asteroid::getDynamicsWorld() {
+  return dynamicsWorld;
+}
+/*
 Ogre::Vector3 Asteroid::getPos()
 {
   return GameObject::getPos();
 }
+*/
