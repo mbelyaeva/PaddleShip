@@ -29,9 +29,17 @@ protected:
   virtual bool mouseMoved(const OIS::MouseEvent &arg);
   virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
   virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	GameScreen *gameScreen;
+
+  virtual bool startSinglePlayer(const CEGUI::EventArgs &e);
+
+	CEGUI::OgreRenderer* mRenderer;
+  CEGUI::Window *sheet;
+  GameScreen *gameScreen;
   Ogre::SceneNode *mCameraNode;
   SoundPlayer *soundPlayer;
+  bool gameStarted;
+  bool isServer;
+  bool singlePlayer;
 
 };
 

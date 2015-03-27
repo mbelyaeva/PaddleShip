@@ -335,7 +335,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         }
     }
     */
-    else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
+    /*else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
     {
         Ogre::String newVal;
         Ogre::TextureFilterOptions tfo;
@@ -367,7 +367,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
         Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
         //mDetailsPanel->setParamValue(9, newVal);
-    }
+    }*/
     else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
     {
         Ogre::String newVal;

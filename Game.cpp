@@ -10,6 +10,7 @@ using namespace OgreBites;
 Game::Game(void)
 {
     srand(time(0));
+    gameStarted = false;
 }
 //---------------------------------------------------------------------------
 Game::~Game(void)
@@ -69,6 +70,35 @@ void Game::createFrameListener(void){
 //---------------------------------------------------------------------------
 void Game::createScene(void)
 {
+    mRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
+    CEGUI::Font::setDefaultResourceGroup("Fonts");
+    CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+    CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
+
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+    sheet = wmgr.createWindow("DefaultWindow", "PaddleShip/MainMenu");
+    //CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
+
+    //CEGUI::Window *guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("TextDemo.layout"); 
+    //CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(guiRoot);
+    CEGUI::Window *sPButton = wmgr.createWindow("TaharezLook/Button", "PaddleShip/MainMenu/SPButton");
+    sPButton->setText("Single Player");
+    sPButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35,0),CEGUI::UDim(0.40,0)));
+    sPButton->setSize(CEGUI::USize(CEGUI::UDim(0.30, 0), CEGUI::UDim(0.10, 0)));
+    sPButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSinglePlayer, this));
+    sheet->addChild(sPButton);
+    CEGUI::Window *mPButton = wmgr.createWindow("TaharezLook/Button", "PaddleShip/MainMenu/SPButton");
+    mPButton->setText("Multiplayer (Coming Soon!)");
+    mPButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35,0),CEGUI::UDim(0.50,0)));
+    mPButton->setSize(CEGUI::USize(CEGUI::UDim(0.30, 0), CEGUI::UDim(0.10, 0)));
+    sheet->addChild(mPButton);
+
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
+
     soundPlayer = new SoundPlayer();
     soundPlayer->startBgMusic();
     gameScreen = new GameScreen(mSceneMgr, mCameraNode, soundPlayer);
@@ -95,7 +125,12 @@ void Game::destroyScene(void){
 }
 //---------------------------------------------------------------------------
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
-    gameScreen->update(evt);
+    if(!gameStarted)
+        ;//render menu
+    else
+        gameScreen->update(evt); //render game
+
+    CEGUI::System::getSingleton().injectTimePulse(evt.timeSinceLastFrame);
     return BaseApplication::frameRenderingQueued(evt);
 }
 //---------------------------------------------------------------------------
@@ -104,6 +139,10 @@ bool Game::keyPressed(const OIS::KeyEvent &arg){
 
     gameScreen->injectKeyDown(arg);
 
+    CEGUI::GUIContext& context = CEGUI::System::getSingleton().getDefaultGUIContext();
+    context.injectKeyDown((CEGUI::Key::Scan)arg.key);
+    context.injectChar((CEGUI::Key::Scan)arg.text);
+
     return BaseApplication::keyPressed(arg);
 }
 //---------------------------------------------------------------------------
@@ -111,7 +150,28 @@ bool Game::keyReleased(const OIS::KeyEvent &arg)
 {
     gameScreen->injectKeyUp(arg);
     mCameraMan->injectKeyUp(arg);
+
+    CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp((CEGUI::Key::Scan)arg.key);
+
     return true;
+}
+//---------------------------------------------------------------------------
+CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID)
+{
+    switch (buttonID)
+    {
+    case OIS::MB_Left:
+        return CEGUI::LeftButton;
+ 
+    case OIS::MB_Right:
+        return CEGUI::RightButton;
+ 
+    case OIS::MB_Middle:
+        return CEGUI::MiddleButton;
+ 
+    default:
+        return CEGUI::LeftButton;
+    }
 }
 //---------------------------------------------------------------------------
 bool Game::mouseMoved(const OIS::MouseEvent &arg)
@@ -119,6 +179,12 @@ bool Game::mouseMoved(const OIS::MouseEvent &arg)
     if (mTrayMgr->injectMouseMove(arg)) return true;
     gameScreen->injectMouseMove(arg);
     mCameraMan->injectMouseMove(arg);
+
+    CEGUI::GUIContext& context = CEGUI::System::getSingleton().getDefaultGUIContext();
+    context.injectMouseMove(arg.state.X.rel, arg.state.Y.rel);
+    // Scroll wheel.
+    if (arg.state.Z.rel)
+        context.injectMouseWheelChange(arg.state.Z.rel / 120.0f);
     return true;
 }
 //---------------------------------------------------------------------------
@@ -127,6 +193,7 @@ bool Game::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
     gameScreen->injectMouseDown(arg, id);
     mCameraMan->injectMouseDown(arg, id);
+    CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(convertButton(id));
     return true;
 }
 //---------------------------------------------------------------------------
@@ -135,9 +202,18 @@ bool Game::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
     gameScreen->injectMouseUp(arg, id);
     mCameraMan->injectMouseUp(arg, id);
+    CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(convertButton(id));
     return true;
 }
-  //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
+{
+    singlePlayer = true;
+    gameStarted = true;
+    sheet->setVisible(false);
+    return true;
+}
+//---------------------------------------------------------------------------
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
