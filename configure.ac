@@ -26,3 +26,5 @@ PKG_CHECK_MODULES(sdl, [sdl >= 1.0])
 AC_SUBST(sdl_CFLAGS)
 AC_SUBST(sdl_LIBS)
 
+
+
