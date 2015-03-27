@@ -10,9 +10,21 @@
 #endif
 
 #include "GameObject.h"
-#include "SoundPlayer.h"
+//#include "SoundPlayer.h"
 #include <SdkTrays.h>
+//#include "AsteroidSys.h"
+//#include "btTypedConstraint.h"
+#include <btBulletDynamicsCommon.h>
+
+#include <Ogre.h>
+#include "BaseApplication.h" //?
+#include "Ship.h"
 #include "AsteroidSys.h"
+#include "Simulator.h"
+#include "Paddle.h"
+#include "SoundPlayer.h"
+#include "Alien.h"
+
 
 //---------------------------------------------------------------------------
 
@@ -40,6 +52,9 @@ protected:
 	bool right;
 	int &health;
 	bool hasAsteroid;
+	btHingeConstraint* asteroidBinder;
+	//btFixedConstraint* asteroidBinder;
+	//btGeneric6DofContraint *asteroidBinder;
 };
 
 //---------------------------------------------------------------------------

@@ -15,7 +15,7 @@ PKG_CHECK_MODULES(OIS, [OIS >= 1.0])
 AC_SUBST(OIS_CFLAGS)
 AC_SUBST(OIS_LIBS)
 
-PKG_CHECK_MODULES(bullet, [bullet >= 2.79])
+PKG_CHECK_MODULES(bullet, [bullet >= 2.81])
 AC_SUBST(bullet_CFLAGS)
 AC_SUBST(bullet_LIBS)
 

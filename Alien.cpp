@@ -92,10 +92,12 @@ void Alien::injectKeyUp(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_L){
 		right = false;
 	}
+	/*
 	if (arg.key == OIS::KC_I){
 		grabAsteroid(false);
 		hasAsteroid = false;		
 	}
+	*/
 }
 //---------------------------------------------------------------------------
 void Alien::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
@@ -116,7 +118,7 @@ void Alien::grabAsteroid(bool tryGrab)
 	if (tryGrab) {
 		std::deque<GameObject*> oList = *objList;
 		for (int i = 3; i < oList.size(); i++) {
-			if ((oList[i] -> getPos()).z <= ((rootNode ->getPosition()).z - 20) && ((oList[i] -> getPos()).z <= (rootNode ->getPosition()).z) && (oList[i] -> getPos()).x <= ((rootNode ->getPosition()).x + 20) && (oList[i] -> getPos()).x >= ((rootNode ->getPosition()).x - 20)) {
+			if (!hasAsteroid && (oList[i] -> getPos()).z <= ((rootNode ->getPosition()).z - 20) && ((oList[i] -> getPos()).z <= (rootNode ->getPosition()).z) && (oList[i] -> getPos()).x <= ((rootNode ->getPosition()).x + 20) && (oList[i] -> getPos()).x >= ((rootNode ->getPosition()).x - 20)) {
 				hasAsteroid = true;
 				//reset rigid body as child node of alien ship
 				Asteroid * ast1 = (Asteroid *) oList[i];
@@ -148,7 +150,19 @@ void Alien::grabAsteroid(bool tryGrab)
 				//printf("Velocity values are now: %f, %f, %f\n", asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z);
 				//body->setLinearVelocity( btVector3(asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z) );
 				ast1 -> getDynamicsWorld() -> addRigidBody(ast1 -> getBody());
+				//asteroidBinder = new btFixedConstraint(*body, *(ast1 -> getBody()), tr, *(ast1 -> getTransform());
+
+				/*
+				asteroidBinder = new btGeneric6DofConstraint(body, ast1 -> getBody(), &tr, ast1 -> getTransform(), true);
+		
+ 				// lock all axes
+	 			for (int j = 0; j < 6; j++)
+		 			asteroidBinder->setLimit(j, 0, 0);
 				break;
+				*/
+				asteroidBinder = new btHingeConstraint(*body, *ast1 -> getBody(), btVector3(0,0,0), btVector3(0,0,0), btVector3(0,1,0), btVector3(0,1,0));
+				asteroidBinder->setLimit(M_PI/2, M_PI/2);
+				ast1 -> getDynamicsWorld() ->addConstraint(asteroidBinder, true);
 			}
 		}
 	}
