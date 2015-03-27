@@ -60,8 +60,8 @@ material glass
 	{
 		pass
 		{
-			ambient 0 0 0 1
-			diffuse 0.5 0.43 0.498427 1
+			ambient 0 0 0 0.3
+			diffuse 0.5 0.43 0.498427 0.3
 			scene_blend add
 
 			texture_unit

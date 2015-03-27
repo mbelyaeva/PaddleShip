@@ -29,7 +29,7 @@ Alien::~Alien(void)
 //---------------------------------------------------------------------------
 void Alien::addToScene(void)
 {
-	geom = sceneMgr->createEntity("AlienEnt", "rocket.mesh");
+	geom = sceneMgr->createEntity("AlienEnt", "alien.mesh");
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
 
@@ -141,7 +141,7 @@ void Alien::grabAsteroid(bool tryGrab)
    	 			delete currentAsteroid -> getBody();
    	 			Ogre::Vector3 alienPos = getPos();
    	 			//currentAsteroid -> getNode() ->setPosition(astPos);
-				currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y + 10, alienPos.z));
+				currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y + 17, alienPos.z));
 				//printf("set origin\n");
 				Ogre::Quaternion qt = currentAsteroid -> getNode()->getOrientation();
 				//printf("set orientation\n");
@@ -175,7 +175,7 @@ void Alien::grabAsteroid(bool tryGrab)
 		 			asteroidBinder->setLimit(j, 0, 0);
 				break;
 				*/
-				asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,-10,0), btVector3(0,1,0), btVector3(0,1,0));
+				asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,-17,0), btVector3(0,1,0), btVector3(0,1,0));
 				asteroidBinder->setLimit(M_PI/2, M_PI/2);
 				currentAsteroid -> getDynamicsWorld() ->addConstraint(asteroidBinder, true);
 			}
