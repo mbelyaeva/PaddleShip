@@ -40,6 +40,7 @@ public:
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
 	void grabAsteroid(bool tryGrab);
+	void shootAsteroid(const OIS::KeyEvent &arg);
 	//Ogre::Vector3 getPos();
 
 protected:
@@ -53,6 +54,7 @@ protected:
 	int &health;
 	bool hasAsteroid;
 	btHingeConstraint* asteroidBinder;
+	Asteroid * currentAsteroid;
 	//btFixedConstraint* asteroidBinder;
 	//btGeneric6DofContraint *asteroidBinder;
 };
