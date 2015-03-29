@@ -31,6 +31,9 @@ protected:
   virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
   virtual bool startSinglePlayer(const CEGUI::EventArgs &e);
+  virtual bool startHosting(const CEGUI::EventArgs &e);
+  virtual bool startSearching(const CEGUI::EventArgs &e);
+  virtual bool joinGame(const CEGUI::EventArgs &e);
 
 	CEGUI::OgreRenderer* mRenderer;
   CEGUI::Window *guiRoot;

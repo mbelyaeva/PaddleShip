@@ -86,8 +86,10 @@ void Game::createScene(void)
     
     CEGUI::Window *mainMenu = guiRoot->getChild("mainMenu");
 
-    CEGUI::Window *sPButton = mainMenu->getChild("sPButton");
-    sPButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSinglePlayer, this));
+    mainMenu->getChild("sPButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSinglePlayer, this));
+    mainMenu->getChild("hostButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startHosting, this));
+    mainMenu->getChild("searchButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSearching, this));
+    mainMenu->getChild("joinButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::joinGame, this));
 
 
     soundPlayer = new SoundPlayer();
@@ -201,6 +203,42 @@ bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
 {
     singlePlayer = true;
     gameStarted = true;
+    guiRoot->setVisible(false);
+    return true;
+}
+//---------------------------------------------------------------------------
+bool Game::startHosting(const CEGUI::EventArgs &e)
+{
+    singlePlayer = false;
+    guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
+    guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
+    guiRoot->getChild("mainMenu/joinButton")->setVisible(false);
+    guiRoot->getChild("mainMenu/searchButton")->setVisible(false);
+    guiRoot->getChild("mainMenu/hostChoices")->setVisible(false);
+    guiRoot->getChild("mainMenu/infoBox")->setText("Waiting for another player...");
+    //host w/ sdl
+    return true;
+}
+//---------------------------------------------------------------------------
+bool Game::startSearching(const CEGUI::EventArgs &e)
+{
+    singlePlayer = false;
+    guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
+    guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
+    guiRoot->getChild("mainMenu/infoBox")->setText("Searching...");
+    //search w/ sdl
+    //put choices in box
+    return true;
+}
+//---------------------------------------------------------------------------
+bool Game::joinGame(const CEGUI::EventArgs &e)
+{
+    singlePlayer = false;
+
+    //join w/ sdl
+    
+    gameStarted = true;
+    
     guiRoot->setVisible(false);
     return true;
 }
