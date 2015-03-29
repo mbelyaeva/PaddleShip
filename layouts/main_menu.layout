@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout version="4" >
+    <Window name="root" type="DefaultWindow">
+        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Window name="mainMenu" type="TaharezLook/FrameWindow">
+            <Property name="Area" value="{{0,0},{0,0},{0,362},{0,492}}" />
+            <Property name="DragMovingEnabled" value="false" />
+            <Property name="VerticalAlignment" value="Centre" />
+            <Property name="CloseButtonEnabled" value="false" />
+            <Property name="HorizontalAlignment" value="Centre" />
+            <Property name="AutoRenderingSurface" value="true" />
+            <Window name="hostButton" type="TaharezLook/Button">
+                <Property name="Area" value="{{0,0},{0,98},{0,273},{0,148}}" />
+                <Property name="Text" value="Host Multiplayer" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window name="searchButton" type="TaharezLook/Button">
+                <Property name="Area" value="{{0,0},{0,170},{0,273},{0,220}}" />
+                <Property name="Text" value="Search for Host" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window name="hostChoices" type="TaharezLook/Combobox">
+                <Property name="Area" value="{{0,0},{0.00864454,316},{0,278},{0.00864454,366}}" />
+                <Property name="ReadOnly" value="true" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window name="infoBox" type="TaharezLook/MultiLineEditbox">
+                <Property name="Area" value="{{0,0},{0,242},{0,279},{0,298}}" />
+                <Property name="Text"></Property>
+                <Property name="ReadOnly" value="true" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window name="joinButton" type="TaharezLook/Button">
+                <Property name="Area" value="{{0,0},{0,389},{0,273},{0,439}}" />
+                <Property name="Text" value="Join Selected Host" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window name="sPButton" type="TaharezLook/Button">
+                <Property name="Area" value="{{0,0},{0,25},{0,273},{0,75}}" />
+                <Property name="Text" value="Single Player" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+        </Window>
+    </Window>
+</GUILayout>

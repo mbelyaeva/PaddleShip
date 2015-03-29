@@ -80,24 +80,15 @@ void Game::createScene(void)
     CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
 
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    sheet = wmgr.createWindow("DefaultWindow", "PaddleShip/MainMenu");
-    //CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
+    
+    guiRoot = wmgr.loadLayoutFromFile("main_menu.layout");
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(guiRoot);
+    
+    CEGUI::Window *mainMenu = guiRoot->getChild("mainMenu");
 
-    //CEGUI::Window *guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("TextDemo.layout"); 
-    //CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(guiRoot);
-    CEGUI::Window *sPButton = wmgr.createWindow("TaharezLook/Button", "PaddleShip/MainMenu/SPButton");
-    sPButton->setText("Single Player");
-    sPButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35,0),CEGUI::UDim(0.40,0)));
-    sPButton->setSize(CEGUI::USize(CEGUI::UDim(0.30, 0), CEGUI::UDim(0.10, 0)));
+    CEGUI::Window *sPButton = mainMenu->getChild("sPButton");
     sPButton->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSinglePlayer, this));
-    sheet->addChild(sPButton);
-    CEGUI::Window *mPButton = wmgr.createWindow("TaharezLook/Button", "PaddleShip/MainMenu/SPButton");
-    mPButton->setText("Multiplayer (Coming Soon!)");
-    mPButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.35,0),CEGUI::UDim(0.50,0)));
-    mPButton->setSize(CEGUI::USize(CEGUI::UDim(0.30, 0), CEGUI::UDim(0.10, 0)));
-    sheet->addChild(mPButton);
 
-    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
 
     soundPlayer = new SoundPlayer();
     soundPlayer->startBgMusic();
@@ -210,7 +201,7 @@ bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
 {
     singlePlayer = true;
     gameStarted = true;
-    sheet->setVisible(false);
+    guiRoot->setVisible(false);
     return true;
 }
 //---------------------------------------------------------------------------

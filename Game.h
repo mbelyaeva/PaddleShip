@@ -33,7 +33,7 @@ protected:
   virtual bool startSinglePlayer(const CEGUI::EventArgs &e);
 
 	CEGUI::OgreRenderer* mRenderer;
-  CEGUI::Window *sheet;
+  CEGUI::Window *guiRoot;
   GameScreen *gameScreen;
   Ogre::SceneNode *mCameraNode;
   SoundPlayer *soundPlayer;
