@@ -210,6 +210,7 @@ bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
 bool Game::startHosting(const CEGUI::EventArgs &e)
 {
     singlePlayer = false;
+    isServer = true;
     guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
     guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
     guiRoot->getChild("mainMenu/joinButton")->setVisible(false);
@@ -236,7 +237,7 @@ bool Game::joinGame(const CEGUI::EventArgs &e)
     singlePlayer = false;
 
     //join w/ sdl
-    
+
     gameStarted = true;
     
     guiRoot->setVisible(false);
