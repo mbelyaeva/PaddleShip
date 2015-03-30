@@ -11,10 +11,12 @@ Game::Game(void)
 {
     srand(time(0));
     gameStarted = false;
+    netMgr = NULL;
 }
 //---------------------------------------------------------------------------
 Game::~Game(void)
 {
+    if(netMgr) delete netMgr;
 }
 //---------------------------------------------------------------------------
 bool Game::configure(void)
@@ -204,7 +206,14 @@ bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
     singlePlayer = true;
     gameStarted = true;
     guiRoot->setVisible(false);
+    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
     return true;
+}
+//---------------------------------------------------------------------------
+void Game::setUpSDL(void)
+{
+    netMgr = new NetManager();
+    if (!netMgr->initNetManager()) exit(1);
 }
 //---------------------------------------------------------------------------
 bool Game::startHosting(const CEGUI::EventArgs &e)
@@ -217,16 +226,21 @@ bool Game::startHosting(const CEGUI::EventArgs &e)
     guiRoot->getChild("mainMenu/searchButton")->setVisible(false);
     guiRoot->getChild("mainMenu/hostChoices")->setVisible(false);
     guiRoot->getChild("mainMenu/infoBox")->setText("Waiting for another player...");
-    //host w/ sdl
+    setUpSDL();
+    netMgr->addNetworkInfo(PROTOCOL_ALL, NULL, 0);
+    netMgr->startServer();
+    netMgr->multiPlayerInit();
     return true;
 }
 //---------------------------------------------------------------------------
 bool Game::startSearching(const CEGUI::EventArgs &e)
 {
     singlePlayer = false;
+    isServer = false;
     guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
     guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
     guiRoot->getChild("mainMenu/infoBox")->setText("Searching...");
+    setUpSDL();
     //search w/ sdl
     //put choices in box
     return true;

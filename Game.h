@@ -6,6 +6,7 @@
 #include "SoundPlayer.h"
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Ogre/Renderer.h>
+#include "NetManager.h"
 
 //---------------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ protected:
   virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
   virtual bool startSinglePlayer(const CEGUI::EventArgs &e);
+  virtual void setUpSDL(void);
   virtual bool startHosting(const CEGUI::EventArgs &e);
   virtual bool startSearching(const CEGUI::EventArgs &e);
   virtual bool joinGame(const CEGUI::EventArgs &e);
@@ -40,6 +42,7 @@ protected:
   GameScreen *gameScreen;
   Ogre::SceneNode *mCameraNode;
   SoundPlayer *soundPlayer;
+  NetManager* netMgr;
   bool gameStarted;
   bool isServer;
   bool singlePlayer;
