@@ -47,7 +47,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
     dynamicsWorld->contactPairTest(objList[2]->getBody(), objList[1]->getBody(), *(objList[2]->getCollisionCallback()));
     for (unsigned int i = 0; i < objList.size(); i++)
         objList[i]->update();
-    //mDebugDrawer->Update(); //uncomment to see collision shapes
+    mDebugDrawer->Update(); //uncomment to see collision shapes
 }
 
 btDiscreteDynamicsWorld* Simulator::getDynamicsWorld() {

@@ -37,7 +37,7 @@ void Alien::addToScene(void)
 	rootNode->attachObject(geom);
 
 	mass = 10.0f;
-	shape = new btCapsuleShapeZ(3.0f, 15.0f);
+	shape = shape = new btSphereShape(5);
 }
 //---------------------------------------------------------------------------
 void Alien::addToSimulator(void)
