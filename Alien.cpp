@@ -11,8 +11,11 @@ Alien::Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::Sc
 	//rootNode = cameraNode;
 	//health = 100;
 	hasAsteroid = false;
+	isBound = false;
 	left = false;
 	right = false;
+	forward = false;
+	back = false;
 	soundPlayer = sPlayer;
 	float minP = 1;
   	float maxP = 5;
@@ -33,7 +36,7 @@ void Alien::addToScene(void)
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
 
-	mass = 3.0f;
+	mass = 10.0f;
 	shape = new btCapsuleShapeZ(3.0f, 15.0f);
 }
 //---------------------------------------------------------------------------
@@ -41,17 +44,23 @@ void Alien::addToSimulator(void)
 {
 	GameObject::addToSimulator();
 
-	body->setLinearFactor(btVector3(1,0,0));
+	body->setLinearFactor(btVector3(1,0,1));
 	body->setAngularFactor(btVector3(0,0,0));
 }
 //---------------------------------------------------------------------------
 void Alien::update(void)
 {
-	if (left && body->getLinearVelocity().getX() < 250) {
+	if (left && body->getLinearVelocity().getX() < 50) {
 		body->applyCentralForce(btVector3(1000,0,0));
 	}
-	if (right && body->getLinearVelocity().getX() > -250) {
+	if (right && body->getLinearVelocity().getX() > -50) {
 		body->applyCentralForce(btVector3(-1000,0,0));
+	}
+	if (forward && body->getLinearVelocity().getZ() < 50) {
+		body->applyCentralForce(btVector3(0,0,1000));
+	}
+	if (back && body->getLinearVelocity().getZ() > -50) {
+		body->applyCentralForce(btVector3(0,0,-1000));
 	}
 	if (context->hit){
 		//lose health
@@ -72,15 +81,56 @@ void Alien::injectKeyDown(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_J){
 		left = true;
-		
 	}
 	if (arg.key == OIS::KC_L){
 		right = true;
 	}
 	if (arg.key == OIS::KC_I){
+		forward = true;
+	}
+	if (arg.key == OIS::KC_K){
+		back = true;
+	}
+	if (arg.key == OIS::KC_G){
 		if (!hasAsteroid) {
 			grabAsteroid(true);	
 		}
+	}
+	if (arg.key == OIS::KC_LEFT){
+		if (hasAsteroid) {
+			aimAsteroid(arg);	
+		}
+	}
+	if (arg.key == OIS::KC_RIGHT){
+		if (hasAsteroid) {
+			aimAsteroid(arg);	
+		}
+	}
+	if (arg.key == OIS::KC_UP){
+		if (hasAsteroid) {
+			aimAsteroid(arg);	
+		}
+	}
+	if (arg.key == OIS::KC_DOWN){
+		if (hasAsteroid) {
+			aimAsteroid(arg);	
+		}
+	}
+}
+//---------------------------------------------------------------------------
+void Alien::injectKeyUp(const OIS::KeyEvent &arg)
+{
+	if (arg.key == OIS::KC_J){
+		left = false;
+	}
+	if (arg.key == OIS::KC_L){
+		right = false;
+	}
+	if (arg.key == OIS::KC_I){
+		forward = false;
+	}
+	if (arg.key == OIS::KC_K){
+		back = false;
 	}
 	if (arg.key == OIS::KC_LEFT){
 		if (hasAsteroid) {
@@ -104,16 +154,6 @@ void Alien::injectKeyDown(const OIS::KeyEvent &arg)
 	}
 }
 //---------------------------------------------------------------------------
-void Alien::injectKeyUp(const OIS::KeyEvent &arg)
-{
-	if (arg.key == OIS::KC_J){
-		left = false;
-	}
-	if (arg.key == OIS::KC_L){
-		right = false;
-	}
-}
-//---------------------------------------------------------------------------
 void Alien::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 {
 	mDetailsPanel = mDeetsPan;
@@ -134,50 +174,24 @@ void Alien::grabAsteroid(bool tryGrab)
 		for (int i = 3; i < oList.size(); i++) {
 			if (!hasAsteroid && (oList[i] -> getPos()).z <= ((rootNode ->getPosition()).z - 20) && ((oList[i] -> getPos()).z <= (rootNode ->getPosition()).z) && (oList[i] -> getPos()).x <= ((rootNode ->getPosition()).x + 20) && (oList[i] -> getPos()).x >= ((rootNode ->getPosition()).x - 20)) {
 				hasAsteroid = true;
-				//reset rigid body as child node of alien ship
 				currentAsteroid = (Asteroid *) oList[i];
 				currentAsteroid -> getDynamicsWorld() -> removeRigidBody(currentAsteroid -> getBody());
 				delete currentAsteroid -> getBody() -> getMotionState();
    	 			delete currentAsteroid -> getBody();
    	 			Ogre::Vector3 alienPos = getPos();
-   	 			//currentAsteroid -> getNode() ->setPosition(astPos);
 				currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y + 17, alienPos.z));
-				//printf("set origin\n");
 				Ogre::Quaternion qt = currentAsteroid -> getNode()->getOrientation();
-				//printf("set orientation\n");
 				currentAsteroid -> getTransform() -> setRotation(btQuaternion(qt.x, qt.y, qt.z, qt.w));
-				//printf("set rotation\n");
 				currentAsteroid -> setMotionState(new OgreMotionState(*(currentAsteroid -> getTransform()), currentAsteroid -> getNode()));
-				//printf("created new motionState\n");
-				//shape = new btSphereShape(sphereSize);
-				//printf("reset shape\n");
-				//printf("mass is %f before reset\n", massVal);  
-				//mass = massVal;
-				//printf("mass is %f\n", massVal);
-				//printf("reset mass\n");
 				btRigidBody::btRigidBodyConstructionInfo rbInfo(currentAsteroid -> getMass(), currentAsteroid -> getMotionState(), currentAsteroid -> getShape(), currentAsteroid -> getInertia());
-				//printf("constructed rigid body\n");
 				rbInfo.m_restitution = currentAsteroid -> getRestitution();
 				rbInfo.m_friction = currentAsteroid -> getFriction();
-				//printf("reassigned restitution and friction\n");
 				currentAsteroid -> setBody(new btRigidBody(rbInfo));
-				//printf("created new rigid body\n");
-				//printf("Velocity values are now: %f, %f, %f\n", asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z);
-				//body->setLinearVelocity( btVector3(asteroidVelocity.x, asteroidVelocity.y, asteroidVelocity.z) );
 				currentAsteroid -> getDynamicsWorld() -> addRigidBody(currentAsteroid -> getBody());
-				//asteroidBinder = new btFixedConstraint(*body, *(currentAsteroid -> getBody()), tr, *(currentAsteroid -> getTransform());
-
-				/*
-				asteroidBinder = new btGeneric6DofConstraint(body, currentAsteroid -> getBody(), &tr, currentAsteroid -> getTransform(), true);
-		
- 				// lock all axes
-	 			for (int j = 0; j < 6; j++)
-		 			asteroidBinder->setLimit(j, 0, 0);
-				break;
-				*/
 				asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,-17,0), btVector3(0,1,0), btVector3(0,1,0));
 				asteroidBinder->setLimit(M_PI/2, M_PI/2);
 				currentAsteroid -> getDynamicsWorld() ->addConstraint(asteroidBinder, true);
+				isBound = true;
 			}
 		}
 	}
@@ -186,8 +200,12 @@ void Alien::grabAsteroid(bool tryGrab)
 //---------------------------------------------------------------------------
 
 void Alien::shootAsteroid(const OIS::KeyEvent &arg) {
-	currentAsteroid -> getDynamicsWorld() ->removeConstraint(asteroidBinder);
-	//delete asteroidBinder;
+	if (isBound) {
+		currentAsteroid -> getDynamicsWorld() ->removeConstraint(asteroidBinder);
+		isBound = false;
+	}
+
+	//shoot asteroid in direction of choice
 	if (arg.key == OIS::KC_LEFT){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(200,0,0));
 	} else if (arg.key == OIS::KC_RIGHT){
@@ -197,5 +215,60 @@ void Alien::shootAsteroid(const OIS::KeyEvent &arg) {
 	} else if (arg.key == OIS::KC_DOWN){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(0,0,-200));
 	}
+
 	hasAsteroid = false;
+}
+
+//---------------------------------------------------------------------------
+
+void Alien::aimAsteroid(const OIS::KeyEvent &arg) {
+	currentAsteroid -> getDynamicsWorld() ->removeConstraint(asteroidBinder);
+	isBound = false;
+
+	//reset position of asteroid to shoot in plane of alien
+	currentAsteroid -> getDynamicsWorld() -> removeRigidBody(currentAsteroid -> getBody());
+	delete currentAsteroid -> getBody() -> getMotionState();
+   	delete currentAsteroid -> getBody();
+   	Ogre::Vector3 alienPos = getPos();
+	if (arg.key == OIS::KC_LEFT){
+		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x + 17, alienPos.y, alienPos.z));
+		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
+			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(-17,0,0), btVector3(1,0,0), btVector3(1,0,0));
+			isBound = true;
+		}
+	} else if (arg.key == OIS::KC_RIGHT){
+		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x - 17, alienPos.y, alienPos.z));
+		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
+			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(17,0,0), btVector3(1,0,0), btVector3(1,0,0));
+			isBound = true;
+		}
+	} else if (arg.key == OIS::KC_UP){
+		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z + 17));
+		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
+			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,-17), btVector3(0,0,1), btVector3(0,0,1));
+			isBound = true;
+		}
+	} else if (arg.key == OIS::KC_DOWN){
+		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z - 17));
+		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
+			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,17), btVector3(0,0,1), btVector3(0,0,1));
+			isBound = true;
+		}
+	}
+
+	//add constraint at this new position
+	if (isBound) {
+		asteroidBinder->setLimit(M_PI/2, M_PI/2);
+		currentAsteroid -> getDynamicsWorld() ->addConstraint(asteroidBinder, true);
+	}
+
+	//recreate rigid body at this position
+	Ogre::Quaternion qt = currentAsteroid -> getNode()->getOrientation();
+	currentAsteroid -> getTransform() -> setRotation(btQuaternion(qt.x, qt.y, qt.z, qt.w));
+	currentAsteroid -> setMotionState(new OgreMotionState(*(currentAsteroid -> getTransform()), currentAsteroid -> getNode()));
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(currentAsteroid -> getMass(), currentAsteroid -> getMotionState(), currentAsteroid -> getShape(), currentAsteroid -> getInertia());
+	rbInfo.m_restitution = currentAsteroid -> getRestitution();
+	rbInfo.m_friction = currentAsteroid -> getFriction();
+	currentAsteroid -> setBody(new btRigidBody(rbInfo));
+	currentAsteroid -> getDynamicsWorld() -> addRigidBody(currentAsteroid -> getBody());
 }
