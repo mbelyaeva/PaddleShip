@@ -154,18 +154,12 @@ void Alien::injectKeyUp(const OIS::KeyEvent &arg)
 	}
 }
 //---------------------------------------------------------------------------
+
 void Alien::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 {
 	mDetailsPanel = mDeetsPan;
 }
 //---------------------------------------------------------------------------
-/*
-Ogre::Vector3 Alien::getPos()
-{
-	return rootNode->getPosition();
-}
-//---------------------------------------------------------------------------
-*/
 
 void Alien::grabAsteroid(bool tryGrab)
 {

@@ -34,6 +34,8 @@ protected:
 	SoundPlayer* soundPlayer;
 	bool hasDecr;
 	int health; 
+	bool forward;
+	bool back;
 	bool left;
 	bool right;
 	int &score;

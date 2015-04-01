@@ -25,7 +25,7 @@ void Ship::addToScene(void)
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
 
-	mass = 3.0f;
+	mass = 10.0f;
 	shape = new btCapsuleShapeZ(3.0f, 15.0f);
 }
 //---------------------------------------------------------------------------
@@ -33,7 +33,7 @@ void Ship::addToSimulator(void)
 {
 	GameObject::addToSimulator();
 
-	body->setLinearFactor(btVector3(1,0,0));
+	body->setLinearFactor(btVector3(1,0,1));
 	body->setAngularFactor(btVector3(0,0,0));
 }
 //---------------------------------------------------------------------------
@@ -44,6 +44,12 @@ void Ship::update(void)
 	}
 	if (right && body->getLinearVelocity().getX() > -250) {
 		body->applyCentralForce(btVector3(-1000,0,0));
+	}
+	if (forward && body->getLinearVelocity().getZ() < 250) {
+		body->applyCentralForce(btVector3(0,0,1000));
+	}
+	if (back && body->getLinearVelocity().getZ() > -250) {
+		body->applyCentralForce(btVector3(0,0,-1000));
 	}
 	if(!context->hit) {
 		hasDecr = false;
@@ -73,6 +79,12 @@ void Ship::injectKeyDown(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_D){
 		right = true;
 	}
+	if (arg.key == OIS::KC_W){
+		forward = true;
+	}
+	if (arg.key == OIS::KC_S){
+		back = true;
+	}
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyUp(const OIS::KeyEvent &arg)
@@ -82,6 +94,12 @@ void Ship::injectKeyUp(const OIS::KeyEvent &arg)
 	}
 	if (arg.key == OIS::KC_D){
 		right = false;
+	}
+	if (arg.key == OIS::KC_W){
+		forward = false;
+	}
+	if (arg.key == OIS::KC_S){
+		back = false;
 	}
 }
 //---------------------------------------------------------------------------
