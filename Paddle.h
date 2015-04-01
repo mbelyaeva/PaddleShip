@@ -32,6 +32,7 @@ protected:
 	OgreBites::ParamsPanel* mDetailsPanel;
 	SoundPlayer* soundPlayer;
 	int &score;
+	bool hasIncr;
 };
 
 //---------------------------------------------------------------------------

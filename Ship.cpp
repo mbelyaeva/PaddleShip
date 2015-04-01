@@ -5,6 +5,7 @@
 Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), score(sc)
 {
 	cameraNode = cam;
+	hasDecr = false;
 	//rootNode->getParent()->removeChild(rootNode);
 	//cameraNode->addChild(rootNode);
 	rootNode = cameraNode;
@@ -44,7 +45,10 @@ void Ship::update(void)
 	if (right && body->getLinearVelocity().getX() > -250) {
 		body->applyCentralForce(btVector3(-1000,0,0));
 	}
-	if (context->hit){
+	if(!context->hit) {
+		hasDecr = false;
+	}
+	if (!hasDecr && context->hit){
 		//lose health
 		if (score > 0) {
 			score-=1;
@@ -56,6 +60,7 @@ void Ship::update(void)
  	 	}
  	 	mDetailsPanel->setParamValue(0, scoreVal.str());
 		soundPlayer->playShipHit();
+		hasDecr = true;
 	}
 }
 //---------------------------------------------------------------------------

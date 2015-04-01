@@ -35,7 +35,10 @@ void Paddle::addToSimulator(void)
 //---------------------------------------------------------------------------
 void Paddle::update(void)
 {
-	if (context->hit){
+	if(!context->hit) {
+		hasIncr = false;
+	}
+	if (!hasIncr && context->hit){
 		//increment score
 		score+=1;
 		std::stringstream numScore;
@@ -45,6 +48,7 @@ void Paddle::update(void)
  	 	}
  	 	mDetailsPanel->setParamValue(0, numScore.str());
 		soundPlayer->playScore();
+		hasIncr = true;
 	}
 }
 //---------------------------------------------------------------------------

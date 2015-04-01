@@ -32,6 +32,7 @@ protected:
 	Ogre::SceneNode* cameraNode;
 	OgreBites::ParamsPanel* mDetailsPanel;
 	SoundPlayer* soundPlayer;
+	bool hasDecr;
 	int health; 
 	bool left;
 	bool right;
