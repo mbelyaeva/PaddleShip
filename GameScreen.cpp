@@ -57,9 +57,8 @@ void GameScreen::update(const Ogre::FrameEvent &evt)
 	sim->stepSimulation(evt.timeSinceLastFrame, 1, 1/60.0f);
 }
 //---------------------------------------------------------------------------
-void GameScreen::updateClient(const Ogre::FrameEvent &evt, char const * data)
+void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 {
-	float *positions = (float*)data;
 	//ship->setPosition(positions[0], positions[1], positions[2]);
 	printf("set ship to %f, %f, %f\n", positions[0], positions[1], positions[2]);
 	ship->setPosition(positions[0], positions[1], positions[2]);
@@ -69,14 +68,12 @@ void GameScreen::updateClient(const Ogre::FrameEvent &evt, char const * data)
 
 }
 //---------------------------------------------------------------------------
-void GameScreen::getPositions(char * data)
+void GameScreen::getPositions(float * positions)
 {
-	float positions[128];
-
 	Ogre::Vector3 pos = ship->getPos();
-	//positions[0] = pos.x;
-	//positions[1] = pos.y;
-	//positions[2] = pos.z;
+	positions[0] = pos.x;
+	positions[1] = pos.y;
+	positions[2] = pos.z;
     
     //printf("positions[0] =%f\n", positions[0]);
     //printf("positions[1] =%f\n", positions[1]);
@@ -85,17 +82,13 @@ void GameScreen::getPositions(char * data)
 	
 	//paddle->getPosition(positions[3], positions[4], positions[5]);
 	//alien->getPosition(positions[6], positions[7], positions[8]);
-	char * charPos =  (char*) positions;
 
-	int i;
+	/*int i;
 	for(i = 0; i<12;i++){
 		charPos[i] = '0' - i%9;
-	}
+	}*/
 
-
-	charPos[12] = '\0';
-	printf("charPos = %s\n", charPos);
-	strncpy(data, charPos, 512);
+	printf("charPos = %s\n", (char*)positions);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)

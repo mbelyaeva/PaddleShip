@@ -47,7 +47,7 @@ protected:
   bool singlePlayer;
   bool clientFound;
   char *host;
-  char buffer[512];
+  float buffer[128];
   bool test;
   
 

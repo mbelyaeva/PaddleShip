@@ -131,28 +131,26 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
                 gameStarted = true;
                 CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
                 guiRoot->setVisible(false);
-                netMgr->sendMessageToClient((void*)"hello" , 6);
+                //netMgr->sendMessageToClient((void*)"hello" , 6);
             }
         }
     }
     else{
         if (singlePlayer)
             gameScreen->update(evt); //render game
-        /*else if (!isServer && netMgr->receiveMessage(buffer))
+        else if (!isServer && netMgr->receiveMessageFromServer(buffer))
             gameScreen->updateClient(evt, buffer); //render game based on data from host
         else if (isServer){
             gameScreen->update(evt);
             gameScreen->getPositions(buffer);
-            if (test){
-                netMgr->sendMessage("teststststst");
-                test = false;
-            }
-        }*/
-        if (isServer) netMgr->receiveMessageFromClient(buffer);
+            netMgr->sendMessageToClient(buffer, 12);
+        }
+
+        /*if (isServer) netMgr->receiveMessageFromClient(buffer);
         if (!isServer && test){
                 netMgr->receiveMessageFromServer(buffer);
                 test = false;
-            }
+            }*/
     }
         
 
@@ -276,7 +274,7 @@ bool Game::joinGame(const CEGUI::EventArgs &e)
     
     guiRoot->setVisible(false);
 
-    netMgr->sendMessageToServer((void*)"test" , 5);
+    //netMgr->sendMessageToServer((void*)"test" , 5);
 
     gameStarted = true;
     CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
