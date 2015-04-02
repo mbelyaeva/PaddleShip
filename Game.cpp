@@ -15,6 +15,7 @@ Game::Game(char *hostIP)
     clientFound = false;
     isServer = false;
     host = hostIP;
+    test = true;
 }
 //---------------------------------------------------------------------------
 Game::~Game(void)
@@ -140,7 +141,10 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
         else if (isServer){
             gameScreen->update(evt);
             gameScreen->getPositions(buffer);
-            netMgr->sendMessage(buffer);
+            if (test){
+                netMgr->sendMessage(buffer);
+                test = false;
+            }
         }
     }
         

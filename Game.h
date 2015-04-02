@@ -48,6 +48,7 @@ protected:
   bool clientFound;
   char *host;
   char buffer[512];
+  bool test;
   
 
 };
