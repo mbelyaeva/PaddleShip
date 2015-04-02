@@ -41,12 +41,26 @@ void NetManager::startServer(){
     serverRunning = true;
 }
 
-
-
 bool NetManager::acceptClient(){
     csd = SDLNet_TCP_Accept(sd);
     if (csd){
         printf("TCP client accepted\n");
+        return true;
+    }
+    return false;
+}
+
+void NetManager::sendMessageToClient(void * message, int len){
+    printf("want to send message(%d): %s\n", len, (char*)message);
+    if (SDLNet_TCP_Send(csd, message, len) < len){
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+    printf("Sent message: %s\n", (char*)message);
+}
+bool NetManager::receiveMessageFromClient(void * buff){
+    if (SDLNet_TCP_Recv(csd, buff, NETMANAGER_BUFFER_SIZE) > 0){
+        printf("Received message: %s\n", (char*)buff);
         return true;
     }
     return false;
@@ -72,25 +86,25 @@ void NetManager::connectToServer(char* host){
     }
 }
 
-//------------------------------------------------------------
-// Shared fuctions
-//------------------------------------------------------------
-
-bool NetManager::receiveMessage(char * buff){
-    if (SDLNet_TCP_Recv(csd, buffer, NETMANAGER_BUFFER_SIZE) > 0){
-        printf("Received message: %s\n", buffer);
-        strncpy(buff, buffer, NETMANAGER_BUFFER_SIZE);
+void NetManager::sendMessageToServer(void * message, int len){
+    printf("want to send message(%d): %s\n", len, (char*)message);
+    if (SDLNet_TCP_Send(sd, message, len) < len){
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+    printf("Sent message: %s\n", (char*)message);
+}
+bool NetManager::receiveMessageFromServer(void * buff){
+    if (SDLNet_TCP_Recv(sd, buff, NETMANAGER_BUFFER_SIZE) > 0){
+        printf("Received message: %s\n", (char*)buff);
         return true;
     }
     return false;
 }
 
-void NetManager::sendMessage(char const * message){
-    strncpy(buffer, message, NETMANAGER_BUFFER_SIZE);
-    int len = strlen(buffer) + 1;
-    if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len){
-        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-        exit(EXIT_FAILURE);
-    }
-    printf("Sent message: %s\n", buffer);
-}
+//------------------------------------------------------------
+// Shared fuctions
+//------------------------------------------------------------
+
+
+

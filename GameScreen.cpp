@@ -74,13 +74,27 @@ void GameScreen::getPositions(char * data)
 	float positions[128];
 
 	Ogre::Vector3 pos = ship->getPos();
-	positions[0] = pos.x;
-	positions[1] = pos.y;
-	positions[2] = pos.z;
+	//positions[0] = pos.x;
+	//positions[1] = pos.y;
+	//positions[2] = pos.z;
+    
+    //printf("positions[0] =%f\n", positions[0]);
+    //printf("positions[1] =%f\n", positions[1]);
+    //printf("positions[2] =%f\n", positions[2]);
+
 	
 	//paddle->getPosition(positions[3], positions[4], positions[5]);
 	//alien->getPosition(positions[6], positions[7], positions[8]);
 	char * charPos =  (char*) positions;
+
+	int i;
+	for(i = 0; i<12;i++){
+		charPos[i] = '0' - i%9;
+	}
+
+
+	charPos[12] = '\0';
+	printf("charPos = %s\n", charPos);
 	strncpy(data, charPos, 512);
 }
 //---------------------------------------------------------------------------

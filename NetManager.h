@@ -15,16 +15,21 @@ public:
     void startServer();
     void stopServer();
     bool acceptClient();
+    void sendMessageToClient(void * message, int len);
+    bool receiveMessageFromServer(void * buff);
 
     void connectToServer(char* host);
+    void sendMessageToServer(void * message, int len);
+    bool receiveMessageFromClient(void * buff);
 
-    bool receiveMessage(char * buff);
-    void sendMessage(char const * message);
+    
+
+    
     
 private:
     TCPsocket sd, csd; /* Socket descriptor, Client socket descriptor */
     IPaddress ip;
-    char buffer[NETMANAGER_BUFFER_SIZE];
+    //char buffer[NETMANAGER_BUFFER_SIZE];
 
     bool serverRunning;
 };
