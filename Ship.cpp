@@ -15,6 +15,8 @@ Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::Scen
 	health = 100;
 	left = false;
 	right = false;
+	forward = false;
+	back = false;
 	soundPlayer = sPlayer;
 }
 //---------------------------------------------------------------------------
