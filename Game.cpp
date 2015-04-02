@@ -142,8 +142,8 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
             gameScreen->updateClient(evt, buffer); //render game based on data from host
         else if (isServer){
             gameScreen->update(evt);
-            gameScreen->getPositions(buffer);
-            netMgr->sendMessageToClient(buffer, 12);
+            int len = gameScreen->getPositions(buffer);
+            netMgr->sendMessageToClient(buffer, len);
         }
 
         /*if (isServer) netMgr->receiveMessageFromClient(buffer);

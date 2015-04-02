@@ -62,18 +62,23 @@ void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 	//ship->setPosition(positions[0], positions[1], positions[2]);
 	printf("set ship to %f, %f, %f\n", positions[0], positions[1], positions[2]);
 	ship->setPosition(positions[0], positions[1], positions[2]);
-	//paddle->setPosition(positions[3], positions[4], positions[5]);
-	//alien->setPosition(positions[6], positions[7], positions[8]);
+	alien->setPosition(positions[3], positions[4], positions[5]);
+	//paddle->setPosition(positions[6], positions[7], positions[8]);
 	
 
 }
 //---------------------------------------------------------------------------
-void GameScreen::getPositions(float * positions)
+int GameScreen::getPositions(float * positions)
 {
 	Ogre::Vector3 pos = ship->getPos();
 	positions[0] = pos.x;
 	positions[1] = pos.y;
 	positions[2] = pos.z;
+
+	Ogre::Vector3 pos = alien->getPos();
+	positions[3] = pos.x;
+	positions[4] = pos.y;
+	positions[5] = pos.z;
     
     //printf("positions[0] =%f\n", positions[0]);
     //printf("positions[1] =%f\n", positions[1]);
@@ -88,7 +93,7 @@ void GameScreen::getPositions(float * positions)
 		charPos[i] = '0' - i%9;
 	}*/
 
-	printf("charPos = %s\n", (char*)positions);
+	return 24;
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)

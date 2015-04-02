@@ -20,7 +20,7 @@ public:
 	void createScene(void);
 	void update(const Ogre::FrameEvent &evt);
 	void updateClient(const Ogre::FrameEvent &evt, float * positions);
-	void getPositions(float * positions);
+	int getPositions(float * positions);
 	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);
