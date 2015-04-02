@@ -7,11 +7,14 @@
 using namespace OgreBites;
 
 //---------------------------------------------------------------------------
-Game::Game(void)
+Game::Game(char *hostIP)
 {
     srand(time(0));
     gameStarted = false;
     netMgr = NULL;
+    clientFound = false;
+    isServer = false;
+    host = hostIP;
 }
 //---------------------------------------------------------------------------
 Game::~Game(void)
@@ -72,6 +75,8 @@ void Game::createFrameListener(void){
 //---------------------------------------------------------------------------
 void Game::createScene(void)
 {
+    setUpSDL();
+
     mRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
     CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
     CEGUI::Font::setDefaultResourceGroup("Fonts");
@@ -92,6 +97,9 @@ void Game::createScene(void)
     mainMenu->getChild("hostButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startHosting, this));
     mainMenu->getChild("searchButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSearching, this));
     mainMenu->getChild("joinButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::joinGame, this));
+    
+    guiRoot->getChild("mainMenu/searchButton")->setVisible(false); //disable for now
+    guiRoot->getChild("mainMenu/hostChoices")->setVisible(false); //disable for now
 
 
     soundPlayer = new SoundPlayer();
@@ -120,8 +128,14 @@ void Game::destroyScene(void){
 }
 //---------------------------------------------------------------------------
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
-    if(!gameStarted)
-        ;//render menu
+    if(!gameStarted){
+        if(isServer && !clientFound){
+            if(netMgr->acceptClient()){
+                clientFound = true;
+                //start game
+            }
+        }
+    }
     else
         gameScreen->update(evt); //render game
 
@@ -213,7 +227,8 @@ bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
 void Game::setUpSDL(void)
 {
     netMgr = new NetManager();
-    if (!netMgr->initNetManager()) exit(1);
+    netMgr->init();
+    
 }
 //---------------------------------------------------------------------------
 bool Game::startHosting(const CEGUI::EventArgs &e)
@@ -226,33 +241,34 @@ bool Game::startHosting(const CEGUI::EventArgs &e)
     guiRoot->getChild("mainMenu/searchButton")->setVisible(false);
     guiRoot->getChild("mainMenu/hostChoices")->setVisible(false);
     guiRoot->getChild("mainMenu/infoBox")->setText("Waiting for another player...");
-    setUpSDL();
-    netMgr->addNetworkInfo(PROTOCOL_ALL, NULL, 0);
     netMgr->startServer();
-    netMgr->multiPlayerInit();
     return true;
 }
 //---------------------------------------------------------------------------
 bool Game::startSearching(const CEGUI::EventArgs &e)
 {
-    singlePlayer = false;
+    /*singlePlayer = false;
     isServer = false;
     guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
     guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
     guiRoot->getChild("mainMenu/infoBox")->setText("Searching...");
-    setUpSDL();
-    //search w/ sdl
-    //put choices in box
+    */
     return true;
 }
 //---------------------------------------------------------------------------
 bool Game::joinGame(const CEGUI::EventArgs &e)
 {
     singlePlayer = false;
+    isServer = false;
 
-    //join w/ sdl
+    if(!host){
+        guiRoot->getChild("mainMenu/infoBox")->setText("Host must be provided as command line argument");
+        return true;
+    }
 
-    gameStarted = true;
+    std::cout << host << std::endl;
+
+    netMgr->connectToServer(host);
     
     guiRoot->setVisible(false);
     return true;
@@ -275,7 +291,8 @@ extern "C" {
 #endif
     {
         // Create application object
-        Game app;
+        char* host = argc > 1 ? argv[1] : NULL;
+        Game app(host);
 
         try {
             app.go();

@@ -13,7 +13,7 @@
 class Game : public BaseApplication
 {
 public:
-  Game(void);
+  Game(char *hostIP = NULL);
   virtual ~Game(void);
 
 protected:
@@ -42,10 +42,13 @@ protected:
   GameScreen *gameScreen;
   Ogre::SceneNode *mCameraNode;
   SoundPlayer *soundPlayer;
-  NetManager* netMgr;
+  NetManager *netMgr;
   bool gameStarted;
   bool isServer;
   bool singlePlayer;
+  bool clientFound;
+  char *host;
+  
 
 };
 
