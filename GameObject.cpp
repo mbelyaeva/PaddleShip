@@ -116,3 +116,7 @@ void GameObject::setMotionState(OgreMotionState* newState) {
 void GameObject::setBody(btRigidBody* newBody) {
     body = newBody;
 }
+
+void GameObject::setPosition(float x, float y, float z){
+    rootNode->setPosition(Ogre::Vector3(x,y,z));
+}

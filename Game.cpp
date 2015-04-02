@@ -127,12 +127,23 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
         if(isServer && !clientFound){
             if(netMgr->acceptClient()){
                 clientFound = true;
-                //start game
+                gameStarted = true;
+                CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
             }
         }
     }
-    else
-        gameScreen->update(evt); //render game
+    else{
+        if (singlePlayer)
+            gameScreen->update(evt); //render game
+        else if (!isServer && netMgr->receiveMessage(buffer))
+            gameScreen->updateClient(evt, buffer); //render game based on data from host
+        else if (isServer){
+            gameScreen->update(evt);
+            gameScreen->getPositions(buffer);
+            netMgr->sendMessage(buffer);
+        }
+    }
+        
 
     CEGUI::System::getSingleton().injectTimePulse(evt.timeSinceLastFrame);
     return BaseApplication::frameRenderingQueued(evt);
@@ -253,6 +264,10 @@ bool Game::joinGame(const CEGUI::EventArgs &e)
     netMgr->connectToServer(host);
     
     guiRoot->setVisible(false);
+
+    gameStarted = true;
+    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
+
     return true;
 }
 //---------------------------------------------------------------------------

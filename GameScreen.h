@@ -16,9 +16,11 @@ class GameScreen
 {
 public:
 	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer);
-	virtual ~GameScreen(void);
+	~GameScreen(void);
 	void createScene(void);
 	void update(const Ogre::FrameEvent &evt);
+	void updateClient(const Ogre::FrameEvent &evt, char const * data);
+	void getPositions(char * data);
 	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
 	void injectKeyUp(const OIS::KeyEvent &arg);

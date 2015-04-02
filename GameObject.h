@@ -28,7 +28,7 @@ public:
     btScalar getRestitution();
     void setMotionState(OgreMotionState* newState);
     void setBody(btRigidBody* newBody);  
-
+    void setPosition(float x, float y, float z);
 
 protected:
     Ogre::String name;

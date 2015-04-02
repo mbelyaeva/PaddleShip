@@ -57,6 +57,33 @@ void GameScreen::update(const Ogre::FrameEvent &evt)
 	sim->stepSimulation(evt.timeSinceLastFrame, 1, 1/60.0f);
 }
 //---------------------------------------------------------------------------
+void GameScreen::updateClient(const Ogre::FrameEvent &evt, char const * data)
+{
+	float *positions = (float*)data;
+	//ship->setPosition(positions[0], positions[1], positions[2]);
+	printf("set ship to %f, %f, %f\n", positions[0], positions[1], positions[2]);
+	ship->setPosition(positions[0], positions[1], positions[2]);
+	//paddle->setPosition(positions[3], positions[4], positions[5]);
+	//alien->setPosition(positions[6], positions[7], positions[8]);
+	
+
+}
+//---------------------------------------------------------------------------
+void GameScreen::getPositions(char * data)
+{
+	float positions[128];
+
+	Ogre::Vector3 pos = ship->getPos();
+	positions[0] = pos.x;
+	positions[1] = pos.y;
+	positions[2] = pos.z;
+	
+	//paddle->getPosition(positions[3], positions[4], positions[5]);
+	//alien->getPosition(positions[6], positions[7], positions[8]);
+	char * charPos =  (char*) positions;
+	strncpy(data, charPos, 512);
+}
+//---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 {
 	
