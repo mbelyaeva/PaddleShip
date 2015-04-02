@@ -95,12 +95,7 @@ void Game::createScene(void)
 
     mainMenu->getChild("sPButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSinglePlayer, this));
     mainMenu->getChild("hostButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startHosting, this));
-    mainMenu->getChild("searchButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startSearching, this));
     mainMenu->getChild("joinButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::joinGame, this));
-    
-    guiRoot->getChild("mainMenu/searchButton")->setVisible(false); //disable for now
-    guiRoot->getChild("mainMenu/hostChoices")->setVisible(false); //disable for now
-
 
     soundPlayer = new SoundPlayer();
     soundPlayer->startBgMusic();
@@ -238,21 +233,8 @@ bool Game::startHosting(const CEGUI::EventArgs &e)
     guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
     guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
     guiRoot->getChild("mainMenu/joinButton")->setVisible(false);
-    guiRoot->getChild("mainMenu/searchButton")->setVisible(false);
-    guiRoot->getChild("mainMenu/hostChoices")->setVisible(false);
     guiRoot->getChild("mainMenu/infoBox")->setText("Waiting for another player...");
     netMgr->startServer();
-    return true;
-}
-//---------------------------------------------------------------------------
-bool Game::startSearching(const CEGUI::EventArgs &e)
-{
-    /*singlePlayer = false;
-    isServer = false;
-    guiRoot->getChild("mainMenu/sPButton")->setVisible(false);
-    guiRoot->getChild("mainMenu/hostButton")->setVisible(false);
-    guiRoot->getChild("mainMenu/infoBox")->setText("Searching...");
-    */
     return true;
 }
 //---------------------------------------------------------------------------

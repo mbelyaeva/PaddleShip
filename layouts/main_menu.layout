@@ -16,25 +16,15 @@
                 <Property name="Text" value="Host Multiplayer" />
                 <Property name="HorizontalAlignment" value="Centre" />
             </Window>
-            <Window name="searchButton" type="TaharezLook/Button">
+            <Window name="joinButton" type="TaharezLook/Button">
                 <Property name="Area" value="{{0,0},{0,170},{0,273},{0,220}}" />
-                <Property name="Text" value="Search for Host" />
-                <Property name="HorizontalAlignment" value="Centre" />
-            </Window>
-            <Window name="hostChoices" type="TaharezLook/Combobox">
-                <Property name="Area" value="{{0,0},{0.00864454,316},{0,278},{0.00864454,366}}" />
-                <Property name="ReadOnly" value="true" />
+                <Property name="Text" value="Join Server" />
                 <Property name="HorizontalAlignment" value="Centre" />
             </Window>
             <Window name="infoBox" type="TaharezLook/MultiLineEditbox">
-                <Property name="Area" value="{{0,0},{0,242},{0,279},{0,298}}" />
+                <Property name="Area" value="{{0,0},{0,242},{0,279},{0,420}}" />
                 <Property name="Text"></Property>
                 <Property name="ReadOnly" value="true" />
-                <Property name="HorizontalAlignment" value="Centre" />
-            </Window>
-            <Window name="joinButton" type="TaharezLook/Button">
-                <Property name="Area" value="{{0,0},{0,389},{0,273},{0,439}}" />
-                <Property name="Text" value="Join Selected Host" />
                 <Property name="HorizontalAlignment" value="Centre" />
             </Window>
             <Window name="sPButton" type="TaharezLook/Button">
