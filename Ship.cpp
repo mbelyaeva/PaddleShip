@@ -2,13 +2,16 @@
 #include "Ship.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), score(sc)
+Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &sc, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), score(sc)
 {
-	cameraNode = cam;
+	cameraNode = cm;
+	cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
 	hasDecr = false;
-	//rootNode->getParent()->removeChild(rootNode);
+	//rootNode->getParent()->removeChild(cameraNode);
 	//cameraNode->addChild(rootNode);
-	rootNode = cameraNode;
+	changedView = false;
+	rearView = false;
+	//rootNode->addChild(cameraNode);
 	health = 100;
 	left = false;
 	right = false;
@@ -68,6 +71,23 @@ void Ship::update(void)
 		soundPlayer->playShipHit();
 		hasDecr = true;
 	}
+	
+	if (rearView) {
+		//changedView = true;
+		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
+		//cameraNode->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 25,getPos().z + 40));
+		cam -> setPosition(Ogre::Vector3(getPos().x + 0, getPos().y + 25, getPos().z + 40));
+		printf("KEY PRESSED Camera position is: %f,%f,%f", cam->getPosition().x, cam->getPosition().y, cam->getPosition().z);
+		cam -> lookAt(Ogre::Vector3(getPos().x + 0, getPos().y +0, getPos().z -25));
+	} else {
+		//changedView = false;
+		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
+		//cameraNode->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 25,getPos().z - 40));
+		cam -> setPosition(Ogre::Vector3(getPos().x + 0, getPos().y + 25, getPos().z - 40));
+		printf("KEY RELEASED Camera position is: %f,%f,%f", cam->getPosition().x, cam->getPosition().y, cam->getPosition().z);
+		cam-> lookAt(Ogre::Vector3(getPos().x + 0, getPos().y + 0, getPos().z + 25));
+	}
+	
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyDown(const OIS::KeyEvent &arg)
@@ -85,6 +105,18 @@ void Ship::injectKeyDown(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_S){
 		back = true;
 	}
+	
+	if (arg.key == OIS::KC_E){
+		rearView = true;
+		
+		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
+		//cameraNode->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 25,getPos().z + 40));
+		//cam -> setPosition(Ogre::Vector3(getPos().x + 0, getPos().y + 25, getPos().z + 40));
+		//cam -> lookAt(Ogre::Vector3(getPos().x + 0, getPos().y +0, getPos().z -25));
+		
+	}
+	
+
 }
 //---------------------------------------------------------------------------
 void Ship::injectKeyUp(const OIS::KeyEvent &arg)
@@ -101,6 +133,17 @@ void Ship::injectKeyUp(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_S){
 		back = false;
 	}
+	
+	if (arg.key == OIS::KC_E){
+		rearView = false;
+		
+		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
+		//cameraNode->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 25,getPos().z - 40));
+		//cam -> setPosition(Ogre::Vector3(getPos().x + 0, getPos().y + 25, getPos().z - 40));
+		//cam-> lookAt(Ogre::Vector3(getPos().x + 0, getPos().y + 0, getPos().z + 25));
+		
+	}
+	
 }
 //---------------------------------------------------------------------------
 void Ship::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)

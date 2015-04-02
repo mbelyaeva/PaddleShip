@@ -18,7 +18,7 @@
 class Ship: public GameObject 
 {
 public:
-	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &sc, SoundPlayer* sPlayer);
+	Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &sc, SoundPlayer* sPlayer);
 	~Ship(void);
 	void addToScene(void);
 	void addToSimulator(void);
@@ -30,9 +30,12 @@ public:
 
 protected:
 	Ogre::SceneNode* cameraNode;
+	Ogre::Camera* cam;
 	OgreBites::ParamsPanel* mDetailsPanel;
 	SoundPlayer* soundPlayer;
 	bool hasDecr;
+	bool rearView;
+	bool changedView;
 	int health; 
 	bool forward;
 	bool back;
