@@ -15,7 +15,7 @@
 class GameScreen
 {
 public:
-	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer);
+	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer, Ogre::Light* shipLt, Ogre::Light* alienLt);
 	~GameScreen(void);
 	void createScene(void);
 	void setClient(bool client);

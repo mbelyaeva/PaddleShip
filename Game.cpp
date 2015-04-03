@@ -102,7 +102,7 @@ void Game::createScene(void)
     //sound
     soundPlayer = new SoundPlayer();
     soundPlayer->startBgMusic();
-    gameScreen = new GameScreen(mSceneMgr, mCameraNode, soundPlayer);
+    gameScreen = new GameScreen(mSceneMgr, mCameraNode, soundPlayer, shipLight, alienLight);
 
     //game screen
     gameScreen->createScene();
@@ -111,13 +111,31 @@ void Game::createScene(void)
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
     mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+    /*
+    shipLight = mSceneMgr->createLight("shipLight");
+    shipLight->setType(Ogre::Light::LT_POINT);
+    shipLight->setPosition(Ogre::Vector3(0, 500, -250));
+ 
+    shipLight->setDiffuseColour(1.0, 1.0, 1.0);
+    shipLight->setSpecularColour(1.0, 1.0, 1.0);
+
+    alienLight = mSceneMgr->createLight("alienLight");
+    alienLight->setType(Ogre::Light::LT_POINT);
+    alienLight->setPosition(Ogre::Vector3(0, 500, -250));
+ 
+    alienLight->setDiffuseColour(1.0, 1.0, 1.0);
+    alienLight->setSpecularColour(1.0, 1.0, 1.0);
+    */
+
+    /*
     Ogre::Light* pointLight = mSceneMgr->createLight("pointLight");
     pointLight->setType(Ogre::Light::LT_POINT);
     pointLight->setPosition(Ogre::Vector3(0, 500, -250));
  
     pointLight->setDiffuseColour(1.0, 1.0, 1.0);
     pointLight->setSpecularColour(1.0, 1.0, 1.0);
-
+    */
+    
 }
 //---------------------------------------------------------------------------
 void Game::destroyScene(void){

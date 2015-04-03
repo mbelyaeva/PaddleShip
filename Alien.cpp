@@ -2,9 +2,10 @@
 #include "Alien.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Alien::Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), health(ht)
+Alien::Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer, Ogre::Light* alienLt) : GameObject(nym, mgr, sim), health(ht)
 {
 	cameraNode = cm;
+	alienLight = alienLt;
 	objList = oList;
 	cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
 	//rootNode->getParent()->removeChild(rootNode);
@@ -36,6 +37,13 @@ void Alien::addToScene(void)
 	geom = sceneMgr->createEntity("AlienEnt", "alien.mesh");
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
+
+	alienLight = sceneMgr->createLight("alienLight");
+    alienLight->setType(Ogre::Light::LT_POINT);
+    alienLight->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 500,getPos().z + 250));
+ 
+    alienLight->setDiffuseColour(0.7, 0.7, 0.7);
+    alienLight->setSpecularColour(0.7, 0.7, 0.7);
 
 	mass = 10.0f;
 	shape = shape = new btSphereShape(5);
@@ -76,6 +84,7 @@ void Alien::update(void)
  	 	mDetailsPanel->setParamValue(2, healthVal.str());
 		soundPlayer->playShipHit();
 	}
+	alienLight->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 500,getPos().z + 250));
 	/*
 	if (rearView) {
 		//changedView = true;
@@ -385,4 +394,10 @@ void Alien::aimAsteroid(int arg) {
 void Alien::setCam(float xP, float yP, float zP, float xD, float yD, float zD) {
 	cam -> setPosition(Ogre::Vector3(xP, yP, zP));
 	cam-> lookAt(Ogre::Vector3(xD, yD, zD));
+}
+
+void Alien::setLight(float xP, float yP, float zP) {
+	alienLight->setPosition(Ogre::Vector3(xP,yP,zP));
+    //alienLight->setDiffuseColour(1.0, 1.0, 1.0);
+    //alienLight->setSpecularColour(1.0, 1.0, 1.0);
 }

@@ -31,10 +31,11 @@
 class Alien: public GameObject 
 {
 public:
-	Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer);
+	Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer, Ogre::Light* alienLt);
 	~Alien(void);
 	void addToScene(void);
 	void setCam(float xP, float yP, float zP, float xD, float yD, float zD);
+	void setLight(float xP, float yP, float zP);
 	void addToSimulator(void);
 	void update(void);
 	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
@@ -54,6 +55,7 @@ protected:
 	std::deque<GameObject*>* objList;
 	//int health; 
 	Ogre::Camera* cam;
+	Ogre::Light* alienLight;
 	//bool rearView;
 	bool left;
 	bool right;

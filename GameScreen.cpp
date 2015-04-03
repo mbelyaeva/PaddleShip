@@ -1,7 +1,7 @@
 #include "GameScreen.h"
 
 //---------------------------------------------------------------------------
-GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer)
+GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer, Ogre::Light* shipLt, Ogre::Light* alienLt)
 {
 	score = 0;
 	alienHealth = 100;
@@ -9,8 +9,8 @@ GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode
 	soundPlayer = sPlayer;
 	sim = new Simulator(sceneMgr);
 	std::deque<GameObject*>* objList = sim -> getObjList();
-	ship = new Ship("Ship", sceneMgr, sim, cameraNode, score, sPlayer);
-	alien = new Alien("Alien", sceneMgr, sim, cameraNode, alienHealth, objList, sPlayer);
+	ship = new Ship("Ship", sceneMgr, sim, cameraNode, score, sPlayer, shipLt);
+	alien = new Alien("Alien", sceneMgr, sim, cameraNode, alienHealth, objList, sPlayer, alienLt);
 	paddle = new Paddle("paddle", sceneMgr, sim, score, sPlayer); 
 	ast1 = new AsteroidSys(sceneMgr, sim, ship);
 	motorRight = true;
@@ -74,6 +74,7 @@ void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 	alien->setPosition(positions[7], positions[8], positions[9]);
 	alien->getNode()->setOrientation(Ogre::Quaternion(positions[10],positions[11],positions[12],positions[13]));
 	alien->setCam(positions[7], positions[8] + 25, positions[9] + 40, positions[7], positions[8], positions[9] - 25);
+	alien ->setLight(positions[7], positions[8] + 500, positions[9] + 250);
 	paddle->setPosition(positions[14], positions[15], positions[16]);
 	paddle->getNode()->setOrientation(Ogre::Quaternion(positions[17],positions[18],positions[19],positions[20]));
 	

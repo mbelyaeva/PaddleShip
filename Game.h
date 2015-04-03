@@ -49,7 +49,8 @@ protected:
   char *host;
   float buffer[NETMANAGER_BUFFER_SIZE/4];
   bool test;
-  
+  Ogre::Light* shipLight;
+  Ogre::Light* alienLight;
 
 };
 

@@ -2,9 +2,10 @@
 #include "Ship.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &sc, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), score(sc)
+Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &sc, SoundPlayer* sPlayer, Ogre::Light* shipLt) : GameObject(nym, mgr, sim), score(sc)
 {
 	cameraNode = cm;
+	shipLight = shipLt;
 	cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
 	hasDecr = false;
 	//rootNode->getParent()->removeChild(cameraNode);
@@ -29,6 +30,13 @@ void Ship::addToScene(void)
 	geom = sceneMgr->createEntity("shipEnt", "rocket.mesh");
 	geom->setCastShadows(true);
 	rootNode->attachObject(geom);
+
+	shipLight = sceneMgr->createLight("shipLight");
+    shipLight->setType(Ogre::Light::LT_POINT);
+    shipLight->setPosition(Ogre::Vector3(0, 500, -250));
+ 
+    shipLight->setDiffuseColour(0.7, 0.7, 0.7);
+    shipLight->setSpecularColour(0.7, 0.7, 0.7);
 
 	mass = 10.0f;
 	shape = new btCapsuleShapeZ(3.0f, 15.0f);
@@ -73,7 +81,9 @@ void Ship::update(void)
 		soundPlayer->playShipHit();
 		hasDecr = true;
 	}
-	
+
+	shipLight->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 500,getPos().z - 250));
+
 	if (rearView) {
 		//changedView = true;
 		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
