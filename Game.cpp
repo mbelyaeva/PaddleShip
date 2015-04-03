@@ -131,7 +131,6 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
                 gameStarted = true;
                 CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
                 guiRoot->setVisible(false);
-                //netMgr->sendMessageToClient((void*)"hello" , 6);
             }
         }
     }
@@ -145,12 +144,6 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
             int len = gameScreen->getPositions(buffer);
             netMgr->sendMessageToClient(buffer, len);
         }
-
-        /*if (isServer) netMgr->receiveMessageFromClient(buffer);
-        if (!isServer && test){
-                netMgr->receiveMessageFromServer(buffer);
-                test = false;
-            }*/
     }
         
 
@@ -274,8 +267,6 @@ bool Game::joinGame(const CEGUI::EventArgs &e)
     
     guiRoot->setVisible(false);
 
-    //netMgr->sendMessageToServer((void*)"test" , 5);
-
     gameStarted = true;
     CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 
@@ -298,6 +289,11 @@ extern "C" {
     int main(int argc, char *argv[])
 #endif
     {
+        #if OGRE_DOUBLE_PRECISION == 1
+            printf("Ogre must be compiled without double precision\n");
+            exit(1)
+        #endif
+
         // Create application object
         char* host = argc > 1 ? argv[1] : NULL;
         Game app(host);

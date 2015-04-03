@@ -59,41 +59,53 @@ void GameScreen::update(const Ogre::FrameEvent &evt)
 //---------------------------------------------------------------------------
 void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 {
-	//ship->setPosition(positions[0], positions[1], positions[2]);
-	printf("set ship to %f, %f, %f\n", positions[0], positions[1], positions[2]);
 	ship->setPosition(positions[0], positions[1], positions[2]);
-	alien->setPosition(positions[3], positions[4], positions[5]);
-	//paddle->setPosition(positions[6], positions[7], positions[8]);
+	ship->getNode()->setOrientation(Ogre::Quaternion(positions[3],positions[4],positions[5],positions[6]));
+	alien->setPosition(positions[7], positions[8], positions[9]);
+	alien->getNode()->setOrientation(Ogre::Quaternion(positions[10],positions[11],positions[12],positions[13]));
+	paddle->setPosition(positions[14], positions[15], positions[16]);
+	paddle->getNode()->setOrientation(Ogre::Quaternion(positions[17],positions[18],positions[19],positions[20]));
 	
 
 }
 //---------------------------------------------------------------------------
 int GameScreen::getPositions(float * positions)
 {
+	//int i = 0;
 	Ogre::Vector3 pos = ship->getPos();
 	positions[0] = pos.x;
 	positions[1] = pos.y;
 	positions[2] = pos.z;
+	Ogre::Quaternion rot = ship->getNode()->getOrientation();
+	positions[3] = rot.w;
+	positions[4] = rot.x;
+	positions[5] = rot.y;
+	positions[6] = rot.z;
 
-	Ogre::Vector3 pos = alien->getPos();
-	positions[3] = pos.x;
-	positions[4] = pos.y;
-	positions[5] = pos.z;
-    
-    //printf("positions[0] =%f\n", positions[0]);
-    //printf("positions[1] =%f\n", positions[1]);
-    //printf("positions[2] =%f\n", positions[2]);
+	pos = alien->getPos();
+	positions[7] = pos.x;
+	positions[8] = pos.y;
+	positions[9] = pos.z;
+	rot = alien->getNode()->getOrientation();
+	positions[10] = rot.w;
+	positions[11] = rot.x;
+	positions[12] = rot.y;
+	positions[13] = rot.z;
 
-	
-	//paddle->getPosition(positions[3], positions[4], positions[5]);
-	//alien->getPosition(positions[6], positions[7], positions[8]);
+	pos = paddle->getPos();
+	positions[14] = pos.x;
+	positions[15] = pos.y;
+	positions[16] = pos.z;
+	rot = paddle->getNode()->getOrientation();
+	positions[17] = rot.w;
+	positions[18] = rot.x;
+	positions[19] = rot.y;
+	positions[20] = rot.z;
 
-	/*int i;
-	for(i = 0; i<12;i++){
-		charPos[i] = '0' - i%9;
-	}*/
 
-	return 24;
+
+
+	return 21*sizeof(float);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
