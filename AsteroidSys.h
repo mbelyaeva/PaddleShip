@@ -2,7 +2,7 @@
 #define __AsteroidSys_h_
 
 #include "Asteroid.h"
-
+#define NUM_ASTEROIDS 250
 
 //---------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ public:
 	void addToScene(void);
 	void addToSimulator(btDiscreteDynamicsWorld* dynamicsWorld);
 protected:
-	Asteroid * asteroidSystem [500];
+	Asteroid * asteroidSystem [NUM_ASTEROIDS];
 };
 
 //---------------------------------------------------------------------------
