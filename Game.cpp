@@ -147,7 +147,8 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
         else if (isServer){
             if(netMgr->messageWaitingFromClient()){
                 netMgr->receiveMessageFromClient(buffer);
-                printf("recieved message from client: %d\n", *((int*)buffer));
+                //printf("recieved message from client: %d\n", *((int*)buffer));
+                gameScreen->clientKey(*((int*)buffer));
             }
             gameScreen->update(evt);
             int len = gameScreen->getPositions(buffer);
@@ -169,31 +170,34 @@ bool Game::keyPressed(const OIS::KeyEvent &arg){
         int message = -1;
         
         if (arg.key == OIS::KC_J){
-            message = 'j';
+            message = 1;
         }
         else if (arg.key == OIS::KC_L){
-            message = 'l';
+            message = 2;
         }
         else if (arg.key == OIS::KC_I){
-            message = 'i';
+            message = 3;
         }
         else if (arg.key == OIS::KC_K){
-            message = 'k';
+            message = 4;
         }
         else if (arg.key == OIS::KC_G){
-            message = 'g';
+            message = 5;
+        }
+        else if (arg.key == OIS::KC_P){
+            message = 6;
         }
         else if (arg.key == OIS::KC_LEFT){
-            message = 'L';
+            message = 7;
         }
         else if (arg.key == OIS::KC_RIGHT){
-            message = 'R';
+            message = 8;
         }
         else if (arg.key == OIS::KC_UP){
-            message = 'U';
+            message = 9;
         }
         else if (arg.key == OIS::KC_DOWN){
-            message = 'D';
+            message = 10;
         }
 
         if (message != -1)
@@ -209,8 +213,47 @@ bool Game::keyPressed(const OIS::KeyEvent &arg){
 //---------------------------------------------------------------------------
 bool Game::keyReleased(const OIS::KeyEvent &arg)
 {
-    gameScreen->injectKeyUp(arg);
-    mCameraMan->injectKeyUp(arg);
+    if(singlePlayer || isServer)
+        gameScreen->injectKeyUp(arg);
+    else {
+        int message = -1;
+        
+        if (arg.key == OIS::KC_J){
+            message = 11;
+        }
+        else if (arg.key == OIS::KC_L){
+            message = 12;
+        }
+        else if (arg.key == OIS::KC_I){
+            message = 13;
+        }
+        else if (arg.key == OIS::KC_K){
+            message = 14;
+        }
+        else if (arg.key == OIS::KC_G){
+            message = 15;
+        }
+        else if (arg.key == OIS::KC_P){
+            message = 16;
+        }
+        else if (arg.key == OIS::KC_LEFT){
+            message = 17;
+        }
+        else if (arg.key == OIS::KC_RIGHT){
+            message = 18;
+        }
+        else if (arg.key == OIS::KC_UP){
+            message = 19;
+        }
+        else if (arg.key == OIS::KC_DOWN){
+            message = 20;
+        }
+
+        if (message != -1)
+            netMgr->sendMessageToServer(&message, 4);
+    }
+
+    //mCameraMan->injectKeyUp(arg);
 
     CEGUI::System::getSingleton().getDefaultGUIContext().injectKeyUp((CEGUI::Key::Scan)arg.key);
 
@@ -239,7 +282,7 @@ bool Game::mouseMoved(const OIS::MouseEvent &arg)
 {
     if (mTrayMgr->injectMouseMove(arg)) return true;
     gameScreen->injectMouseMove(arg);
-    mCameraMan->injectMouseMove(arg);
+    //mCameraMan->injectMouseMove(arg);
 
     CEGUI::GUIContext& context = CEGUI::System::getSingleton().getDefaultGUIContext();
     context.injectMouseMove(arg.state.X.rel, arg.state.Y.rel);
@@ -253,7 +296,7 @@ bool Game::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
     gameScreen->injectMouseDown(arg, id);
-    mCameraMan->injectMouseDown(arg, id);
+    //mCameraMan->injectMouseDown(arg, id);
     CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(convertButton(id));
     return true;
 }
@@ -262,7 +305,7 @@ bool Game::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
     gameScreen->injectMouseUp(arg, id);
-    mCameraMan->injectMouseUp(arg, id);
+    //mCameraMan->injectMouseUp(arg, id);
     CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(convertButton(id));
     return true;
 }

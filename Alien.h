@@ -39,10 +39,12 @@ public:
 	void update(void);
 	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
 	void injectKeyDown(const OIS::KeyEvent &arg);
+	void injectKeyDown(int key);
 	void injectKeyUp(const OIS::KeyEvent &arg);
+	void injectKeyUp(int key);
 	void grabAsteroid(bool tryGrab);
-	void aimAsteroid(const OIS::KeyEvent &arg);
-	void shootAsteroid(const OIS::KeyEvent &arg);
+	void aimAsteroid(int arg);
+	void shootAsteroid(int arg);
 	//Ogre::Vector3 getPos();
 
 protected:

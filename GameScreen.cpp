@@ -157,14 +157,19 @@ void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
 
 	ship->injectKeyDown(arg);
 	paddle->injectKeyDown(arg);
-	alien->injectKeyDown(arg);
+	if (singlePlayer) alien->injectKeyDown(arg);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyUp(const OIS::KeyEvent &arg)
 {
 	ship->injectKeyUp(arg);
 	paddle->injectKeyUp(arg);
-	alien->injectKeyUp(arg);
+	if (singlePlayer) alien->injectKeyUp(arg);
+}
+//---------------------------------------------------------------------------
+void GameScreen::clientKey(int key){
+	if(key<=10) alien->injectKeyDown(key);
+	else alien->injectKeyUp(key-10);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectMouseMove(const OIS::MouseEvent &arg)

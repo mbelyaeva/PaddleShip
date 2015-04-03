@@ -114,31 +114,77 @@ void Alien::injectKeyDown(const OIS::KeyEvent &arg)
 			grabAsteroid(true);	
 		}
 	}
-	if (arg.key == OIS::KC_LEFT){
-		if (hasAsteroid) {
-			aimAsteroid(arg);	
-		}
-	}
-	if (arg.key == OIS::KC_RIGHT){
-		if (hasAsteroid) {
-			aimAsteroid(arg);	
-		}
-	}
-	if (arg.key == OIS::KC_UP){
-		if (hasAsteroid) {
-			aimAsteroid(arg);	
-		}
-	}
-	if (arg.key == OIS::KC_DOWN){
-		if (hasAsteroid) {
-			aimAsteroid(arg);	
-		}
-	}
 	/*
 	if (arg.key == OIS::KC_P){
 		rearView = true;
 	}
 	*/
+	if (arg.key == OIS::KC_LEFT){
+		if (hasAsteroid) {
+			aimAsteroid(7);	
+		}
+	}
+	if (arg.key == OIS::KC_RIGHT){
+		if (hasAsteroid) {
+			aimAsteroid(8);	
+		}
+	}
+	if (arg.key == OIS::KC_UP){
+		if (hasAsteroid) {
+			aimAsteroid(9);	
+		}
+	}
+	if (arg.key == OIS::KC_DOWN){
+		if (hasAsteroid) {
+			aimAsteroid(10);	
+		}
+	}
+}
+//---------------------------------------------------------------------------
+void Alien::injectKeyDown(int key)
+{
+	if (key == 1){
+		left = true;
+	}
+	if (key == 2){
+		right = true;
+	}
+	if (key == 3){
+		forward = true;
+	}
+	if (key == 4){
+		back = true;
+	}
+	if (key == 5){
+		if (!hasAsteroid) {
+			grabAsteroid(true);	
+		}
+	}
+	/*
+	if (key == 6){
+		rearView = true;
+	}
+	*/
+	if (key == 7){
+		if (hasAsteroid) {
+			aimAsteroid(7);	
+		}
+	}
+	if (key == 8){
+		if (hasAsteroid) {
+			aimAsteroid(8);	
+		}
+	}
+	if (key == 9){
+		if (hasAsteroid) {
+			aimAsteroid(9);	
+		}
+	}
+	if (key == 10){
+		if (hasAsteroid) {
+			aimAsteroid(10);	
+		}
+	}
 }
 //---------------------------------------------------------------------------
 void Alien::injectKeyUp(const OIS::KeyEvent &arg)
@@ -155,35 +201,75 @@ void Alien::injectKeyUp(const OIS::KeyEvent &arg)
 	if (arg.key == OIS::KC_K){
 		back = false;
 	}
-	if (arg.key == OIS::KC_LEFT){
-		if (hasAsteroid) {
-			shootAsteroid(arg);	
-		}
-	}
-	if (arg.key == OIS::KC_RIGHT){
-		if (hasAsteroid) {
-			shootAsteroid(arg);	
-		}
-	}
-	if (arg.key == OIS::KC_UP){
-		if (hasAsteroid) {
-			shootAsteroid(arg);	
-		}
-	}
-	if (arg.key == OIS::KC_DOWN){
-		if (hasAsteroid) {
-			shootAsteroid(arg);	
-		}
-	}
 	/*
 	if (arg.key == OIS::KC_P){
 		rearView = false;
 		
 	}
 	*/
+	if (arg.key == OIS::KC_LEFT){
+		if (hasAsteroid) {
+			shootAsteroid(7);	
+		}
+	}
+	if (arg.key == OIS::KC_RIGHT){
+		if (hasAsteroid) {
+			shootAsteroid(8);	
+		}
+	}
+	if (arg.key == OIS::KC_UP){
+		if (hasAsteroid) {
+			shootAsteroid(9);	
+		}
+	}
+	if (arg.key == OIS::KC_DOWN){
+		if (hasAsteroid) {
+			shootAsteroid(10);	
+		}
+	}
 }
 //---------------------------------------------------------------------------
-
+void Alien::injectKeyUp(int key)
+{
+	if (key == 1){
+		left = false;
+	}
+	if (key == 2){
+		right = false;
+	}
+	if (key == 3){
+		forward = false;
+	}
+	if (key == 4){
+		back = false;
+	}
+	/*
+	if (key == 6){
+		rearView = false;
+	}
+	*/
+	if (key == 7){
+		if (hasAsteroid) {
+			shootAsteroid(7);	
+		}
+	}
+	if (key == 8){
+		if (hasAsteroid) {
+			shootAsteroid(8);	
+		}
+	}
+	if (key == 9){
+		if (hasAsteroid) {
+			shootAsteroid(9);	
+		}
+	}
+	if (key == 10){
+		if (hasAsteroid) {
+			shootAsteroid(10);	
+		}
+	}
+}
+//---------------------------------------------------------------------------
 void Alien::setDeetsPan(OgreBites::ParamsPanel*mDeetsPan)
 {
 	mDetailsPanel = mDeetsPan;
@@ -222,20 +308,20 @@ void Alien::grabAsteroid(bool tryGrab)
 
 //---------------------------------------------------------------------------
 
-void Alien::shootAsteroid(const OIS::KeyEvent &arg) {
+void Alien::shootAsteroid(int arg) {
 	if (isBound) {
 		currentAsteroid -> getDynamicsWorld() ->removeConstraint(asteroidBinder);
 		isBound = false;
 	}
 
 	//shoot asteroid in direction of choice
-	if (arg.key == OIS::KC_LEFT){
+	if (arg == 7){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(200,0,0));
-	} else if (arg.key == OIS::KC_RIGHT){
+	} else if (arg == 8){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(-200,0,0));
-	} else if (arg.key == OIS::KC_UP){
+	} else if (arg == 9){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(0,0,200));
-	} else if (arg.key == OIS::KC_DOWN){
+	} else if (arg == 10){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(0,0,-200));
 	}
 
@@ -244,7 +330,7 @@ void Alien::shootAsteroid(const OIS::KeyEvent &arg) {
 
 //---------------------------------------------------------------------------
 
-void Alien::aimAsteroid(const OIS::KeyEvent &arg) {
+void Alien::aimAsteroid(int arg) {
 	currentAsteroid -> getDynamicsWorld() ->removeConstraint(asteroidBinder);
 	isBound = false;
 
@@ -253,25 +339,25 @@ void Alien::aimAsteroid(const OIS::KeyEvent &arg) {
 	delete currentAsteroid -> getBody() -> getMotionState();
    	delete currentAsteroid -> getBody();
    	Ogre::Vector3 alienPos = getPos();
-	if (arg.key == OIS::KC_LEFT){
+	if (arg == 7){
 		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x + 17, alienPos.y, alienPos.z));
 		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
 			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(-17,0,0), btVector3(1,0,0), btVector3(1,0,0));
 			isBound = true;
 		}
-	} else if (arg.key == OIS::KC_RIGHT){
+	} else if (arg == 8){
 		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x - 17, alienPos.y, alienPos.z));
 		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
 			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(17,0,0), btVector3(1,0,0), btVector3(1,0,0));
 			isBound = true;
 		}
-	} else if (arg.key == OIS::KC_UP){
+	} else if (arg == 9){
 		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z + 17));
 		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
 			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,-17), btVector3(0,0,1), btVector3(0,0,1));
 			isBound = true;
 		}
-	} else if (arg.key == OIS::KC_DOWN){
+	} else if (arg == 10){
 		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z - 17));
 		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
 			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,17), btVector3(0,0,1), btVector3(0,0,1));
