@@ -35,7 +35,7 @@ protected:
 	SoundPlayer* soundPlayer;
 	bool hasDecr;
 	bool rearView;
-	bool changedView;
+	//bool changedView;
 	int health; 
 	bool forward;
 	bool back;

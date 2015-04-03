@@ -31,9 +31,10 @@
 class Alien: public GameObject 
 {
 public:
-	Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer);
+	Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer);
 	~Alien(void);
 	void addToScene(void);
+	void setCam(float xP, float yP, float zP, float xD, float yD, float zD);
 	void addToSimulator(void);
 	void update(void);
 	void setDeetsPan(OgreBites::ParamsPanel*mDeetsPan);
@@ -50,6 +51,8 @@ protected:
 	SoundPlayer* soundPlayer;
 	std::deque<GameObject*>* objList;
 	//int health; 
+	Ogre::Camera* cam;
+	//bool rearView;
 	bool left;
 	bool right;
 	bool forward;

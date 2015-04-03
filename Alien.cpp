@@ -2,10 +2,11 @@
 #include "Alien.h"
 #include <iostream>
 //---------------------------------------------------------------------------
-Alien::Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cam, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), health(ht)
+Alien::Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::SceneNode* cm, int &ht, std::deque<GameObject*>* oList, SoundPlayer* sPlayer) : GameObject(nym, mgr, sim), health(ht)
 {
-	cameraNode = cam;
+	cameraNode = cm;
 	objList = oList;
+	cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
 	//rootNode->getParent()->removeChild(rootNode);
 	//cameraNode->addChild(rootNode);
 	//rootNode = cameraNode;
@@ -75,6 +76,23 @@ void Alien::update(void)
  	 	mDetailsPanel->setParamValue(2, healthVal.str());
 		soundPlayer->playShipHit();
 	}
+	/*
+	if (rearView) {
+		//changedView = true;
+		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
+		//cameraNode->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 25,getPos().z + 40));
+		cam -> setPosition(Ogre::Vector3(getPos().x + 0, getPos().y + 25, getPos().z + 40));
+		//printf("KEY PRESSED Camera position is: %f,%f,%f", cam->getPosition().x, cam->getPosition().y, cam->getPosition().z);
+		cam -> lookAt(Ogre::Vector3(getPos().x + 0, getPos().y +0, getPos().z -25));
+	} else {
+		//changedView = false;
+		//Ogre::Camera* cam = (Ogre::Camera*) cameraNode -> getAttachedObject("PlayerCam");
+		//cameraNode->setPosition(Ogre::Vector3(getPos().x + 0,getPos().y + 25,getPos().z - 40));
+		cam -> setPosition(Ogre::Vector3(getPos().x + 0, getPos().y + 25, getPos().z - 40));
+		//printf("KEY RELEASED Camera position is: %f,%f,%f", cam->getPosition().x, cam->getPosition().y, cam->getPosition().z);
+		cam-> lookAt(Ogre::Vector3(getPos().x + 0, getPos().y + 0, getPos().z + 25));
+	}
+	*/
 }
 //---------------------------------------------------------------------------
 void Alien::injectKeyDown(const OIS::KeyEvent &arg)
@@ -116,6 +134,11 @@ void Alien::injectKeyDown(const OIS::KeyEvent &arg)
 			aimAsteroid(arg);	
 		}
 	}
+	/*
+	if (arg.key == OIS::KC_P){
+		rearView = true;
+	}
+	*/
 }
 //---------------------------------------------------------------------------
 void Alien::injectKeyUp(const OIS::KeyEvent &arg)
@@ -152,6 +175,12 @@ void Alien::injectKeyUp(const OIS::KeyEvent &arg)
 			shootAsteroid(arg);	
 		}
 	}
+	/*
+	if (arg.key == OIS::KC_P){
+		rearView = false;
+		
+	}
+	*/
 }
 //---------------------------------------------------------------------------
 
@@ -265,4 +294,9 @@ void Alien::aimAsteroid(const OIS::KeyEvent &arg) {
 	rbInfo.m_friction = currentAsteroid -> getFriction();
 	currentAsteroid -> setBody(new btRigidBody(rbInfo));
 	currentAsteroid -> getDynamicsWorld() -> addRigidBody(currentAsteroid -> getBody());
+}
+
+void Alien::setCam(float xP, float yP, float zP, float xD, float yD, float zD) {
+	cam -> setPosition(Ogre::Vector3(xP, yP, zP));
+	cam-> lookAt(Ogre::Vector3(xD, yD, zD));
 }

@@ -9,7 +9,7 @@ Ship::Ship(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::Scen
 	hasDecr = false;
 	//rootNode->getParent()->removeChild(cameraNode);
 	//cameraNode->addChild(rootNode);
-	changedView = false;
+	//changedView = false;
 	rearView = false;
 	//rootNode->addChild(cameraNode);
 	health = 100;
