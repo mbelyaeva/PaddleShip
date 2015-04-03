@@ -66,14 +66,18 @@ void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 	paddle->setPosition(positions[14], positions[15], positions[16]);
 	paddle->getNode()->setOrientation(Ogre::Quaternion(positions[17],positions[18],positions[19],positions[20]));
 	
+	std::deque<GameObject*> oList = *(sim->getObjList());
+	int astIndex = 3;
+	for(int i = 21; i < 21+7*NUM_ASTEROIDS; i+=7, astIndex++){
+		Asteroid* ast = (Asteroid*)oList[astIndex];
+		ast->setPosition(positions[i], positions[i+1], positions[i+2]);
+		ast->getNode()->setOrientation(Ogre::Quaternion(positions[i+3],positions[i+4],positions[i+5],positions[i+6]));
+	}
 
 }
 //---------------------------------------------------------------------------
-#include "NetManager.h"
-
 int GameScreen::getPositions(float * positions)
 {
-	//int i = 0;
 	Ogre::Vector3 pos = ship->getPos();
 	positions[0] = pos.x;
 	positions[1] = pos.y;
@@ -104,10 +108,22 @@ int GameScreen::getPositions(float * positions)
 	positions[19] = rot.y;
 	positions[20] = rot.z;
 
+	std::deque<GameObject*> oList = *(sim->getObjList());
+	int astIndex = 3;
+	for(int i = 21; i < 21+7*NUM_ASTEROIDS; i+=7, astIndex++){
+		Asteroid* ast = (Asteroid*)oList[astIndex];
+		pos = ast->getPos();
+		positions[i] = pos.x;
+		positions[i+1] = pos.y;
+		positions[i+2] = pos.z;
+		rot = ast->getNode()->getOrientation();
+		positions[i+3] = rot.w;
+		positions[i+4] = rot.x;
+		positions[i+5] = rot.y;
+		positions[i+6] = rot.z;
+	}
 
-
-
-	return NETMANAGER_BUFFER_SIZE/4;//3521*sizeof(float);
+	return (21+7*NUM_ASTEROIDS)*sizeof(float);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
