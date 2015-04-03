@@ -3,7 +3,7 @@
 
 #include <SDL/SDL_net.h>
 
-#define NETMANAGER_BUFFER_SIZE 512
+#define NETMANAGER_BUFFER_SIZE 7084
 
 class NetManager
 {
@@ -29,7 +29,6 @@ public:
 private:
     TCPsocket sd, csd; /* Socket descriptor, Client socket descriptor */
     IPaddress ip;
-    //char buffer[NETMANAGER_BUFFER_SIZE];
 
     bool serverRunning;
 };

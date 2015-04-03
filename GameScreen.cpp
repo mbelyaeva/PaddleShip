@@ -69,6 +69,8 @@ void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 
 }
 //---------------------------------------------------------------------------
+#include "NetManager.h"
+
 int GameScreen::getPositions(float * positions)
 {
 	//int i = 0;
@@ -105,7 +107,7 @@ int GameScreen::getPositions(float * positions)
 
 
 
-	return 21*sizeof(float);
+	return NETMANAGER_BUFFER_SIZE/4;//3521*sizeof(float);
 }
 //---------------------------------------------------------------------------
 void GameScreen::injectKeyDown(const OIS::KeyEvent &arg)
