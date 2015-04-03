@@ -22,6 +22,8 @@ public:
     void sendMessageToServer(void * message, int len);
     bool receiveMessageFromClient(void * buff);
 
+    bool messageWaiting();
+
     
 
     

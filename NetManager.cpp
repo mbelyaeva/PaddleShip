@@ -106,5 +106,7 @@ bool NetManager::receiveMessageFromServer(void * buff){
 // Shared fuctions
 //------------------------------------------------------------
 
-
+bool NetManager::messageWaiting(){
+    return false;
+}
 

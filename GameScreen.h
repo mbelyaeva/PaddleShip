@@ -18,6 +18,8 @@ public:
 	GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode, SoundPlayer* sPlayer);
 	~GameScreen(void);
 	void createScene(void);
+	void setClient(bool client);
+	void setSinglePlayer(bool single);
 	void update(const Ogre::FrameEvent &evt);
 	void updateClient(const Ogre::FrameEvent &evt, float * positions);
 	int getPositions(float * positions);
@@ -41,6 +43,8 @@ protected:
 	bool motorRight;
 	int score;
 	int alienHealth;
+	bool isClient;
+	bool singlePlayer;
 };
 
 //---------------------------------------------------------------------------

@@ -14,6 +14,8 @@ GameScreen::GameScreen(Ogre::SceneManager* sceneMgr, Ogre::SceneNode* cameraNode
 	paddle = new Paddle("paddle", sceneMgr, sim, score, sPlayer); 
 	ast1 = new AsteroidSys(sceneMgr, sim, ship);
 	motorRight = true;
+	isClient = false;
+	singlePlayer = false;
 }
 //---------------------------------------------------------------------------
 GameScreen::~GameScreen(void)
@@ -50,6 +52,14 @@ void GameScreen::createScene(void)
     //asteroid particle system
     ast1->addToScene();
     ast1->addToSimulator(sim->getDynamicsWorld());
+}
+//---------------------------------------------------------------------------
+void GameScreen::setClient(bool client){
+	isClient = client;
+}
+//---------------------------------------------------------------------------
+void GameScreen::setSinglePlayer(bool single){
+	singlePlayer = single;
 }
 //---------------------------------------------------------------------------
 void GameScreen::update(const Ogre::FrameEvent &evt)

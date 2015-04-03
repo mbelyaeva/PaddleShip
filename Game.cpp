@@ -78,6 +78,7 @@ void Game::createScene(void)
 {
     setUpSDL();
 
+    //gui
     mRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
     CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
     CEGUI::Font::setDefaultResourceGroup("Fonts");
@@ -98,16 +99,18 @@ void Game::createScene(void)
     mainMenu->getChild("hostButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::startHosting, this));
     mainMenu->getChild("joinButton")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Game::joinGame, this));
 
+    //sound
     soundPlayer = new SoundPlayer();
     soundPlayer->startBgMusic();
     gameScreen = new GameScreen(mSceneMgr, mCameraNode, soundPlayer);
-    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-    mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
- 
+
     //game screen
     gameScreen->createScene();
 
     //Lights
+    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
+    mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
     Ogre::Light* pointLight = mSceneMgr->createLight("pointLight");
     pointLight->setType(Ogre::Light::LT_POINT);
     pointLight->setPosition(Ogre::Vector3(0, 500, -250));
@@ -129,6 +132,8 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
             if(netMgr->acceptClient()){
                 clientFound = true;
                 gameStarted = true;
+                gameScreen->setClient(false);
+                gameScreen->setSinglePlayer(false);
                 CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
                 guiRoot->setVisible(false);
             }
@@ -140,6 +145,10 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
         else if (!isServer && netMgr->receiveMessageFromServer(buffer))
             gameScreen->updateClient(evt, buffer); //render game based on data from host
         else if (isServer){
+            if(netMgr->messageWaiting()){
+                netMgr->receiveMessageFromClient(buffer);
+                printf("recieved message from client: %d\n", (int *)buffer);
+            }
             gameScreen->update(evt);
             int len = gameScreen->getPositions(buffer);
             netMgr->sendMessageToClient(buffer, len);
@@ -154,7 +163,42 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
 bool Game::keyPressed(const OIS::KeyEvent &arg){
     if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
 
-    gameScreen->injectKeyDown(arg);
+    if(singlePlayer || isServer)
+        gameScreen->injectKeyDown(arg);
+    else {
+        int message = -1;
+        
+        if (arg.key == OIS::KC_J){
+            message = 'j';
+        }
+        else if (arg.key == OIS::KC_L){
+            message = 'l';
+        }
+        else if (arg.key == OIS::KC_I){
+            message = 'i';
+        }
+        else if (arg.key == OIS::KC_K){
+            message = 'k';
+        }
+        else if (arg.key == OIS::KC_G){
+            message = 'g';
+        }
+        else if (arg.key == OIS::KC_LEFT){
+            message = 'L';
+        }
+        else if (arg.key == OIS::KC_RIGHT){
+            message = 'R';
+        }
+        else if (arg.key == OIS::KC_UP){
+            message = 'U';
+        }
+        else if (arg.key == OIS::KC_DOWN){
+            message = 'D';
+        }
+
+        if (message != -1)
+            netMgr->sendMessageToServer(&message, 4);
+    }
 
     CEGUI::GUIContext& context = CEGUI::System::getSingleton().getDefaultGUIContext();
     context.injectKeyDown((CEGUI::Key::Scan)arg.key);
@@ -228,6 +272,7 @@ bool Game::startSinglePlayer(const CEGUI::EventArgs &e)
     singlePlayer = true;
     gameStarted = true;
     guiRoot->setVisible(false);
+    gameScreen->setSinglePlayer(true);
     CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
     return true;
 }
@@ -261,13 +306,15 @@ bool Game::joinGame(const CEGUI::EventArgs &e)
         return true;
     }
 
-    std::cout << host << std::endl;
-
     netMgr->connectToServer(host);
-    
-    guiRoot->setVisible(false);
 
+    std::cout << "connected to " << host << std::endl;
+    
+    gameScreen->setClient(true);
+    gameScreen->setSinglePlayer(false);
     gameStarted = true;
+
+    guiRoot->setVisible(false);
     CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 
     return true;
