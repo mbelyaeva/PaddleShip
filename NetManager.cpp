@@ -51,16 +51,16 @@ bool NetManager::acceptClient(){
 }
 
 void NetManager::sendMessageToClient(void * message, int len){
-    printf("want to send message(%d): %s\n", len, (char*)message);
+    //printf("want to send message(%d): %s\n", len, (char*)message);
     if (SDLNet_TCP_Send(csd, message, len) < len){
         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    printf("Sent message: %s\n", (char*)message);
+    //printf("Sent message: %s\n", (char*)message);
 }
 bool NetManager::receiveMessageFromClient(void * buff){
     if (SDLNet_TCP_Recv(csd, buff, NETMANAGER_BUFFER_SIZE) > 0){
-        printf("Received message: %s\n", (char*)buff);
+        //printf("Received message: %s\n", (char*)buff);
         return true;
     }
     return false;
@@ -87,16 +87,16 @@ void NetManager::connectToServer(char* host){
 }
 
 void NetManager::sendMessageToServer(void * message, int len){
-    printf("want to send message(%d): %s\n", len, (char*)message);
+    //printf("want to send message(%d): %s\n", len, (char*)message);
     if (SDLNet_TCP_Send(sd, message, len) < len){
         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    printf("Sent message: %s\n", (char*)message);
+    //printf("Sent message: %s\n", (char*)message);
 }
 bool NetManager::receiveMessageFromServer(void * buff){
     if (SDLNet_TCP_Recv(sd, buff, NETMANAGER_BUFFER_SIZE) > 0){
-        printf("Received message: %s\n", (char*)buff);
+        //printf("Received message: %s\n", (char*)buff);
         return true;
     }
     return false;
