@@ -145,9 +145,9 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt){
         else if (!isServer && netMgr->receiveMessageFromServer(buffer))
             gameScreen->updateClient(evt, buffer); //render game based on data from host
         else if (isServer){
-            if(netMgr->messageWaiting()){
+            if(netMgr->messageWaitingFromClient()){
                 netMgr->receiveMessageFromClient(buffer);
-                printf("recieved message from client: %d\n", (int *)buffer);
+                printf("recieved message from client: %d\n", *((int*)buffer));
             }
             gameScreen->update(evt);
             int len = gameScreen->getPositions(buffer);

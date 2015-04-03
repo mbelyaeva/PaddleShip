@@ -6,6 +6,7 @@
 
 NetManager::NetManager(){
     serverRunning = false;
+    set = SDLNet_AllocSocketSet(1);
 }
 
 NetManager::~NetManager(){
@@ -43,10 +44,12 @@ void NetManager::startServer(){
 
 bool NetManager::acceptClient(){
     csd = SDLNet_TCP_Accept(sd);
-    if (csd){
-        printf("TCP client accepted\n");
-        return true;
+    if (csd) printf("TCP client accepted\n");
+    if(SDLNet_TCP_AddSocket(set,csd)==-1) {
+        fprintf(stderr, "SDLNet_TCP_AddSocket: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
     }
+    if (csd) return true;
     return false;
 }
 
@@ -64,6 +67,18 @@ bool NetManager::receiveMessageFromClient(void * buff){
         return true;
     }
     return false;
+}
+
+bool NetManager::messageWaitingFromClient(){
+    bool rd = false;
+    int numready = SDLNet_CheckSockets(set, 0);
+    if (numready == -1){
+        fprintf(stderr, "SDLNet_CheckSockets: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+    else if (numready)
+        rd = SDLNet_SocketReady(csd);
+    return rd;
 }
 
 //------------------------------------------------------------
@@ -106,7 +121,5 @@ bool NetManager::receiveMessageFromServer(void * buff){
 // Shared fuctions
 //------------------------------------------------------------
 
-bool NetManager::messageWaiting(){
-    return false;
-}
+
 
