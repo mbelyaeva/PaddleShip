@@ -24,7 +24,7 @@ Alien::Alien(Ogre::String nym, Ogre::SceneManager* mgr, Simulator* sim, Ogre::Sc
   	minP = 30;
   	maxP = 40;
   	Ogre::Real zP = minP + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxP-minP)));
-	rootNode->setPosition(Ogre::Vector3(xP, 0, 25));
+	rootNode->setPosition(Ogre::Vector3(xP, 0, 600));
 }
 //---------------------------------------------------------------------------
 Alien::~Alien(void)
@@ -51,17 +51,17 @@ void Alien::addToSimulator(void)
 //---------------------------------------------------------------------------
 void Alien::update(void)
 {
-	if (left && body->getLinearVelocity().getX() < 50) {
-		body->applyCentralForce(btVector3(1000,0,0));
-	}
-	if (right && body->getLinearVelocity().getX() > -50) {
+	if (left && body->getLinearVelocity().getX() > -50) {
 		body->applyCentralForce(btVector3(-1000,0,0));
 	}
-	if (forward && body->getLinearVelocity().getZ() < 50) {
-		body->applyCentralForce(btVector3(0,0,1000));
+	if (right && body->getLinearVelocity().getX() < 50) {
+		body->applyCentralForce(btVector3(1000,0,0));
 	}
-	if (back && body->getLinearVelocity().getZ() > -50) {
+	if (forward && body->getLinearVelocity().getZ() > -50) {
 		body->applyCentralForce(btVector3(0,0,-1000));
+	}
+	if (back && body->getLinearVelocity().getZ() < 50) {
+		body->applyCentralForce(btVector3(0,0,1000));
 	}
 	if (context->hit){
 		//lose health
@@ -316,13 +316,13 @@ void Alien::shootAsteroid(int arg) {
 
 	//shoot asteroid in direction of choice
 	if (arg == 7){
-		currentAsteroid -> getBody()->setLinearVelocity(btVector3(200,0,0));
-	} else if (arg == 8){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(-200,0,0));
+	} else if (arg == 8){
+		currentAsteroid -> getBody()->setLinearVelocity(btVector3(200,0,0));
 	} else if (arg == 9){
-		currentAsteroid -> getBody()->setLinearVelocity(btVector3(0,0,200));
-	} else if (arg == 10){
 		currentAsteroid -> getBody()->setLinearVelocity(btVector3(0,0,-200));
+	} else if (arg == 10){
+		currentAsteroid -> getBody()->setLinearVelocity(btVector3(0,0,200));
 	}
 
 	hasAsteroid = false;
@@ -340,27 +340,27 @@ void Alien::aimAsteroid(int arg) {
    	delete currentAsteroid -> getBody();
    	Ogre::Vector3 alienPos = getPos();
 	if (arg == 7){
-		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x + 17, alienPos.y, alienPos.z));
-		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
-			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(-17,0,0), btVector3(1,0,0), btVector3(1,0,0));
-			isBound = true;
-		}
-	} else if (arg == 8){
 		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x - 17, alienPos.y, alienPos.z));
 		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
 			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(17,0,0), btVector3(1,0,0), btVector3(1,0,0));
 			isBound = true;
 		}
-	} else if (arg == 9){
-		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z + 17));
-		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
-			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,-17), btVector3(0,0,1), btVector3(0,0,1));
+	} else if (arg == 8){
+		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x + 17, alienPos.y, alienPos.z));
+		if (currentAsteroid -> getBody() -> getLinearVelocity().getX()) {
+			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(-17,0,0), btVector3(1,0,0), btVector3(1,0,0));
 			isBound = true;
 		}
-	} else if (arg == 10){
+	} else if (arg == 9){
 		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z - 17));
 		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
 			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,17), btVector3(0,0,1), btVector3(0,0,1));
+			isBound = true;
+		}
+	} else if (arg == 10){
+		currentAsteroid -> getTransform() -> setOrigin(btVector3(alienPos.x, alienPos.y, alienPos.z + 17));
+		if (currentAsteroid -> getBody() -> getLinearVelocity().getZ()) {
+			asteroidBinder = new btHingeConstraint(*body, *currentAsteroid -> getBody(), btVector3(0,0,0), btVector3(0,0,-17), btVector3(0,0,1), btVector3(0,0,1));
 			isBound = true;
 		}
 	}

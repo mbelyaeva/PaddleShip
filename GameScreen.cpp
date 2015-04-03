@@ -73,6 +73,7 @@ void GameScreen::updateClient(const Ogre::FrameEvent &evt, float * positions)
 	ship->getNode()->setOrientation(Ogre::Quaternion(positions[3],positions[4],positions[5],positions[6]));
 	alien->setPosition(positions[7], positions[8], positions[9]);
 	alien->getNode()->setOrientation(Ogre::Quaternion(positions[10],positions[11],positions[12],positions[13]));
+	alien->setCam(positions[7], positions[8] + 25, positions[9] + 40, positions[7], positions[8], positions[9] - 25);
 	paddle->setPosition(positions[14], positions[15], positions[16]);
 	paddle->getNode()->setOrientation(Ogre::Quaternion(positions[17],positions[18],positions[19],positions[20]));
 	
